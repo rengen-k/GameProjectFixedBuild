@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
         playerActionsScript = new PlayerActionsScript();
         playerActionsScript.Player.Enable();
         playerActionsScript.Player.Jump.performed += Jump;
+        playerActionsScript.Player.Look.performed += Look;
+
     }
 
     // Update is called once per frame
@@ -59,7 +61,7 @@ public class PlayerController : MonoBehaviour
         
         Vector3 movement = new Vector3(inputVector.y, 0.0f, inputVector.x);
         // swap x with y, z with x
-        Debug.Log(movement);
+        //Debug.Log(movement);
         // transform.Translate(movement * speed * Time.fixedDeltaTime);
         Rb.AddForce(movement * speed * Time.fixedDeltaTime);
 
@@ -74,9 +76,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void Look(InputAction.CallbackContext context){
+       
+        if (context.ReadValue<Vector2>().x == -1f ){
+            Debug.Log("Detected LEft movement.");
+        }
+        if (context.ReadValue<Vector2>().x == 1f ){
+            Debug.Log("Detected Right movement.");
+        }
+        
+    }
+
     private void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.name == "Ground") {
             isGrounded = true;
+        }
+        else if (collision.gameObject.name == "KillPlane")
+        {
+            transform.position = new Vector3(0,1.33f,0);
+            //Respawn();
         }
     }
     private void OnCollisionExit(Collision collision) {
