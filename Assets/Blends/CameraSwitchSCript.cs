@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-public class CameraSwitchSCript : MonoBehaviour
+
+
+public class CameraSwitchScript : MonoBehaviour
 {
     // Start is called before the first frame update
 
@@ -10,25 +12,29 @@ public class CameraSwitchSCript : MonoBehaviour
 
     private InputAction action;
 
+    int cameraPos = 0;
+
 
     private Animator animator;
     void Awake()
     {
         animator = GetComponent<Animator>();
-        action.Enable();
+        
     }
 
     // Update is called once per frame
     void Start(){
-        action.performed += _ => SwitchState();
+        
     }
     void Update()
     {
         
     }
 
-    private void SwitchState(){
+    public void SwitchState(float direction){
         //Dunno how this works, need to figure out how to get the action key pressed into this function. 
+        //direction is either -1f or 1f, indicating whether we are going left or right.
+        
         animator.Play("180Angle");
         
         //if (context.ReadValue<Vector2>().x == -1f ){

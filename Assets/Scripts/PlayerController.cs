@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 public class PlayerController : MonoBehaviour
 {
 
@@ -12,11 +13,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpVelocity;
     private PlayerInput playerInput;
     private PlayerActionsScript playerActionsScript;
+    public CameraSwitchScript camScript;
+    
 
     // Start is called before the first frame update
     void Awake()
     {
-         Rb = GetComponent<Rigidbody>();
+        Rb = GetComponent<Rigidbody>();
+        
+
+
     }
 
     void Start() {
@@ -78,11 +84,15 @@ public class PlayerController : MonoBehaviour
 
     public void Look(InputAction.CallbackContext context){
        
+        
         if (context.ReadValue<Vector2>().x == -1f ){
             Debug.Log("Detected LEft movement.");
+            camScript.SwitchState(context.ReadValue<Vector2>().x);
+            
         }
-        if (context.ReadValue<Vector2>().x == 1f ){
+        else if (context.ReadValue<Vector2>().x == 1f ){
             Debug.Log("Detected Right movement.");
+            camScript.SwitchState(context.ReadValue<Vector2>().x);
         }
         
     }
