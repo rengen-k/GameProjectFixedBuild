@@ -87,12 +87,12 @@ public class PlayerController : MonoBehaviour
         
         if (context.ReadValue<Vector2>().x == -1f ){
             Debug.Log("Detected LEft movement.");
-            camScript.SwitchState(context.ReadValue<Vector2>().x);
+            camScript.SwitchState(-1);
             
         }
         else if (context.ReadValue<Vector2>().x == 1f ){
             Debug.Log("Detected Right movement.");
-            camScript.SwitchState(context.ReadValue<Vector2>().x);
+            camScript.SwitchState(1);
         }
         
     }

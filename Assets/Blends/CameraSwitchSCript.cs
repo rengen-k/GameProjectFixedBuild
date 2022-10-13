@@ -19,6 +19,7 @@ public class CameraSwitchScript : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
+        animator.Play("0Angle");
         
     }
 
@@ -31,19 +32,22 @@ public class CameraSwitchScript : MonoBehaviour
         
     }
 
-    public void SwitchState(float direction){
-        //Dunno how this works, need to figure out how to get the action key pressed into this function. 
-        //direction is either -1f or 1f, indicating whether we are going left or right.
+    public void SwitchState(int direction){
         
-        animator.Play("180Angle");
-        
-        //if (context.ReadValue<Vector2>().x == -1f ){
-        //    Debug.Log("Detected LEft movement.");
-        //}
-        //if (context.ReadValue<Vector2>().x == 1f ){
-        //    Debug.Log("Detected Right movement.");
-        //}
-        animator.Play("90Angle");
+        //direction is either -1 or 1, indicating whether we are going left or right.
+
+        string[] views = {"0Angle","90Angle","180Angle","270Angle"};
+
+        //if (checkIfAngleLock(cameraPos, direction))
+
+        cameraPos = (cameraPos + direction) % 4;
+        if (cameraPos < 0){
+            cameraPos = 3;
+        }
+
+        Debug.Log(cameraPos);
+        animator.Play(views[cameraPos]);
+      
     }
 
 }
