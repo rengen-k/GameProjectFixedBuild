@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
         // Vector3 movement = new Vector3(cameraRelativeMovement.x, 0.0f, cameraRelativeMovement.y);
         
         Vector3 movement = new Vector3(inputVector.y, 0.0f, inputVector.x);
-        // swap x with y
+        // swap x with y, z with x
         Debug.Log(movement);
         // transform.Translate(movement * speed * Time.fixedDeltaTime);
         Rb.AddForce(movement * speed * Time.fixedDeltaTime);
