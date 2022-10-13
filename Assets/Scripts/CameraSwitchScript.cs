@@ -32,7 +32,7 @@ public class CameraSwitchScript : MonoBehaviour
         
     }
 
-    public void SwitchState(int direction){
+    public int SwitchState(int direction){
         
         //direction is either -1 or 1, indicating whether we are going left or right.
 
@@ -47,6 +47,8 @@ public class CameraSwitchScript : MonoBehaviour
 
         Debug.Log(cameraPos);
         animator.Play(views[cameraPos]);
+
+        return cameraPos;
       
     }
 

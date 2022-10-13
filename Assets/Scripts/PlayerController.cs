@@ -14,18 +14,29 @@ public class PlayerController : MonoBehaviour
     private PlayerInput playerInput;
     private PlayerActionsScript playerActionsScript;
     public CameraSwitchScript camScript;
-    
+    private int currentCam = 0;
+    private Vector3 movement;
+    // private Vector3[] movementMap = new Vector3[4];
+    // private Vector2 inputVector = new Vector2(0.0f, 0.0f);
 
     // Start is called before the first frame update
     void Awake()
     {
         Rb = GetComponent<Rigidbody>();
-        
+        movement = new Vector3(0.0f, 0.0f, 0.0f);
 
 
     }
 
     void Start() {
+        // movementMap[0] = new Vector3(inputVector.x, 0.0f, inputVector.y);
+        // movementMap[1] = new Vector3(-inputVector.y, 0.0f, -inputVector.x);
+        // movementMap[2] = new Vector3(-inputVector.x, 0.0f, -inputVector.y);
+        // movementMap[3] = new Vector3(inputVector.y, 0.0f, inputVector.x);
+
+
+
+
 
         playerInput = GetComponent<PlayerInput>();
 
@@ -65,7 +76,17 @@ public class PlayerController : MonoBehaviour
         // Debug.Log(inputVector);
         // Vector3 movement = new Vector3(cameraRelativeMovement.x, 0.0f, cameraRelativeMovement.y);
         
-        Vector3 movement = new Vector3(inputVector.y, 0.0f, inputVector.x);
+        if (currentCam == 0) {
+            movement = new Vector3(inputVector.x, 0.0f, inputVector.y);
+        } else if (currentCam == 1) {
+            movement = new Vector3(-inputVector.y, 0.0f, -inputVector.x);
+        } else if (currentCam == 2) {
+            movement = new Vector3(-inputVector.x, 0.0f, -inputVector.y);
+        } else if (currentCam == 3) {
+            movement = new Vector3(inputVector.y, 0.0f, inputVector.x);
+        }
+
+        // Debug.Log("" + currentCam + " " + inputVector + movementMap[currentCam]);
         // swap x with y, z with x
         //Debug.Log(movement);
         // transform.Translate(movement * speed * Time.fixedDeltaTime);
@@ -87,12 +108,12 @@ public class PlayerController : MonoBehaviour
         
         if (context.ReadValue<Vector2>().x == -1f ){
             Debug.Log("Detected LEft movement.");
-            camScript.SwitchState(-1);
+            currentCam = camScript.SwitchState(-1);
             
         }
         else if (context.ReadValue<Vector2>().x == 1f ){
             Debug.Log("Detected Right movement.");
-            camScript.SwitchState(1);
+            currentCam = camScript.SwitchState(1);
         }
         
     }
