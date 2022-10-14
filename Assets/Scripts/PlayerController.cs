@@ -112,12 +112,12 @@ public class PlayerController : MonoBehaviour
         Debug.Log(context);
         if (context.ReadValue<Vector2>().x <= -0.5f ){
             Debug.Log("Detected LEft movement.");
-            currentCam = camScript.SwitchState(-1);
+            currentCam = camScript.SwitchState(1);
             
         }
         else if (context.ReadValue<Vector2>().x >= 0.5f ){
             Debug.Log("Detected Right movement.");
-            currentCam = camScript.SwitchState(1);
+            currentCam = camScript.SwitchState(-1);
         }
     }
 
