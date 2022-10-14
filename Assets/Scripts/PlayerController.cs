@@ -18,9 +18,11 @@ public class PlayerController : MonoBehaviour
     //Movement
     private Vector3 movement;
 
-    private float coyoteTime = 0.3f;
+    private float coyoteTime = 2.5f;
     public float coyoteTimeCounter;
 
+    private float jumpBufferTime = 10f;
+    public float jumpBufferCounter;
 
     private bool isJumping = false;
 
@@ -60,14 +62,31 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-        Debug.Log(coyoteTimeCounter +  "Before");
+        
         if (checkGround()){
             coyoteTimeCounter = coyoteTime;
+            
         }
         else{
             coyoteTimeCounter -= Time.deltaTime;
         }
-        Debug.Log(coyoteTimeCounter + "After");
+        jumpBufferCounter -= Time.deltaTime;
+
+
+        if (jumpRequest){
+         
+            if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f && !isJumping ) {
+                jumpBufferCounter = jumpBufferTime;
+                coyoteTimeCounter = 0f;
+                Debug.Log("Jump!" );
+                Rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
+                
+                StartCoroutine(JumpCooldown());
+                
+                jumpRequest = false;
+            }
+            
+        }
         
         
     }
@@ -88,12 +107,7 @@ public class PlayerController : MonoBehaviour
         // transform.Translate(movement * speed * Time.fixedDeltaTime);
         Rb.AddForce(movement * speed * Time.fixedDeltaTime);
 
-        
-        if (jumpRequest) {
-            Rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
-            jumpRequest = false;
-        }
-
+    
         if (Rb.velocity.y < 0) {
             Rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
         }
@@ -101,16 +115,9 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Jump(InputAction.CallbackContext context) {
-
-        
-        if (context.performed && coyoteTimeCounter > 0f && !isJumping) {
-            Debug.Log("Jump!" + context.phase);
-            Rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
-            coyoteTimeCounter = 0f;
-            StartCoroutine(JumpCooldown());
-            
-            
-        }
+        jumpRequest = true;
+        jumpBufferCounter = jumpBufferTime;
+       
     }
 
     public void Look(InputAction.CallbackContext context){
