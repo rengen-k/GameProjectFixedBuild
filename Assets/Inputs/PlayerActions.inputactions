@@ -40,15 +40,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "SwitchState",
-                    "type": "Button",
-                    "id": "f36be46d-c325-422e-a137-0f9f3bfdbaad",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -57,7 +48,7 @@
                     "id": "978bfe49-cc26-4a3d-ab7b-7d7a29327403",
                     "path": "<Gamepad>/leftStick",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "StickDeadzone",
                     "groups": ";Gamepad",
                     "action": "Move",
                     "isComposite": false,
@@ -144,8 +135,8 @@
                     "name": "",
                     "id": "c1f7a91b-d0fd-4a62-997e-7fb9b69bf235",
                     "path": "<Gamepad>/rightStick",
-                    "interactions": "",
-                    "processors": "",
+                    "interactions": "Press",
+                    "processors": "NormalizeVector2,StickDeadzone",
                     "groups": ";Gamepad",
                     "action": "Look",
                     "isComposite": false,
@@ -285,12 +276,12 @@
                 },
                 {
                     "name": "",
-                    "id": "f1818faa-4ea4-4555-bbe8-8e7fbf9569e9",
-                    "path": "",
+                    "id": "2e53fb9d-62b0-4f74-943d-c257c5fd29f9",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SwitchState",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

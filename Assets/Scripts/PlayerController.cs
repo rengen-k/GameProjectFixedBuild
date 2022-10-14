@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
     private float coyoteTime = 0.3f;
     public float coyoteTimeCounter;
 
+    private bool jumpRequest;
+
     [SerializeField] private float speed;
     [SerializeField] private float jumpVelocity;
     [SerializeField] private float fallMultiplier = 0.1f;
@@ -38,19 +40,6 @@ public class PlayerController : MonoBehaviour
     }
 
     void Start() {
-        // movementMap[0] = new Vector3(inputVector.x, 0.0f, inputVector.y);
-        // movementMap[1] = new Vector3(-inputVector.y, 0.0f, -inputVector.x);
-        // movementMap[2] = new Vector3(-inputVector.x, 0.0f, -inputVector.y);
-        // movementMap[3] = new Vector3(inputVector.y, 0.0f, inputVector.x);
-
-        //Taken from https://roundwide.com/physics-overlap-capsule/
-        // Do I need to cite this.
-        
-
-
-
-
-
         playerInput = GetComponent<PlayerInput>();
 
         playerActionsScript = new PlayerActionsScript();
@@ -67,7 +56,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-        
         
         if (checkGround()){
             coyoteTimeCounter = coyoteTime;
@@ -96,6 +84,11 @@ public class PlayerController : MonoBehaviour
         // transform.Translate(movement * speed * Time.fixedDeltaTime);
         Rb.AddForce(movement * speed * Time.fixedDeltaTime);
 
+        if (jumpRequest) {
+            Rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
+            jumpRequest = false;
+        }
+
         if (Rb.velocity.y < 0) {
             Rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
         }
@@ -103,24 +96,25 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Jump(InputAction.CallbackContext context) {
+
         
         if (context.performed && coyoteTimeCounter > 0f) {
-            coyoteTimeCounter = 0f;
-            Debug.Log("Jump!" + context.phase);
-            Rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
-            
+            // coyoteTimeCounter = 0f;
+            // Debug.Log("Jump!" + context.phase);
+            // Rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
+            jumpRequest = true;
         }
     }
 
     public void Look(InputAction.CallbackContext context){
        
-        
-        if (context.ReadValue<Vector2>().x == -1f ){
+        Debug.Log(context);
+        if (context.ReadValue<Vector2>().x <= -0.5f ){
             Debug.Log("Detected LEft movement.");
             currentCam = camScript.SwitchState(-1);
             
         }
-        else if (context.ReadValue<Vector2>().x == 1f ){
+        else if (context.ReadValue<Vector2>().x >= 0.5f ){
             Debug.Log("Detected Right movement.");
             currentCam = camScript.SwitchState(1);
         }
