@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float speed;
     [SerializeField] private float jumpVelocity;
+    [SerializeField] private float fallMultiplier = 0.1f;
 
     // private Vector3[] movementMap = new Vector3[4];
     // private Vector2 inputVector = new Vector2(0.0f, 0.0f);
@@ -59,10 +60,14 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private void OnDisable() {
+        playerActionsScript.Player.Disable();
+    }
+
     // Update is called once per frame
     void Update()
-    {
-   
+    {   
+        
         
         if (checkGround()){
             coyoteTimeCounter = coyoteTime;
@@ -78,22 +83,6 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate() {
         Vector2 inputVector = playerActionsScript.Player.Move.ReadValue<Vector2>();
 
-        // Vector3 forward = Camera.main.transform.forward;
-        // Debug.Log("forward" + forward);
-        // Vector3 right = Camera.main.transform.right;
-        // Debug.Log("right" + right);
-
-
-        // Vector3 forwardRelative = verticalInput * forward;
-        // Vector3 rightRelative = horizontalInput * right;
-        
-        // Vector3 cameraRelativeMovement = forwardRelative + rightRelative;
-
-        // Debug.Log(inputVector);
-        // Vector3 movement = new Vector3(cameraRelativeMovement.x, 0.0f, cameraRelativeMovement.y);
-
-        
-        
         if (currentCam == 0) {
             movement = new Vector3(inputVector.x, 0.0f, 0f);
         } else if (currentCam == 1) {
@@ -104,11 +93,12 @@ public class PlayerController : MonoBehaviour
             movement = new Vector3(0f, 0.0f, inputVector.x);
         }
 
-        // Debug.Log("" + currentCam + " " + inputVector + movementMap[currentCam]);
-        // swap x with y, z with x
-        //Debug.Log(movement);
         // transform.Translate(movement * speed * Time.fixedDeltaTime);
         Rb.AddForce(movement * speed * Time.fixedDeltaTime);
+
+        if (Rb.velocity.y < 0) {
+            Rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+        }
 
     }
 
