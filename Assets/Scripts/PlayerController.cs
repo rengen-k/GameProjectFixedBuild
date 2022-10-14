@@ -25,8 +25,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float speed;
     [SerializeField] private float jumpVelocity;
-    [SerializeField] private float fallMultiplier = 0.1f;
+    [SerializeField] private float fallMultiplier = 2f;
 
+    private Vector3 rotation = new Vector3(0, 90, 0);
     // private Vector3[] movementMap = new Vector3[4];
     // private Vector2 inputVector = new Vector2(0.0f, 0.0f);
 
@@ -118,7 +119,6 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Detected Right movement.");
             currentCam = camScript.SwitchState(1);
         }
-        
     }
 
     private void OnCollisionEnter(Collision collision) {
