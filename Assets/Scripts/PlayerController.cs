@@ -21,6 +21,9 @@ public class PlayerController : MonoBehaviour
     private float coyoteTime = 0.3f;
     public float coyoteTimeCounter;
 
+
+    private bool isJumping = false;
+
     private bool jumpRequest;
 
     [SerializeField] private float speed;
@@ -57,14 +60,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-        
+        Debug.Log(coyoteTimeCounter +  "Before");
         if (checkGround()){
             coyoteTimeCounter = coyoteTime;
         }
         else{
             coyoteTimeCounter -= Time.deltaTime;
         }
-        
+        Debug.Log(coyoteTimeCounter + "After");
         
         
     }
@@ -85,6 +88,7 @@ public class PlayerController : MonoBehaviour
         // transform.Translate(movement * speed * Time.fixedDeltaTime);
         Rb.AddForce(movement * speed * Time.fixedDeltaTime);
 
+        
         if (jumpRequest) {
             Rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
             jumpRequest = false;
@@ -99,11 +103,13 @@ public class PlayerController : MonoBehaviour
     public void Jump(InputAction.CallbackContext context) {
 
         
-        if (context.performed && coyoteTimeCounter > 0f) {
-            // coyoteTimeCounter = 0f;
-            // Debug.Log("Jump!" + context.phase);
-            // Rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
-            jumpRequest = true;
+        if (context.performed && coyoteTimeCounter > 0f && !isJumping) {
+            Debug.Log("Jump!" + context.phase);
+            Rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
+            coyoteTimeCounter = 0f;
+            StartCoroutine(JumpCooldown());
+            
+            
         }
     }
 
@@ -160,7 +166,12 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
-    
+    private IEnumerator JumpCooldown()
+    {
+        isJumping = true;
+        yield return new WaitForSeconds(0.4f);
+        isJumping = false;
+    }
 
     
 
