@@ -77,11 +77,11 @@ public class PlayerController : MonoBehaviour
         if (currentCam == 0) {
             movement = new Vector3(inputVector.x, 0.0f, 0f);
         } else if (currentCam == 1) {
-            movement = new Vector3(0f, 0.0f, -inputVector.x);
+            movement = new Vector3(0f, 0.0f, inputVector.x);
         } else if (currentCam == 2) {
             movement = new Vector3(-inputVector.x, 0.0f, 0f);
         } else if (currentCam == 3) {
-            movement = new Vector3(0f, 0.0f, inputVector.x);
+            movement = new Vector3(0f, 0.0f, -inputVector.x);
         }
 
         // transform.Translate(movement * speed * Time.fixedDeltaTime);
