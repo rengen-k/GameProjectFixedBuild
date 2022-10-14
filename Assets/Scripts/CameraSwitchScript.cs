@@ -36,7 +36,7 @@ public class CameraSwitchScript : MonoBehaviour
         
         //direction is either -1 or 1, indicating whether we are going left or right.
 
-        string[] views = {"0Angle","90Angle","180Angle","270Angle"};
+        string[] views = {"0Angle","270Angle","180Angle","90Angle"};
 
         //if (checkIfAngleLock(cameraPos, direction))
 

@@ -18,10 +18,10 @@ public class PlayerController : MonoBehaviour
     //Movement
     private Vector3 movement;
 
-    private float coyoteTime = 2.5f;
+    private float coyoteTime = 0.25f;
     public float coyoteTimeCounter;
 
-    private float jumpBufferTime = 10f;
+    private float jumpBufferTime = 0.3f;
     public float jumpBufferCounter;
 
     private bool isJumping = false;
@@ -33,15 +33,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float fallMultiplier = 2f;
 
     private Vector3 rotation = new Vector3(0, 90, 0);
-    // private Vector3[] movementMap = new Vector3[4];
-    // private Vector2 inputVector = new Vector2(0.0f, 0.0f);
+
 
     // Start is called before the first frame update
     void Awake()
     {
         Rb = GetComponent<Rigidbody>();
         movement = new Vector3(0.0f, 0.0f, 0.0f);
-
 
     }
 
@@ -62,33 +60,15 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-        
+
         if (checkGround()){
             coyoteTimeCounter = coyoteTime;
-            
         }
         else{
             coyoteTimeCounter -= Time.deltaTime;
         }
         jumpBufferCounter -= Time.deltaTime;
-
-
-        if (jumpRequest){
-         
-            if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f && !isJumping ) {
-                jumpBufferCounter = jumpBufferTime;
-                coyoteTimeCounter = 0f;
-                Debug.Log("Jump!" );
-                Rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
-                
-                StartCoroutine(JumpCooldown());
-                
-                jumpRequest = false;
-            }
-            
-        }
-        
-        
+ 
     }
 
     private void FixedUpdate() {
@@ -107,6 +87,20 @@ public class PlayerController : MonoBehaviour
         // transform.Translate(movement * speed * Time.fixedDeltaTime);
         Rb.AddForce(movement * speed * Time.fixedDeltaTime);
 
+        if (jumpRequest){
+            if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f && !isJumping ) {
+
+                jumpBufferCounter = jumpBufferTime;
+                coyoteTimeCounter = 0f;
+                jumpRequest = false;
+
+                Rb.velocity = new Vector3(Rb.velocity.x,0f,Rb.velocity.z);
+                Rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
+                StartCoroutine(JumpCooldown());
+                
+            }
+            
+        }
     
         if (Rb.velocity.y < 0) {
             Rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
@@ -124,13 +118,11 @@ public class PlayerController : MonoBehaviour
        
         Debug.Log(context);
         if (context.ReadValue<Vector2>().x <= -0.5f ){
-            Debug.Log("Detected LEft movement.");
-            currentCam = camScript.SwitchState(1);
+            currentCam = camScript.SwitchState(-1);
             
         }
         else if (context.ReadValue<Vector2>().x >= 0.5f ){
-            Debug.Log("Detected Right movement.");
-            currentCam = camScript.SwitchState(-1);
+            currentCam = camScript.SwitchState(1);
         }
     }
 
