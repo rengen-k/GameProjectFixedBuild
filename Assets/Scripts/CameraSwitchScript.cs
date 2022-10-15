@@ -12,25 +12,8 @@ public class CameraSwitchScript : MonoBehaviour
 
     private InputAction action;
 
-    int cameraPos = 0;
+    [SerializeField] int cameraPos = 0;
 
-
-    private Animator animator;
-    void Awake()
-    {
-        animator = GetComponent<Animator>();
-        animator.Play("0Angle");
-        
-    }
-
-    // Update is called once per frame
-    void Start(){
-        
-    }
-    void Update()
-    {
-        
-    }
 
     public int SwitchState(int direction){
         
@@ -46,10 +29,8 @@ public class CameraSwitchScript : MonoBehaviour
         }
 
         Debug.Log(cameraPos);
-        animator.Play(views[cameraPos]);
 
         return cameraPos;
-      
     }
 
 }

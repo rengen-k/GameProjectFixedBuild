@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private int currentCam = 0;
     
     //Movement
+
     private Vector3 movement;
 
     private float coyoteTime = 0.25f;
@@ -75,7 +76,7 @@ public class PlayerController : MonoBehaviour
         Vector2 inputVector = playerActionsScript.Player.Move.ReadValue<Vector2>();
 
         if (currentCam == 0) {
-            movement = new Vector3(inputVector.x, 0.0f, 0f);
+            movement = new Vector3(inputVector.x, 0.0f, 0.0f);
         } else if (currentCam == 1) {
             movement = new Vector3(0f, 0.0f, inputVector.x);
         } else if (currentCam == 2) {
@@ -119,10 +120,12 @@ public class PlayerController : MonoBehaviour
         Debug.Log(context);
         if (context.ReadValue<Vector2>().x <= -0.5f ){
             currentCam = camScript.SwitchState(-1);
+            transform.Rotate(rotation);
             
         }
         else if (context.ReadValue<Vector2>().x >= 0.5f ){
             currentCam = camScript.SwitchState(1);
+            transform.Rotate(-rotation);
         }
     }
 
