@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     //Movement
 
     private Vector3 movement;
+    private float lastMove = 0f;
 
     private float coyoteTime = 0.25f;
     public float coyoteTimeCounter;
@@ -80,14 +81,17 @@ public class PlayerController : MonoBehaviour
     
 
         // character model looks left and right
-        if (inputVector.x > 0)
-        {
-            model.rotation = transform.rotation * Quaternion.Euler(0, -90, 0);
-            //model.transform.RotateAround(transform.position, Vector3.up, -90f);
-        }
-        else if (inputVector.x < 0)
-        {
-            model.rotation = transform.rotation * Quaternion.Euler(0, 90, 0);
+        if (lastMove != inputVector.x && inputVector.x != 0f){
+            lastMove = inputVector.x;
+            if (inputVector.x > 0)
+            {
+                
+                model.transform.RotateAround(transform.position, Vector3.up, -180f);
+            }
+            else if (inputVector.x < 0)
+            {
+                model.transform.RotateAround(transform.position, Vector3.up, 180f);
+            }
         }
 
         if (currentCam == 0) {
