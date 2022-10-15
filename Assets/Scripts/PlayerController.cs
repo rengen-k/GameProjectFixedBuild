@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpVelocity;
     [SerializeField] private float fallMultiplier = 2f;
 
+    [SerializeField] private Transform model;
+
     private Vector3 rotation = new Vector3(0, 90, 0);
 
 
@@ -74,6 +76,19 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate() {
         Vector2 inputVector = playerActionsScript.Player.Move.ReadValue<Vector2>();
+
+    
+
+        // character model looks left and right
+        if (inputVector.x > 0)
+        {
+            model.rotation = transform.rotation * Quaternion.Euler(0, -90, 0);
+            //model.transform.RotateAround(transform.position, Vector3.up, -90f);
+        }
+        else if (inputVector.x < 0)
+        {
+            model.rotation = transform.rotation * Quaternion.Euler(0, 90, 0);
+        }
 
         if (currentCam == 0) {
             movement = new Vector3(inputVector.x, 0.0f, 0.0f);
