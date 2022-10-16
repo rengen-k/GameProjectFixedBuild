@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 movement;
     private float lastMove = 0f;
 
-    private float coyoteTime = 0.25f;
+    private float coyoteTime = 0.2f;
     public float coyoteTimeCounter;
 
     private float jumpBufferTime = 0.3f;
@@ -153,6 +153,14 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = new Vector3(0,1.33f,0);
             //Respawn();
+        }
+        else if(collision.gameObject.tag == "JumpTag"){
+            Debug.Log("Should be forced up");
+            coyoteTimeCounter = 0f;
+
+            //For now, trampoline forces you up with twice the force of the jump. When the carryable tag is entered, this should instead query the value the trampoline says
+            // Rb.AddForce(Vector3.up * jumpVelocity* collision.gameObject.getJumpMult(), ForceMode.Impulse);
+            Rb.AddForce(Vector3.up * jumpVelocity*2, ForceMode.Impulse);
         }
         
     }
