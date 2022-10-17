@@ -40,7 +40,7 @@ public class CameraSwitchScript : MonoBehaviour
 
         //if (checkIfAngleLock(cameraPos, direction))
 
-        transform.Rotate(0f, 90f*direction*-1, 0f);
+        
 
         cameraPos = (cameraPos + direction) % 4;
         if (cameraPos < 0){
