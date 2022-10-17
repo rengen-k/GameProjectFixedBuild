@@ -45,6 +45,9 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 originalPos;
 
+    // Damage
+    private bool isHurt = false;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -57,7 +60,7 @@ public class PlayerController : MonoBehaviour
 
     void Start() {
         currentHealth = maxHealth;
-        originalPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 1, gameObject.transform.position.z);
+        originalPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.3f, gameObject.transform.position.z);
 
         playerInput = GetComponent<PlayerInput>();
 
@@ -160,17 +163,18 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.tag == "HurtTag1") {
+        if (collision.gameObject.tag == "HurtTag1" && !isHurt) {
             Debug.Log("Collided with HurtTag1");
             currentHealth -= 1;
+            StartCoroutine(HurtCooldown());
             if (currentHealth <= 0) {
             Respawn();
             } else {
                 Debug.Log("currentHealth: " + currentHealth);
-                Rb.AddForce(Vector3.up * jumpVelocity * 1, ForceMode.Impulse);
+                Rb.AddForce(Vector3.up * jumpVelocity * 1.2f, ForceMode.Impulse);
             }
             
-        } 
+        }
         else if (collision.gameObject.name == "KillPlane")
         {
             Respawn();
@@ -234,6 +238,13 @@ public class PlayerController : MonoBehaviour
         isJumping = true;
         yield return new WaitForSeconds(0.4f);
         isJumping = false;
+    }
+
+    private IEnumerator HurtCooldown()
+    {
+        isHurt = true;
+        yield return new WaitForSeconds(0.4f);
+        isHurt = false;
     }
 
     
