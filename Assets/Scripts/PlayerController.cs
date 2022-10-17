@@ -14,6 +14,11 @@ public class PlayerController : MonoBehaviour
 
     public CameraSwitchScript camScript;
     private int currentCam = 0;
+
+    //Stats
+
+    [SerializeField] private int currentHealth;
+    [SerializeField] private int maxHealth = 1;
     
     //Movement
 
@@ -38,16 +43,22 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 rotation = new Vector3(0, 90, 0);
 
+    private Vector3 originalPos;
+
 
     // Start is called before the first frame update
     void Awake()
     {
+        
         Rb = GetComponent<Rigidbody>();
         movement = new Vector3(0.0f, 0.0f, 0.0f);
 
     }
 
     void Start() {
+        currentHealth = maxHealth;
+        originalPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 1, gameObject.transform.position.z);
+
         playerInput = GetComponent<PlayerInput>();
 
         playerActionsScript = new PlayerActionsScript();
@@ -149,10 +160,20 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.name == "KillPlane")
+        if (collision.gameObject.tag == "HurtTag1") {
+            Debug.Log("Collided with HurtTag1");
+            currentHealth -= 1;
+            if (currentHealth <= 0) {
+            Respawn();
+            } else {
+                Debug.Log("currentHealth: " + currentHealth);
+                Rb.AddForce(Vector3.up * jumpVelocity * 1, ForceMode.Impulse);
+            }
+            
+        } 
+        else if (collision.gameObject.name == "KillPlane")
         {
-            transform.position = new Vector3(0,1.33f,0);
-            //Respawn();
+            Respawn();
         }
         else if(collision.gameObject.tag == "JumpTag"){
             Debug.Log("Should be forced up");
@@ -162,8 +183,21 @@ public class PlayerController : MonoBehaviour
             // Rb.AddForce(Vector3.up * jumpVelocity* collision.gameObject.getJumpMult(), ForceMode.Impulse);
             Rb.AddForce(Vector3.up * jumpVelocity*2, ForceMode.Impulse);
         }
+
+        
         
     }
+
+    private void ResetPlayerHealth() {
+        currentHealth = maxHealth;
+    }
+
+    private void Respawn() {
+        ResetPlayerHealth();
+        transform.position = originalPos;
+    }
+
+
     private void OnCollisionExit(Collision collision) {
         
     }

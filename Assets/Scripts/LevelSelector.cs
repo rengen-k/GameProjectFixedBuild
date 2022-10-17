@@ -6,7 +6,6 @@ using TMPro;
 
 public class LevelSelector : MonoBehaviour
 {
-    // Start is called before the first frame update
 
     public int level;
     private GameObject levelText; 
@@ -17,9 +16,8 @@ public class LevelSelector : MonoBehaviour
         texty.text = level.ToString();
     }
 
-    // Update is called once per frame
     public void OpenScene()
     {
-        SceneManager.LoadScene("Level " + level.ToString());
+        SceneManager.LoadScene("Level" + level.ToString());
     }
 }

@@ -42,6 +42,7 @@ public class PauseMenu : MonoBehaviour
     void Update()
     {
         if (pauseRequest) {
+            Debug.Log("Trigger Pause menu");
             pauseRequest = false;
             if (GamePaused){
                 Resume();
