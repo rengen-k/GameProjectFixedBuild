@@ -11,7 +11,7 @@ public class SceneSwitch : MonoBehaviour
     
     private void OnTriggerEnter(Collider collision) {
         GameObject collisionGameObject = collision.gameObject;
-        if (collisionGameObject.name == "Player") {
+        if (collisionGameObject.tag == "Player") {
             LoadScene();
         }
     }

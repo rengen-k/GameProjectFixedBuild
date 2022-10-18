@@ -248,7 +248,7 @@ public class PlayerController : MonoBehaviour
             Respawn();
             } else {
                 Debug.Log("currentHealth: " + currentHealth);
-                Rb.AddForce(Vector3.up * jumpVelocity * 1.2f, ForceMode.Impulse);
+                Rb.AddForce(Vector3.up * 10f, ForceMode.Impulse);
             }
         }
         else if (collision.gameObject.name == "KillPlane")
@@ -260,8 +260,9 @@ public class PlayerController : MonoBehaviour
             coyoteTimeCounter = 0f;
 
             //For now, trampoline forces you up with twice the force of the jump. When the carryable tag is entered, this should instead query the value the trampoline says
-            // Rb.AddForce(Vector3.up * jumpVelocity* collision.gameObject.getJumpMult(), ForceMode.Impulse);
-            Rb.AddForce(Vector3.up * jumpVelocity * 1.1f, ForceMode.Impulse);
+            // Rb.AddForce(Vector3.up * jumpVelocity * collision.gameObject.getJumpMult(), ForceMode.Impulse);
+            // No need to have jumpVelocity in calculation.
+            Rb.AddForce(Vector3.up * 6f, ForceMode.Impulse);
         }
     }
 
