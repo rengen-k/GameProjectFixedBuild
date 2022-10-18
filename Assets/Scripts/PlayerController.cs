@@ -15,6 +15,15 @@ public class PlayerController : MonoBehaviour
     public CameraSwitchScript camScript;
     private int currentCam = 0;
 
+    //Stats
+
+    [SerializeField] private int currentHealth;
+    [SerializeField] private int maxHealth = 1;
+    
+    // Damage
+
+    private bool isHurt = false;
+
     //Movement
 
     private Vector3 movement;
@@ -46,6 +55,8 @@ public class PlayerController : MonoBehaviour
 
     private Transform model;
 
+    private Vector3 originalPos;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -56,6 +67,9 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        currentHealth = maxHealth;
+        originalPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.3f, gameObject.transform.position.z);
+
         playerInput = GetComponent<PlayerInput>();
         model = transform.Find("Model");
         //playerActionsScript = new PlayerActionsScript();
@@ -225,19 +239,46 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.name == "KillPlane")
-        {
-            transform.position = new Vector3(0, 1.33f, 0);
-            //Respawn();
+    private void OnCollisionEnter(Collision collision) {
+        if (collision.gameObject.tag == "HurtTag1" && !isHurt) {
+            Debug.Log("Collided with HurtTag1");
+            currentHealth -= 1;
+            StartCoroutine(HurtCooldown());
+            if (currentHealth <= 0) {
+            Respawn();
+            } else {
+                Debug.Log("currentHealth: " + currentHealth);
+                Rb.AddForce(Vector3.up * jumpVelocity * 1.2f, ForceMode.Impulse);
+            }
         }
+        else if (collision.gameObject.name == "KillPlane")
+        {
+            Respawn();
+        }
+        else if(collision.gameObject.tag == "JumpTag"){
+            Debug.Log("Should be forced up");
+            coyoteTimeCounter = 0f;
 
+            //For now, trampoline forces you up with twice the force of the jump. When the carryable tag is entered, this should instead query the value the trampoline says
+            // Rb.AddForce(Vector3.up * jumpVelocity* collision.gameObject.getJumpMult(), ForceMode.Impulse);
+            Rb.AddForce(Vector3.up * jumpVelocity * 1.1f, ForceMode.Impulse);
+        }
     }
+
     private void OnCollisionExit(Collision collision)
     {
 
     }
+
+    private void ResetPlayerHealth() {
+        currentHealth = maxHealth;
+    }
+
+    private void Respawn() {
+        ResetPlayerHealth();
+        transform.position = originalPos;
+    }
+
 
     //private bool checkGround(){
 
@@ -273,6 +314,12 @@ public class PlayerController : MonoBehaviour
         isJumping = false;
     }
 
+    private IEnumerator HurtCooldown()
+    {
+        isHurt = true;
+        yield return new WaitForSeconds(0.4f);
+        isHurt = false;
+    }
 
 
 
