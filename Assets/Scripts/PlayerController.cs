@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
         var col = GetComponent<CapsuleCollider>();
         var direction = new Vector3 {[col.direction] = 1};
         var offset = (col.height) / 2 - col.radius;
-        groundRadius = col.radius;
+        groundRadius = col.radius+0.1f;
         var localPoint0 = col.center - direction * offset;
         groundCheck.position = transform.TransformPoint(localPoint0);
 
