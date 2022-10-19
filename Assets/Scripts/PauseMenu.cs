@@ -24,7 +24,7 @@ public class PauseMenu : MonoBehaviour
 
     private bool pauseRequest;
 
-    void Start(){
+    void Awake(){
         playerActionsScript = new PlayerActionsScript();
         playerActionsScript.Player.Enable();
         playerActionsScript.Player.Menu.performed += TriggerPause;

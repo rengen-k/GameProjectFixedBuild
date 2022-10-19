@@ -9,6 +9,8 @@ public class LevelSelector : MonoBehaviour
 
     public int level;
     private GameObject levelText; 
+    [SerializeField] private PauseMenu pauseMenu;
+
     void Awake()
     {
         levelText = this.gameObject.transform.GetChild(0).gameObject;
@@ -17,7 +19,8 @@ public class LevelSelector : MonoBehaviour
     }
 
     public void OpenScene()
-    {
+    {   
+        pauseMenu.Resume();
         SceneManager.LoadScene("Level" + level.ToString());
     }
 }
