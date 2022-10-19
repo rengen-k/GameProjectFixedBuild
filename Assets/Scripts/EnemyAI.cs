@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+// code from https://www.youtube.com/watch?v=c8Nq19gkNfs
+
 public class EnemyAI : MonoBehaviour
 {
     NavMeshAgent agent;
