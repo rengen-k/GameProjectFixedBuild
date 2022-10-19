@@ -283,8 +283,9 @@ public class PlayerController : MonoBehaviour
 
     private bool checkGround(){
 
-        //Taken from https://roundwide.com/physics-overlap-capsule/
-        // Do I need to cite this.
+        // credit Kazuhiro Fujieda
+        // https://roundwide.com/physics-overlap-capsule/
+        
         var col = GetComponent<CapsuleCollider>();
         var direction = new Vector3 {[col.direction] = 1};
         var offset = (col.height+0.3f) / 2 - col.radius;
