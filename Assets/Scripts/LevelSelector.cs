@@ -21,6 +21,6 @@ public class LevelSelector : MonoBehaviour
     public void OpenScene()
     {   
         pauseMenu.Resume();
-        SceneManager.LoadScene("Level" + level.ToString());
+        SceneManager.LoadScene("Level " + level.ToString());
     }
 }
