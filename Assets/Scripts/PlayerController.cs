@@ -302,7 +302,7 @@ public class PlayerController : MonoBehaviour
 
         for (int i = 0; i < num; i++)
         {
-            if (inContact[i].gameObject.tag == "Ground"){
+            if (inContact[i].gameObject.layer == 7){
                 return true;
             } 
         }
