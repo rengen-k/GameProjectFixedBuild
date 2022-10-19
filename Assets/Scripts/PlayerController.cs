@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     private float coyoteTime = 0.25f;
     public float coyoteTimeCounter;
 
-    private float jumpBufferTime = 0.3f;
+    private float jumpBufferTime = 0.4f;
     public float jumpBufferCounter;
     private bool isJumping = false;
     private bool jumpRequest;
@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 rotation = new Vector3(0, 90f, 0);
 
     [SerializeField] private Transform groundCheck;
-    [SerializeField] private float groundRadius;
+    private float groundRadius;
     [SerializeField] private LayerMask whatIsGround;
     private bool isGrounded;
 
@@ -62,6 +62,13 @@ public class PlayerController : MonoBehaviour
     {
         Rb = GetComponent<Rigidbody>();
         movement = new Vector3(0.0f, 0.0f, 0.0f);
+
+        var col = GetComponent<CapsuleCollider>();
+        var direction = new Vector3 {[col.direction] = 1};
+        var offset = (col.height) / 2 - col.radius;
+        groundRadius = col.radius;
+        var localPoint0 = col.center - direction * offset;
+        groundCheck.position = transform.TransformPoint(localPoint0);
 
     }
 
@@ -114,7 +121,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (int)whatIsGround);
-
+        
         Vector2 inputVector = playerActionsScript.Player.Move.ReadValue<Vector2>();
 
         if (currentCam == 0)
@@ -281,32 +288,6 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    //private bool checkGround(){
-
-    //    //Taken from https://roundwide.com/physics-overlap-capsule/
-    //    // Do I need to cite this.
-    //    var col = GetComponent<CapsuleCollider>();
-    //    var direction = new Vector3 {[col.direction] = 1};
-    //    var offset = col.height / 2 - col.radius;
-    //    var localPoint0 = col.center - direction * offset;
-    //    var localPoint1 = col.center + direction * offset;
-    //    var point0 = transform.TransformPoint(localPoint0);
-    //    var point1 = transform.TransformPoint(localPoint1);
-    //    var r = transform.TransformVector(col.radius, col.radius, col.radius);
-    //    var radius = Enumerable.Range(0, 3).Select(xyz => xyz == col.direction ? 0 : r[xyz]).Select(Mathf.Abs).Max();
-
-    //    Collider[] inContact = new Collider[5];
-
-    //    var num = Physics.OverlapCapsuleNonAlloc(point0, point1, radius, inContact);
-
-    //    for (int i = 0; i < num; i++)
-    //    {
-    //        if (inContact[i].gameObject.tag == "Ground"){
-    //            return true;
-    //        } 
-    //    }
-    //    return false;
-    //}
 
     private IEnumerator JumpCooldown()
     {
