@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-        if (isGrounded)
+        if (checkGround())
         {
             coyoteTimeCounter = coyoteTime;
         }
@@ -114,7 +114,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (int)whatIsGround);
-
+        
         Vector2 inputVector = playerActionsScript.Player.Move.ReadValue<Vector2>();
 
         if (currentCam == 0)
@@ -281,32 +281,32 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    //private bool checkGround(){
+    private bool checkGround(){
 
-    //    //Taken from https://roundwide.com/physics-overlap-capsule/
-    //    // Do I need to cite this.
-    //    var col = GetComponent<CapsuleCollider>();
-    //    var direction = new Vector3 {[col.direction] = 1};
-    //    var offset = col.height / 2 - col.radius;
-    //    var localPoint0 = col.center - direction * offset;
-    //    var localPoint1 = col.center + direction * offset;
-    //    var point0 = transform.TransformPoint(localPoint0);
-    //    var point1 = transform.TransformPoint(localPoint1);
-    //    var r = transform.TransformVector(col.radius, col.radius, col.radius);
-    //    var radius = Enumerable.Range(0, 3).Select(xyz => xyz == col.direction ? 0 : r[xyz]).Select(Mathf.Abs).Max();
+        //Taken from https://roundwide.com/physics-overlap-capsule/
+        // Do I need to cite this.
+        var col = GetComponent<CapsuleCollider>();
+        var direction = new Vector3 {[col.direction] = 1};
+        var offset = (col.height+0.3f) / 2 - col.radius;
+        var localPoint0 = col.center - direction * offset;
+        var localPoint1 = col.center + direction * offset;
+        var point0 = transform.TransformPoint(localPoint0);
+        var point1 = transform.TransformPoint(localPoint1);
+        var r = transform.TransformVector(col.radius, col.radius, col.radius);
+        var radius = Enumerable.Range(0, 3).Select(xyz => xyz == col.direction ? 0 : r[xyz]).Select(Mathf.Abs).Max();
 
-    //    Collider[] inContact = new Collider[5];
+       Collider[] inContact = new Collider[5];
 
-    //    var num = Physics.OverlapCapsuleNonAlloc(point0, point1, radius, inContact);
+        var num = Physics.OverlapCapsuleNonAlloc(point0, point1, radius, inContact);
 
-    //    for (int i = 0; i < num; i++)
-    //    {
-    //        if (inContact[i].gameObject.tag == "Ground"){
-    //            return true;
-    //        } 
-    //    }
-    //    return false;
-    //}
+        for (int i = 0; i < num; i++)
+        {
+            if (inContact[i].gameObject.tag == "Ground"){
+                return true;
+            } 
+        }
+        return false;
+    }
 
     private IEnumerator JumpCooldown()
     {
