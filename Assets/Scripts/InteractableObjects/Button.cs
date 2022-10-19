@@ -33,7 +33,7 @@ public class Button : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trigger triggered!" + other.name);
+        //Debug.Log("Trigger triggered!" + other.name);
         foreach (Triggerable t in trigger)
         {
             t.triggerAct();

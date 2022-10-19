@@ -1,29 +1,30 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System;
+using UnityEngine.UI;
 public class CollectibleTracker : MonoBehaviour
 {
     // Start is called before the first frame update
 
     private static bool[] levelsCollected;
     public static CollectibleTracker instance;
+    //Needs panel inside LevelScreen from prefab, should be one with the grid of buttons.
     [SerializeField] private Transform levelPanel;
 
     void Awake()
     {
-        
+        //If an object from another scene like this exists, use that, otherwise, set up instance to be the object from another scene upon leaving scene.
         if (instance != null && instance != this){
-            Debug.Log("Collectible FOund!");
             Destroy(this.gameObject);
         }
         else{
             DontDestroyOnLoad(transform.gameObject);
             instance = this;
-            Debug.Log("NoCollectible FOund!");
             //Generating list, with every level represented by a bool in levelsCollected
-            GenerateLevelList();
+            levelsCollected = new bool[levelPanel.childCount];
+            
             
         }
         UpdateLevels();
@@ -37,26 +38,29 @@ public class CollectibleTracker : MonoBehaviour
 
     }
 
-    private void GenerateLevelList()
+    public void Collected()
     {
-        levelsCollected = new bool[levelPanel.childCount];
-        //TESTING
-        levelsCollected[6] = true;
+        //get scene number, take as index of level we should update in list.
+        int levelNum = Int32.Parse(SceneManager.GetActiveScene().name.Split(" ")[1]);
+        levelsCollected[levelNum] = true;
+        UpdateLevels();
     }
 
     // UpdateLevels gets called during object creation, and whenever a collectible is picked up, after the levelsCollected gets updated.
-    public void UpdateLevels()
+    private void UpdateLevels()
     {
-        for (int i = 0; i < levelsCollected.Length; i++){
-            if (levelsCollected[i])
+        int index = 0;
+        foreach (Transform btnObj in levelPanel)
+        {
+            if (levelsCollected[index])
             {
-                //bool says this level has collected the collectible. Now update correct buttn in panel
-                //i is the level number you got to update, levelNum is the active scenes number, dunno what to use it for
-                int levelNum = Int32.Parse(SceneManager.GetActiveScene().name.Split(" ")[1]);
-                Debug.Log("Got " + levelNum);
-
-
+                
+                btnObj.gameObject.GetComponent<Image>().color = Color.green;
             }
+            
+            index++;
         }
+
+
     }
 }

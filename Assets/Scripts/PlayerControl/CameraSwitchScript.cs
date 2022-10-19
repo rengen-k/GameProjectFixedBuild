@@ -39,18 +39,11 @@ public class CameraSwitchScript : MonoBehaviour
         string[] views = {"0Angle","270Angle","180Angle","90Angle"};
 
         //if (checkIfAngleLock(cameraPos, direction))
-
-        
-
         cameraPos = (cameraPos + direction) % 4;
         if (cameraPos < 0){
             cameraPos = 3;
         }
-
         animator.Play(views[cameraPos]);
-
-        Debug.Log(cameraPos);
-
         return cameraPos;
     }
 

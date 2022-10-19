@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
         var col = GetComponent<CapsuleCollider>();
         var direction = new Vector3 {[col.direction] = 1};
         var offset = (col.height) / 2 - col.radius;
-        groundRadius = col.radius;
+        groundRadius = col.radius+0.1f;
         var localPoint0 = col.center - direction * offset;
         groundCheck.position = transform.TransformPoint(localPoint0);
 
@@ -215,7 +215,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        Debug.Log("in jump");
+        //Debug.Log("in jump");
         jumpRequest = true;
         jumpBufferCounter = jumpBufferTime;
         if (context.canceled)
@@ -231,30 +231,30 @@ public class PlayerController : MonoBehaviour
     public void Look(InputAction.CallbackContext context)
     {
 
-        Debug.Log(context);
+        //Debug.Log(context);
         if (context.ReadValue<Vector2>().x <= -0.5f)
         {
             currentCam = camScript.SwitchState(-1);
-            Debug.Log("currentCam: " + currentCam);
+            //Debug.Log("currentCam: " + currentCam);
             //transform.Rotate(rotation);
         }
         else if (context.ReadValue<Vector2>().x >= 0.5f)
         {
             currentCam = camScript.SwitchState(1);
-            Debug.Log("currentCam: " + currentCam);
+            //Debug.Log("currentCam: " + currentCam);
             //transform.Rotate(-rotation);
         }
     }
 
     private void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.tag == "HurtTag1" && !isHurt) {
-            Debug.Log("Collided with HurtTag1");
+            //Debug.Log("Collided with HurtTag1");
             currentHealth -= 1;
             StartCoroutine(HurtCooldown());
             if (currentHealth <= 0) {
             Respawn();
             } else {
-                Debug.Log("currentHealth: " + currentHealth);
+                //Debug.Log("currentHealth: " + currentHealth);
                 Rb.AddForce(Vector3.up * 10f, ForceMode.Impulse);
             }
         }
@@ -263,7 +263,7 @@ public class PlayerController : MonoBehaviour
             Respawn();
         }
         else if(collision.gameObject.tag == "JumpTag"){
-            Debug.Log("Should be forced up");
+            //Debug.Log("Should be forced up");
             coyoteTimeCounter = 0f;
 
             //For now, trampoline forces you up with twice the force of the jump. When the carryable tag is entered, this should instead query the value the trampoline says
