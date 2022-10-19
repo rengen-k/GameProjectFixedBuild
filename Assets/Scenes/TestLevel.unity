@@ -164,7 +164,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 233925854}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 2491a05cd12ac4846a81e74cc44e837a, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -437,15 +437,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2543732141891017031, guid: 95bb11b3209c6b44fa995296a8aacfdf, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.000000021085649
+      value: 0.000000015108188
       objectReference: {fileID: 0}
     - target: {fileID: 2543732141891017031, guid: 95bb11b3209c6b44fa995296a8aacfdf, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.0000000034217298
+      value: 0.0000000024517213
       objectReference: {fileID: 0}
     - target: {fileID: 2543732141891017031, guid: 95bb11b3209c6b44fa995296a8aacfdf, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.16018225
+      value: -0.16018224
       objectReference: {fileID: 0}
     - target: {fileID: 2543732142012049204, guid: 95bb11b3209c6b44fa995296a8aacfdf, type: 3}
       propertyPath: m_Follow
@@ -473,7 +473,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2543732142012049207, guid: 95bb11b3209c6b44fa995296a8aacfdf, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.11326594
+      value: 0.11326595
       objectReference: {fileID: 0}
     - target: {fileID: 2543732142012049207, guid: 95bb11b3209c6b44fa995296a8aacfdf, type: 3}
       propertyPath: m_LocalRotation.y
@@ -481,7 +481,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2543732142012049207, guid: 95bb11b3209c6b44fa995296a8aacfdf, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.11326594
+      value: 0.113265954
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -1756,21 +1756,9 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 9173282484261340008, guid: 4aa76f037130cb144a0ae881838a4226, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 9173282484391698527, guid: 4aa76f037130cb144a0ae881838a4226, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 9173282484750590618, guid: 4aa76f037130cb144a0ae881838a4226, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 9173282484774162201, guid: 4aa76f037130cb144a0ae881838a4226, type: 3}
-      propertyPath: m_TagString
-      value: Player
+    - target: {fileID: 1303182125, guid: 4aa76f037130cb144a0ae881838a4226, type: 3}
+      propertyPath: m_Height
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9173282484774162206, guid: 4aa76f037130cb144a0ae881838a4226, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1784,10 +1772,6 @@ PrefabInstance:
       propertyPath: camScript
       value: 
       objectReference: {fileID: 1274398828}
-    - target: {fileID: 9173282485034384676, guid: 4aa76f037130cb144a0ae881838a4226, type: 3}
-      propertyPath: acceleration
-      value: 17
-      objectReference: {fileID: 0}
     - target: {fileID: 9173282485034384676, guid: 4aa76f037130cb144a0ae881838a4226, type: 3}
       propertyPath: jumpVelocity
       value: 11

@@ -142,7 +142,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 9173282484391698527}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
@@ -156,7 +156,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 9173282484391698527}
   m_Material: {fileID: 13400000, guid: 2491a05cd12ac4846a81e74cc44e837a, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.52
   m_Height: 1.93
   m_Direction: 1
@@ -220,7 +220,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9173282484774162201}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.7, z: -0.5}
+  m_LocalPosition: {x: 0, y: 0.7, z: -0.33}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -315,6 +315,7 @@ GameObject:
   - component: {fileID: 9173282485034384682}
   - component: {fileID: 9173282485034384677}
   - component: {fileID: 9173282485034384676}
+  - component: {fileID: 1303182125}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -463,8 +464,8 @@ MonoBehaviour:
   jumpBufferCounter: 0
   lastGrounded: 0
   jumpCutMultiplier: 0.5
-  speed: 15
-  jumpVelocity: 12
+  speed: 12
+  jumpVelocity: 11
   fallMultiplier: 2
   groundCheck: {fileID: 9173282484750590619}
   groundRadius: 0.1
@@ -474,3 +475,17 @@ MonoBehaviour:
   acceleration: 17
   deceleration: 35
   velPower: 1.5
+--- !u!136 &1303182125
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9173282485034384679}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
