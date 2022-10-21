@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 movement;
 
-    private float coyoteTime = 0.25f;
+    private float coyoteTime = 0.05f;
     public float coyoteTimeCounter;
 
     private float jumpBufferTime = 0.4f;
@@ -55,9 +56,8 @@ public class PlayerController : MonoBehaviour
 
     private Transform model;
 
-    private Vector3 originalPos;
+    // private Vector3 originalPos;
 
-    // Start is called before the first frame update
     void Awake()
     {
         Rb = GetComponent<Rigidbody>();
@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-        originalPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.3f, gameObject.transform.position.z);
+        // originalPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.3f, gameObject.transform.position.z);
 
         playerInput = GetComponent<PlayerInput>();
         model = transform.Find("Model");
@@ -255,7 +255,7 @@ public class PlayerController : MonoBehaviour
             Respawn();
             } else {
                 Debug.Log("currentHealth: " + currentHealth);
-                Rb.AddForce(Vector3.up * 10f, ForceMode.Impulse);
+                Rb.AddForce(Vector3.up * 12f, ForceMode.Impulse);
             }
         }
         else if (collision.gameObject.name == "KillPlane")
@@ -269,7 +269,7 @@ public class PlayerController : MonoBehaviour
             //For now, trampoline forces you up with twice the force of the jump. When the carryable tag is entered, this should instead query the value the trampoline says
             // Rb.AddForce(Vector3.up * jumpVelocity * collision.gameObject.getJumpMult(), ForceMode.Impulse);
             // No need to have jumpVelocity in calculation.
-            Rb.AddForce(Vector3.up * 6f, ForceMode.Impulse);
+            Rb.AddForce(Vector3.up * 14f, ForceMode.Impulse);
         }
     }
 
@@ -284,7 +284,10 @@ public class PlayerController : MonoBehaviour
 
     private void Respawn() {
         ResetPlayerHealth();
-        transform.position = originalPos;
+        // respawn from originalPos
+        // transform.position = originalPos;
+        // respawn by reloading the level to reset the placement of other objects
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
 
