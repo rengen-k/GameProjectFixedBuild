@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     // Damage
 
     private bool isHurt = false;
+    private bool isJumpTrampoline = false;
 
     //Movement
 
@@ -40,7 +41,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpCutMultiplier;
 
     [SerializeField] private float speed;
-    [SerializeField] private float jumpVelocity;
+    [SerializeField] private float jumpMultiplier;
     [SerializeField] private float fallMultiplier = 2f;
 
     private Vector3 rotation = new Vector3(0, 90f, 0);
@@ -198,13 +199,14 @@ public class PlayerController : MonoBehaviour
                 jumpRequest = false;
 
                 Rb.velocity = new Vector3(Rb.velocity.x, 0f, Rb.velocity.z);
-                Rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
+                Rb.AddForce(Vector3.up * jumpMultiplier, ForceMode.Impulse);
                 StartCoroutine(JumpCooldown());
 
             }
 
         }
 
+        // Player will fall faster to the ground
         if (Rb.velocity.y < 0)
         {
             Rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
@@ -262,14 +264,15 @@ public class PlayerController : MonoBehaviour
         {
             Respawn();
         }
-        else if(collision.gameObject.tag == "JumpTag"){
+        else if(collision.gameObject.tag == "JumpTag" && !isJumpTrampoline){
             //Debug.Log("Should be forced up");
             coyoteTimeCounter = 0f;
-
+            StartCoroutine(TrampolineCooldown());
             //For now, trampoline forces you up with twice the force of the jump. When the carryable tag is entered, this should instead query the value the trampoline says
             // Rb.AddForce(Vector3.up * jumpVelocity * collision.gameObject.getJumpMult(), ForceMode.Impulse);
             // No need to have jumpVelocity in calculation.
-            Rb.AddForce(Vector3.up * 14f, ForceMode.Impulse);
+            Rb.velocity = Vector3.zero;
+            Rb.AddForce(Vector3.up * 19f, ForceMode.Impulse);
         }
     }
 
@@ -304,6 +307,13 @@ public class PlayerController : MonoBehaviour
         isHurt = true;
         yield return new WaitForSeconds(0.4f);
         isHurt = false;
+    }
+
+    private IEnumerator TrampolineCooldown()
+    {
+        isJumpTrampoline = true;
+        yield return new WaitForSeconds(0.4f);
+        isJumpTrampoline = false;
     }
 
 
