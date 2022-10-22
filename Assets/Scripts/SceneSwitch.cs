@@ -12,6 +12,8 @@ public class SceneSwitch : MonoBehaviour
     private void OnTriggerEnter(Collider collision) {
         GameObject collisionGameObject = collision.gameObject;
         if (collisionGameObject.tag == "Player") {
+            var tracker = GameObject.Find("CollectibleTracker");
+            tracker.GetComponent<CollectibleTracker>().EndLevel();
             LoadScene();
         }
     }

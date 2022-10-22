@@ -236,13 +236,13 @@ public class PlayerController : MonoBehaviour
         {
             currentCam = camScript.SwitchState(-1);
             //Debug.Log("currentCam: " + currentCam);
-            //transform.Rotate(rotation);
+            model.transform.Rotate(rotation);
         }
         else if (context.ReadValue<Vector2>().x >= 0.5f)
         {
             currentCam = camScript.SwitchState(1);
             //Debug.Log("currentCam: " + currentCam);
-            //transform.Rotate(-rotation);
+            model.transform.Rotate(-rotation);
         }
     }
 

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class collectible : MonoBehaviour
 {
+    private bool onceTouch = true;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -16,9 +18,13 @@ public class collectible : MonoBehaviour
         
     }
     private void OnTriggerEnter(Collider other)
-    {
-        var tracker = GameObject.Find("CollectibleTracker");
-        tracker.GetComponent<CollectibleTracker>().Collected();
-        Destroy(gameObject);
+    {   
+        if (other.gameObject.tag == "Player" && onceTouch){
+            onceTouch = false;
+            Debug.Log("Fetcged!");
+            var tracker = GameObject.Find("CollectibleTracker");
+            tracker.GetComponent<CollectibleTracker>().Collected();
+            Destroy(gameObject);
+        }
     }
 }

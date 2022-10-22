@@ -33,6 +33,12 @@ public class PauseMenu : MonoBehaviour
         helpPosOff = helpPanel.transform.TransformPoint(new Vector2(0f, 0f));
         levelsPosOn = levelPanel.transform.TransformPoint(new Vector2(0f, -550f));
         levelsPosOff = levelPanel.transform.TransformPoint(new Vector2(0f, 0f));
+
+        
+    }
+
+    void Start(){
+        PauseMenuUI.SetActive(false);
     }
 
     private void OnDisable() {
