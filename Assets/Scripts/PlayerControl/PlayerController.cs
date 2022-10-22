@@ -55,7 +55,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float deceleration;
     [SerializeField] private float velPower;
 
+    
     private Transform model;
+
+    // Respawn variables
+    private Vector3 lastGroundedPosition;
+    private bool updateRespawnPosition = true;
 
     // private Vector3 originalPos;
 
@@ -75,6 +80,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        lastGroundedPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.3f, gameObject.transform.position.z);
         currentHealth = maxHealth;
         // originalPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.3f, gameObject.transform.position.z);
 
@@ -117,6 +123,12 @@ public class PlayerController : MonoBehaviour
         jumpBufferCounter -= Time.deltaTime;
         lastGrounded -= Time.deltaTime;
 
+        if (isGrounded && updateRespawnPosition && coyoteTimeCounter == 0.04f) {
+            Debug.Log("respawn pos updated");
+            lastGroundedPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.3f, gameObject.transform.position.z);
+            StartCoroutine(RespawnPositionCooldown());
+        }
+        
     }
 
     private void FixedUpdate()
@@ -213,6 +225,8 @@ public class PlayerController : MonoBehaviour
         }
         Rb.AddForce(Physics.gravity * 1.2f, ForceMode.Acceleration);
 
+        
+
     }
 
     public void Jump(InputAction.CallbackContext context)
@@ -289,8 +303,9 @@ public class PlayerController : MonoBehaviour
         ResetPlayerHealth();
         // respawn from originalPos
         // transform.position = originalPos;
+        transform.position = lastGroundedPosition;
         // respawn by reloading the level to reset the placement of other objects
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
 
@@ -314,6 +329,13 @@ public class PlayerController : MonoBehaviour
         isJumpTrampoline = true;
         yield return new WaitForSeconds(0.4f);
         isJumpTrampoline = false;
+    }
+
+    private IEnumerator RespawnPositionCooldown()
+    {
+        updateRespawnPosition = false;
+        yield return new WaitForSeconds(2.2f);
+        updateRespawnPosition = true;
     }
 
 
