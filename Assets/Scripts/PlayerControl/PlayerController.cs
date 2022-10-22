@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 movement;
 
-    private float coyoteTime = 0.05f;
+    private float coyoteTime = 0.04f;
     public float coyoteTimeCounter;
 
     private float jumpBufferTime = 0.4f;
