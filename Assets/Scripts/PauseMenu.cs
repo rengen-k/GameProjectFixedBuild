@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+
 
 public class PauseMenu : MonoBehaviour
 {
@@ -107,6 +109,14 @@ public class PauseMenu : MonoBehaviour
         PauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GamePaused = false;
+    }
+
+    public void ResetLevel()
+    {
+        PauseMenuUI.SetActive(false);
+        Time.timeScale = 1f;
+        GamePaused = false;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     void Pause()
