@@ -14,7 +14,6 @@ public class PickupItem : MonoBehaviour
     public bool itemPickedUp;
     public static bool ableToPickup;
     private Rigidbody rb;
-    public float fallMultiplier;
     private bool reset;
 
     void Start()
@@ -45,7 +44,8 @@ public class PickupItem : MonoBehaviour
         // for some reason it needs to be in both Update and FixedUpdate for it not to slow the player down or jiggle around
         if (itemPickedUp)
         {
-            transform.position = pickupPoint.position;
+            //transform.position = pickupPoint.position;
+            transform.position = pickupPoint.position + (transform.localScale.x * -GameObject.Find("Model").transform.forward);
         }
     }
 
@@ -53,7 +53,8 @@ public class PickupItem : MonoBehaviour
     {
         if (itemPickedUp)
         {
-            transform.position = pickupPoint.position;
+            //transform.position = pickupPoint.position;
+            transform.position = pickupPoint.position + (transform.localScale.x * -GameObject.Find("Model").transform.forward);
         }
 
         velocity = GameObject.Find("Player").GetComponent<Rigidbody>().velocity;
@@ -63,6 +64,7 @@ public class PickupItem : MonoBehaviour
 
     public void Interact (InputAction.CallbackContext context)
     {
+        Debug.Log("clicked interact");
         // this is so you can't pick up and drop the item on the same keystroke
         reset = true;
 
@@ -83,7 +85,7 @@ public class PickupItem : MonoBehaviour
             Debug.Log("picked up");
             rb.isKinematic = true;
             transform.parent = GameObject.Find("pickupPoint").transform;
-            transform.position = pickupPoint.position;
+            transform.position = pickupPoint.position + (transform.localScale.x * -GameObject.Find("Model").transform.forward);
             ableToPickup = false;
             itemPickedUp = true;
         }
