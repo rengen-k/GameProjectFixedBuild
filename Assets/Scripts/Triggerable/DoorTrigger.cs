@@ -17,6 +17,7 @@ public class DoorTrigger : Triggerable
     }
  
     public override void triggerAct(){
+        Debug.Log("Puzzle activated");
         transform.position = new Vector3(transform.position.x, transform.position.y - 10f, transform.position.z);
 
     }

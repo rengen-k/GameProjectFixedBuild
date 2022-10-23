@@ -7,7 +7,7 @@ public class MovableObject : MonoBehaviour
     private Transform previousParent = null;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.parent.name != "Player" && other.transform.parent != null && other.gameObject.tag != "Ground" && this.transform.parent.tag == "MovingPlatform") {
+        if (other.transform.parent != null && other.gameObject.tag != "Ground" && this.transform.parent.tag == "MovingPlatform") {
             other.transform.SetParent(transform);
             previousParent = other.transform.parent;
         }

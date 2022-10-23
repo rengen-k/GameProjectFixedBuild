@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
     // Respawn variables
     private Vector3 lastGroundedPosition;
     private bool updateRespawnPosition = true;
+    private bool isTouchingGround = false;
 
     // private Vector3 originalPos;
 
@@ -123,8 +124,8 @@ public class PlayerController : MonoBehaviour
         jumpBufferCounter -= Time.deltaTime;
         lastGrounded -= Time.deltaTime;
 
-        if (isGrounded && updateRespawnPosition && coyoteTimeCounter == 0.04f) {
-            //Debug.Log("respawn pos updated");
+        if (isGrounded && updateRespawnPosition && isTouchingGround) {
+            Debug.Log("respawn pos updated");
             lastGroundedPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.3f, gameObject.transform.position.z);
             StartCoroutine(RespawnPositionCooldown());
         }
@@ -263,6 +264,10 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision) {
+        if (collision.gameObject.tag == "Ground") {
+            isTouchingGround = true;
+        }
+
         if (collision.gameObject.tag == "HurtTag1" && !isHurt) {
             //Debug.Log("Collided with HurtTag1");
             currentHealth -= 1;
@@ -292,7 +297,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-
+        if (collision.gameObject.tag == "Ground") {
+            isTouchingGround = false;
+        }
     }
 
     private void ResetPlayerHealth() {
@@ -334,7 +341,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator RespawnPositionCooldown()
     {
         updateRespawnPosition = false;
-        yield return new WaitForSeconds(2.2f);
+        yield return new WaitForSeconds(1f);
         updateRespawnPosition = true;
     }
 
