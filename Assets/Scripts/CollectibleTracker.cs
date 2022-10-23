@@ -55,9 +55,8 @@ public class CollectibleTracker : MonoBehaviour
 
     public void Collected()
     {
-        //get scene number, take as index of level we should update in list.
+
         thisLevelCollectibles--;
-        Debug.Log("Now " + thisLevelCollectibles);
         
     }
 

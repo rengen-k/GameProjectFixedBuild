@@ -28,8 +28,9 @@ public class PauseMenu : MonoBehaviour
         playerActionsScript = new PlayerActionsScript();
         playerActionsScript.Player.Enable();
         playerActionsScript.Player.Menu.performed += TriggerPause;
+        
         //Code meant to make the panals slide in from off screen, todo, figure out how to translate points 
-        helpPosOn = helpPanel.transform.TransformPoint(new Vector2(0f, 1950f)); //-2900 -950
+        helpPosOn = helpPanel.transform.TransformPoint(new Vector2(0f, 1950f)); //Off: local y = -2900  On, local y = -950
         helpPosOff = helpPanel.transform.TransformPoint(new Vector2(0f, 0f));
         levelsPosOn = levelPanel.transform.TransformPoint(new Vector2(0f, -2000f));
         levelsPosOff = levelPanel.transform.TransformPoint(new Vector2(0f, 0f));

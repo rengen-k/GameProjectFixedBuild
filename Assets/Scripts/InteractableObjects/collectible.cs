@@ -21,7 +21,6 @@ public class collectible : MonoBehaviour
     {   
         if (other.gameObject.tag == "Player" && onceTouch){
             onceTouch = false;
-            Debug.Log("Fetcged!");
             var tracker = GameObject.Find("CollectibleTracker");
             tracker.GetComponent<CollectibleTracker>().Collected();
             Destroy(gameObject);
