@@ -279,7 +279,7 @@ public class PlayerController : MonoBehaviour
             Respawn();
         }
         else if(collision.gameObject.tag == "JumpTag" && !isJumpTrampoline){
-            //Debug.Log("Should be forced up");
+            Debug.Log("Should be forced up");
             coyoteTimeCounter = 0f;
             StartCoroutine(TrampolineCooldown());
             //For now, trampoline forces you up with twice the force of the jump. When the carryable tag is entered, this should instead query the value the trampoline says
