@@ -39,4 +39,12 @@ public class Button : MonoBehaviour
             t.triggerAct();
         }
     }
+
+    private void OnTriggerExit(Collider other){
+        Debug.Log("Trigger left!");
+        foreach (Triggerable t in trigger)
+        {
+            t.triggerUnAct();
+        }
+    }
 }

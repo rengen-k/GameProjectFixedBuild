@@ -19,6 +19,10 @@ public class Triggerable : MonoBehaviour
     public virtual void triggerAct(){
 
     }
+
+    public virtual void triggerUnAct(){
+
+    }
 }
 
 
