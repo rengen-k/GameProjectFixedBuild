@@ -28,10 +28,10 @@ public class PauseMenu : MonoBehaviour
         playerActionsScript = new PlayerActionsScript();
         playerActionsScript.Player.Enable();
         playerActionsScript.Player.Menu.performed += TriggerPause;
-
-        helpPosOn = helpPanel.transform.TransformPoint(new Vector2(0f, 550f));
+        //Code meant to make the panals slide in from off screen, todo, figure out how to translate points 
+        helpPosOn = helpPanel.transform.TransformPoint(new Vector2(0f, 1950f)); //-2900 -950
         helpPosOff = helpPanel.transform.TransformPoint(new Vector2(0f, 0f));
-        levelsPosOn = levelPanel.transform.TransformPoint(new Vector2(0f, -550f));
+        levelsPosOn = levelPanel.transform.TransformPoint(new Vector2(0f, -2000f));
         levelsPosOff = levelPanel.transform.TransformPoint(new Vector2(0f, 0f));
 
         
@@ -39,6 +39,8 @@ public class PauseMenu : MonoBehaviour
 
     void Start(){
         PauseMenuUI.SetActive(false);
+        Time.timeScale = 1f;
+        GamePaused = false;
     }
 
     private void OnDisable() {
@@ -61,7 +63,7 @@ public class PauseMenu : MonoBehaviour
 
         Vector2 vel = Vector2.zero;
         
-        
+        /*
         if (helpToggle){
             helpPanel.transform.position = Vector2.Lerp(helpPanel.transform.position, helpPosOn, Time.fixedDeltaTime);
         }
@@ -74,6 +76,21 @@ public class PauseMenu : MonoBehaviour
         }
         else{
             levelPanel.transform.position = Vector2.Lerp(levelPanel.transform.position, levelsPosOff, Time.fixedDeltaTime);
+        }
+        */
+
+        if (helpToggle){
+            helpPanel.SetActive(true);
+        }
+        else{
+            helpPanel.SetActive(false);
+        }
+
+        if (levelsToggle){
+            levelPanel.SetActive(true);
+        }
+        else{
+            levelPanel.SetActive(false);
         }
         
 
@@ -104,6 +121,7 @@ public class PauseMenu : MonoBehaviour
     {
         helpToggle = false;
         levelsToggle = !levelsToggle;
+
     }
 
     public void Help()
