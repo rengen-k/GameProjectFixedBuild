@@ -10,11 +10,13 @@ public class PickupItem : MonoBehaviour
     private Transform player;
     private Vector3 velocity;
     public float pickupDist;
-    public float forceMult;
+    public float throwForce;
     public bool itemPickedUp;
     public static bool ableToPickup;
     private Rigidbody rb;
     private bool reset;
+    public GameObject bombPrefab;
+    public bool hasBeenThrown = false;
 
     void Start()
     {
@@ -44,7 +46,6 @@ public class PickupItem : MonoBehaviour
         // for some reason it needs to be in both Update and FixedUpdate for it not to slow the player down or jiggle around
         if (itemPickedUp)
         {
-            //transform.position = pickupPoint.position;
             transform.position = pickupPoint.position + (transform.localScale.x * -GameObject.Find("Model").transform.forward);
         }
     }
@@ -53,7 +54,6 @@ public class PickupItem : MonoBehaviour
     {
         if (itemPickedUp)
         {
-            //transform.position = pickupPoint.position;
             transform.position = pickupPoint.position + (transform.localScale.x * -GameObject.Find("Model").transform.forward);
         }
 
@@ -64,7 +64,6 @@ public class PickupItem : MonoBehaviour
 
     public void Interact (InputAction.CallbackContext context)
     {
-        Debug.Log("clicked interact");
         // this is so you can't pick up and drop the item on the same keystroke
         reset = true;
 
@@ -97,10 +96,11 @@ public class PickupItem : MonoBehaviour
         if (itemPickedUp)
         {
             rb.isKinematic = false;
-            rb.AddForce(-GameObject.Find("Model").transform.forward * forceMult + velocity, ForceMode.Impulse);
+            rb.AddForce(-GameObject.Find("Model").transform.forward * throwForce + velocity, ForceMode.Impulse);
             this.transform.parent = null;
             ableToPickup = true;
             itemPickedUp = false;
+            hasBeenThrown = true;
         }
     }
 }
