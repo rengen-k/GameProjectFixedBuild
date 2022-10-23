@@ -38,11 +38,11 @@ public class PlayerController : MonoBehaviour
     private bool isJumping = false;
     private bool jumpRequest;
     [SerializeField] private float lastGrounded;
-    [SerializeField] private float jumpCutMultiplier;
+    [SerializeField] private float jumpCutMultiplier = 0.5f;
 
-    [SerializeField] private float speed;
-    [SerializeField] private float jumpMultiplier;
-    [SerializeField] private float fallMultiplier = 2f;
+    private float speed = 12;
+    private float jumpMultiplier = 10.5f;
+    private float fallMultiplier = 2f;
 
     private Vector3 rotation = new Vector3(0, 90f, 0);
 
@@ -51,9 +51,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask whatIsGround;
     private bool isGrounded;
 
-    [SerializeField] private float acceleration;
-    [SerializeField] private float deceleration;
-    [SerializeField] private float velPower;
+    private float acceleration = 17;
+    private float deceleration = 35;
+    private float velPower = 1.5f;
 
     
     private Transform model;
@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
         lastGrounded -= Time.deltaTime;
 
         if (isGrounded && updateRespawnPosition && coyoteTimeCounter == 0.04f) {
-            Debug.Log("respawn pos updated");
+            //Debug.Log("respawn pos updated");
             lastGroundedPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.3f, gameObject.transform.position.z);
             StartCoroutine(RespawnPositionCooldown());
         }
