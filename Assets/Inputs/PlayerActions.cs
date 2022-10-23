@@ -47,21 +47,21 @@ public partial class @PlayerActionsScript : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Fire"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""eceb69ca-907a-4361-bbc2-668d9f7765bb"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Jump"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""cf23e22b-2941-4f4f-ad89-4be6f94e6e82"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Menu"",
@@ -71,6 +71,15 @@ public partial class @PlayerActionsScript : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Value"",
+                    ""id"": ""614a398c-f673-4ed9-903d-a21c23f22105"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -296,6 +305,17 @@ public partial class @PlayerActionsScript : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""6d2fe5b1-9d23-4a9c-9bf3-7379c880674f"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""1703aca1-6c04-4787-b026-140acc04c447"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
@@ -335,6 +355,28 @@ public partial class @PlayerActionsScript : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""45ec6d1c-fe3f-4ad7-909f-6f4f91b46b8e"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b97d1c6c-2a8c-45af-b1fe-1a016e37c0e4"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -927,6 +969,7 @@ public partial class @PlayerActionsScript : IInputActionCollection2, IDisposable
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Menu = m_Player.FindAction("Menu", throwIfNotFound: true);
+        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1003,6 +1046,7 @@ public partial class @PlayerActionsScript : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Menu;
+    private readonly InputAction m_Player_Interact;
     public struct PlayerActions
     {
         private @PlayerActionsScript m_Wrapper;
@@ -1012,6 +1056,7 @@ public partial class @PlayerActionsScript : IInputActionCollection2, IDisposable
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Menu => m_Wrapper.m_Player_Menu;
+        public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1036,6 +1081,9 @@ public partial class @PlayerActionsScript : IInputActionCollection2, IDisposable
                 @Menu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
                 @Menu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
                 @Menu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
+                @Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1055,6 +1103,9 @@ public partial class @PlayerActionsScript : IInputActionCollection2, IDisposable
                 @Menu.started += instance.OnMenu;
                 @Menu.performed += instance.OnMenu;
                 @Menu.canceled += instance.OnMenu;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
         }
     }
@@ -1216,6 +1267,7 @@ public partial class @PlayerActionsScript : IInputActionCollection2, IDisposable
         void OnFire(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnMenu(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

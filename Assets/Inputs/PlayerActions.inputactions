@@ -25,21 +25,21 @@
                 },
                 {
                     "name": "Fire",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "eceb69ca-907a-4361-bbc2-668d9f7765bb",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Jump",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "cf23e22b-2941-4f4f-ad89-4be6f94e6e82",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Menu",
@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Interact",
+                    "type": "Value",
+                    "id": "614a398c-f673-4ed9-903d-a21c23f22105",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -274,6 +283,17 @@
                 },
                 {
                     "name": "",
+                    "id": "6d2fe5b1-9d23-4a9c-9bf3-7379c880674f",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "1703aca1-6c04-4787-b026-140acc04c447",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -313,6 +333,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "45ec6d1c-fe3f-4ad7-909f-6f4f91b46b8e",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b97d1c6c-2a8c-45af-b1fe-1a016e37c0e4",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
