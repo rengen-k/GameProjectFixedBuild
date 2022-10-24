@@ -1656,6 +1656,7 @@ GameObject:
   - component: {fileID: 1590397667}
   - component: {fileID: 1590397666}
   - component: {fileID: 1590397665}
+  - component: {fileID: 1590397669}
   m_Layer: 0
   m_Name: wall (1)
   m_TagString: Untagged
@@ -1741,6 +1742,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1590397669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590397664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1643461b90433842b94de05429bdb82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeType: 0
+  customFade: 0
+  fadeTo: 0
+  otherObjects: []
+  checkParentObject: 0
+  faded: 0
 --- !u!1 &1591029837
 GameObject:
   m_ObjectHideFlags: 0
@@ -1785,6 +1804,7 @@ GameObject:
   - component: {fileID: 1641570102}
   - component: {fileID: 1641570101}
   - component: {fileID: 1641570105}
+  - component: {fileID: 1641570106}
   m_Layer: 0
   m_Name: returning wall
   m_TagString: Untagged
@@ -1882,6 +1902,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2a6784de4210904c804e3980e53582c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1641570106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641570099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1643461b90433842b94de05429bdb82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeType: 0
+  customFade: 0
+  fadeTo: 0
+  otherObjects: []
+  checkParentObject: 0
+  faded: 0
 --- !u!1 &1715895040
 GameObject:
   m_ObjectHideFlags: 0
@@ -2083,6 +2121,7 @@ GameObject:
   - component: {fileID: 1876685909}
   - component: {fileID: 1876685908}
   - component: {fileID: 1876685907}
+  - component: {fileID: 1876685912}
   m_Layer: 0
   m_Name: wall
   m_TagString: Ground
@@ -2180,6 +2219,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1876685912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876685906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1643461b90433842b94de05429bdb82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeType: 0
+  customFade: 0
+  fadeTo: 0
+  otherObjects: []
+  checkParentObject: 0
+  faded: 0
 --- !u!1 &1922105008 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2585608335804220013, guid: cdb344f9eb21fe94e931e7fcbd4c376e, type: 3}
@@ -2235,8 +2292,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupDist: 0
-  forceMult: 0
+  throwForce: 0
   itemPickedUp: 0
+  bombPrefab: {fileID: 0}
+  hasBeenThrown: 0
 --- !u!65 &2000293532
 BoxCollider:
   m_ObjectHideFlags: 0
