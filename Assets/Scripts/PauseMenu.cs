@@ -25,6 +25,7 @@ public class PauseMenu : MonoBehaviour
     private Vector2 levelsPosOff;
 
     private bool pauseRequest;
+    private bool firstTime;
 
     void Awake(){
         playerActionsScript = new PlayerActionsScript();
@@ -41,9 +42,8 @@ public class PauseMenu : MonoBehaviour
     }
 
     void Start(){
-        PauseMenuUI.SetActive(false);
-        Time.timeScale = 1f;
-        GamePaused = false;
+        
+        firstTime = true;
     }
 
     private void OnDisable() {
@@ -52,6 +52,14 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
+        if (firstTime)
+        {
+            firstTime = false;
+            PauseMenuUI.SetActive(false);
+            Time.timeScale = 1f;
+            GamePaused = false;
+        }
+
         if (pauseRequest) {
             //Debug.Log("Trigger Pause menu");
             pauseRequest = false;
