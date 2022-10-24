@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
     private float groundRadius;
     [SerializeField] private LayerMask whatIsGround;
     private bool isGrounded;
+    private bool isStableGrounded;
 
     private float acceleration = 17;
     private float deceleration = 35;
@@ -72,8 +73,8 @@ public class PlayerController : MonoBehaviour
         var col = GetComponent<CapsuleCollider>();
         var direction = new Vector3 {[col.direction] = 1};
         var offset = (col.height) / 2 - col.radius;
-        groundRadius = col.radius+0.1f;
-        var localPoint0 = col.center - direction * offset;
+        groundRadius = col.radius;
+        var localPoint0 = col.center - direction * (offset+0.1f);
         groundCheck.position = transform.TransformPoint(localPoint0);
 
     }
@@ -123,7 +124,7 @@ public class PlayerController : MonoBehaviour
         jumpBufferCounter -= Time.deltaTime;
         lastGrounded -= Time.deltaTime;
 
-        if (isGrounded && updateRespawnPosition && coyoteTimeCounter == 0.04f) {
+        if (isStableGrounded && updateRespawnPosition && coyoteTimeCounter == 0.04f) {
             //Debug.Log("respawn pos updated");
             lastGroundedPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.3f, gameObject.transform.position.z);
             StartCoroutine(RespawnPositionCooldown());
@@ -133,7 +134,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (int)whatIsGround);
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (int)whatIsGround) || Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
+        isStableGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
         
         Vector2 inputVector = playerActionsScript.Player.Move.ReadValue<Vector2>();
 
