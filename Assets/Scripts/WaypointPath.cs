@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Source: https://www.youtube.com/watch?v=ly9mK0TGJJo
+
 public class WaypointPath : MonoBehaviour
 {
     public Transform GetWaypoint(int waypointIndex)
