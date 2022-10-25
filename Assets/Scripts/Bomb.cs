@@ -8,8 +8,9 @@ public class Bomb : MonoBehaviour
     public float blastRadius;
     public float blastForce;
     private float countdown;
-    private bool hasExploded = false;
+    public bool hasExploded = false;
     PickupItem pickupScript;
+    public Transform respawnPoint;
 
     void Start()
     {
@@ -26,8 +27,8 @@ public class Bomb : MonoBehaviour
 
         if (countdown <= 0f && !hasExploded)
         {
-            Explode();
             hasExploded = true;
+            Explode();
         }
     }
 
@@ -58,6 +59,10 @@ public class Bomb : MonoBehaviour
             }
         }
 
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        gameObject.SetActive(false);
+        transform.position = respawnPoint.position;
+        gameObject.SetActive(true);
+        hasExploded = false;
     }
 }

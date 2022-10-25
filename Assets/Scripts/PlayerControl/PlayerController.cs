@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private int currentHealth;
     [SerializeField] private int maxHealth = 1;
-    
+
     // Damage
 
     private bool isHurt = false;
@@ -40,8 +40,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float lastGrounded;
     [SerializeField] private float jumpCutMultiplier = 0.5f;
 
-    private float speed = 12;
-    private float jumpMultiplier = 10.5f;
+    [SerializeField] private float speed = 12;
+    [SerializeField] private float jumpMultiplier = 10.5f;
     private float fallMultiplier = 2f;
 
     private Vector3 rotation = new Vector3(0, 90f, 0);
