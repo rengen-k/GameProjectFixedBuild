@@ -12,7 +12,7 @@ public class Bomb : MonoBehaviour
     PickupItem pickupScript;
     public Transform respawnPoint;
 
-    void Start()
+    void OnEnable()
     {
         countdown = delay;
         pickupScript = GetComponent<PickupItem>();

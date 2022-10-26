@@ -32,6 +32,8 @@ public class PickupItem : MonoBehaviour
         playerActionsScript.Player.Enable();
         playerActionsScript.Player.Fire.performed += Fire;
         playerActionsScript.Player.Interact.performed += Interact;
+        hasBeenThrown = false;
+
     }
 
     private void OnDisable()
