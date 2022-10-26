@@ -339,7 +339,7 @@ public partial class @PlayerActionsScript : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""d8085fec-4c59-4949-8e9c-01ff78693a7e"",
-                    ""path"": ""<Keyboard>/escape"",
+                    ""path"": ""<Keyboard>/backspace"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
