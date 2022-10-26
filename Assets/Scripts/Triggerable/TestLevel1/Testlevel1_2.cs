@@ -17,16 +17,19 @@ public class Testlevel1_2 : Triggerable
     // Update is called once per frame
     void Update()
     {
-        if (isTrigger) {
-            // transform.rotation = Quaternion.Slerp(transform.rotation, transform.rotation * Quaternion.Euler(0, 90 ,0), 20 * Time.deltaTime);
-            transform.rotation = transform.rotation * Quaternion.Euler(0, 90, 0);
-                isTrigger = false;
-        }
-        
+ 
     }
 
     public override void triggerAct(){
-        Debug.Log("Puzzle activated");
+        if (isTrigger){
+            isTrigger = false;
+            Debug.Log("rotate");
+            transform.rotation = transform.rotation * Quaternion.Euler(0, 90, 0);
+        }
+    }
+
+    public override void triggerUnAct()
+    {
         isTrigger = true;
     }
 }
