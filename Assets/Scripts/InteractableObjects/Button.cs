@@ -41,7 +41,7 @@ public class Button : MonoBehaviour
     }
 
     private void OnTriggerExit(Collider other){
-        Debug.Log("Trigger left!");
+
         foreach (Triggerable t in trigger)
         {
             t.triggerUnAct();
