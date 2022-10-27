@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 movement;
 
-    private float coyoteTime = 0.04f;
+    private float coyoteTime = 0.06f;
     public float coyoteTimeCounter;
 
     private float jumpBufferTime = 0.4f;
@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
         jumpBufferCounter -= Time.deltaTime;
         lastGrounded -= Time.deltaTime;
 
-        if (isStableGrounded && updateRespawnPosition && coyoteTimeCounter == 0.04f) {
+        if (isStableGrounded && updateRespawnPosition && coyoteTimeCounter == coyoteTime) {
             //Debug.Log("respawn pos updated");
             lastGroundedPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.3f, gameObject.transform.position.z);
             StartCoroutine(RespawnPositionCooldown());
