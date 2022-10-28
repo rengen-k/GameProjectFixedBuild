@@ -262,6 +262,13 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("currentCam: " + currentCam);
             model.transform.Rotate(-rotation);
         }
+
+        // Rigidbody constraints to prevent movement in an axis that is not intended to be moved in
+        if (currentCam == 0 | currentCam == 2) {
+            Rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
+        } else if (currentCam == 1 | currentCam == 3) {
+            Rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
+        }
     }
 
     private void OnCollisionEnter(Collision collision) {
