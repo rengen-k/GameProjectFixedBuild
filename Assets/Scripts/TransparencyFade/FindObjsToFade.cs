@@ -35,18 +35,22 @@ public class FindObjsToFade : MonoBehaviour
         Vector3 point2 = transform.TransformPoint(col.center + direction * (offset+0.1f));
 
         Vector3 directionCast = (player.position - transform.position).normalized;
+        
+
+        //Every object that should be transparentable needs to belong to one of these layers, can add layers as needed
+        int layers = LayerMask.GetMask("Default", "Ground", "StableGround");
+
 
         numOfHits = Physics.CapsuleCastNonAlloc(
             point1, point2, col.radius, directionCast, hits, 
             (player.position - transform.position).magnitude*0.9f,
-            LayerMask.GetMask("Default"), QueryTriggerInteraction.Ignore);
+            layers, QueryTriggerInteraction.Ignore);
 
         Debug.DrawLine(player.position, transform.position, Color.green);
-        Debug.Log(numOfHits);
+
         for (int i = 0; i < numOfHits; i++){
             // Minus one to not count player object
             ObjectFader fader = hits[i].transform.GetComponent<ObjectFader>();
-
             if (fader != null)
             {
                 
