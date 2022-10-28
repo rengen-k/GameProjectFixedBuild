@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask whatIsGround;
     private bool isGrounded;
     private bool isStableGrounded;
+    private bool isNotNearEdge; // determines correct respawn position
 
     private float acceleration = 17;
     private float deceleration = 35;
@@ -64,6 +65,12 @@ public class PlayerController : MonoBehaviour
     private bool updateRespawnPosition = true;
 
     // private Vector3 originalPos;
+
+    // Raycast variables that determine whether player is not near edge
+    private bool RaycastMinusX;
+    private bool RaycastMinusZ;
+    private bool RaycastPlusX;
+    private bool RaycastPlusZ;
 
     void Awake()
     {
@@ -124,7 +131,7 @@ public class PlayerController : MonoBehaviour
         jumpBufferCounter -= Time.deltaTime;
         lastGrounded -= Time.deltaTime;
 
-        if (isStableGrounded && updateRespawnPosition && coyoteTimeCounter == coyoteTime) {
+        if (isNotNearEdge && isStableGrounded && updateRespawnPosition && coyoteTimeCounter == coyoteTime) {
             //Debug.Log("respawn pos updated");
             lastGroundedPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.3f, gameObject.transform.position.z);
             StartCoroutine(RespawnPositionCooldown());
@@ -227,7 +234,24 @@ public class PlayerController : MonoBehaviour
         }
         Rb.AddForce(Physics.gravity * 1.2f, ForceMode.Acceleration);
 
-        
+        // 4 Raycasts to determine whether player is not too close to the edge to check whether it's a safe place to respawn
+        // Bit shift the index of the layer (8) to get a bit mask
+        int layerMask = 1 << 8;
+
+        // This would cast rays only against colliders in layer 8. Layer 8 is stableground.
+
+        RaycastMinusX = Physics.Raycast(transform.position + new Vector3(-0.3f, 0.0f, 0.0f), transform.TransformDirection(Vector3.down), 1, layerMask);
+        RaycastPlusX = Physics.Raycast(transform.position + new Vector3(0.3f, 0.0f, 0.0f), transform.TransformDirection(Vector3.down), 1, layerMask);
+        RaycastMinusZ = Physics.Raycast(transform.position + new Vector3(0.0f, 0.0f, -0.3f), transform.TransformDirection(Vector3.down), 1, layerMask);
+        RaycastPlusZ = Physics.Raycast(transform.position + new Vector3(0.0f, 0.0f, 0.3f), transform.TransformDirection(Vector3.down), 1, layerMask);
+
+        if (RaycastMinusX && RaycastPlusX && RaycastMinusZ && RaycastPlusZ)
+        {
+            Debug.Log("Raycast hit");
+            isNotNearEdge = true;
+        } else {
+            isNotNearEdge = false;
+        }
 
     }
 
@@ -262,7 +286,7 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("currentCam: " + currentCam);
             model.transform.Rotate(-rotation);
         }
-
+    
         // Rigidbody constraints to prevent movement in an axis that is not intended to be moved in
         if (currentCam == 0 | currentCam == 2) {
             Rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
@@ -343,7 +367,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator RespawnPositionCooldown()
     {
         updateRespawnPosition = false;
-        yield return new WaitForSeconds(2.2f);
+        yield return new WaitForSeconds(0.5f);
         updateRespawnPosition = true;
     }
 
