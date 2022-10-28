@@ -388,7 +388,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 112
+  m_Constraints: 120
   m_CollisionDetection: 1
 --- !u!114 &1945931489979321512
 MonoBehaviour:
@@ -515,6 +515,8 @@ MonoBehaviour:
   jumpBufferCounter: 0
   lastGrounded: 0
   jumpCutMultiplier: 0.5
+  speed: 12
+  jumpMultiplier: 10.5
   groundCheck: {fileID: 9173282484750590619}
   whatIsGround:
     serializedVersion: 2
