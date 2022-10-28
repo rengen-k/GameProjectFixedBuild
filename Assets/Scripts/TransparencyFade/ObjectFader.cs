@@ -43,12 +43,14 @@ public class ObjectFader : MonoBehaviour
             int max = hitList.numOfHits;
             foreach (RaycastHit hit in hitList.hits)
             {
-                if (i < max){
-                    break;
-                }
+                
                 if (transform == hit.transform)
                 {
                     unfadeCheck = true;
+                }
+                
+                if (i < max){
+                    break;
                 }
                 i++;
             }
