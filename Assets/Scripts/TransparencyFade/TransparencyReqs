@@ -1,0 +1,25 @@
+Code generates cylinder between player and camera
+raycast,
+radious is half height of player, so it checks the entire parts of player, and extends to the sides about half height
+Any object inside it, allowed to be transparent, needs to become transparent
+Needs to stop being transparent, when no longer inside.
+
+Could also use vector maths
+
+
+
+To check not being transparent:
+Ways:
+Object checks self, not inside array
+Flush array every frame? Is O(n)
+
+
+Order of operations
+FixedUpdate does not work the way you think, its not actually garunteed to run at the fixed rate- https://forum.unity.com/threads/the-truth-about-fixedupdate.231637/
+Update
+Camera (flushes array first? Unsure if needed) checks, puts every collidor that is between it and player into array, tells those objects that they need to become transparent
+Object checks, am in array up to number of array? If not, turn off transparency
+
+
+
+
