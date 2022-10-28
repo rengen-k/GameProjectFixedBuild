@@ -24,6 +24,7 @@ public class ObjectFader : MonoBehaviour
 
     void Update ()
     {
+        // So long as we are faded, keep checking if we are still inside the list to be faded, if not, unfade. 
         if (faded)
         {
             bool unfadeCheck = false;
@@ -36,10 +37,16 @@ public class ObjectFader : MonoBehaviour
             }
             faded = unfadeCheck;
             if (!unfadeCheck){
-            Debug.Log(transform.name + " should unfade");
+                Unfade();
             }
         }
+
         
+    }
+
+    private void Unfade()
+    {
+        Debug.Log("Unfading");
     }
 
     public bool IsFade()
