@@ -18,10 +18,10 @@ public class ObjectFader : MonoBehaviour
 
     public void Fade()
     {
-        Debug.Log(transform.name + " should be faded");
         faded = true;
 
         Renderer objectRenderer = GetComponent<Renderer>();
+
         foreach (Material material in objectRenderer.materials)
         {
             material.SetOverrideTag("RenderType", "Transparent");
@@ -45,12 +45,18 @@ public class ObjectFader : MonoBehaviour
         if (faded)
         {
             bool unfadeCheck = false;
+            int i = 0;
+            int max = hitList.numOfHits;
             foreach (RaycastHit hit in hitList.hits)
             {
+                if (i < max){
+                    break;
+                }
                 if (transform == hit.transform)
                 {
                     unfadeCheck = true;
                 }
+                i++;
             }
             faded = unfadeCheck;
             if (!unfadeCheck){
@@ -63,7 +69,6 @@ public class ObjectFader : MonoBehaviour
 
     private void Unfade()
     {
-        Debug.Log("Unfading");
 
         Renderer objectRenderer = GetComponent<Renderer>();
         foreach (Material material in objectRenderer.materials)

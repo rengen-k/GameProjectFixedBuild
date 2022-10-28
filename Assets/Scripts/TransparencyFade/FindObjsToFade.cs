@@ -10,7 +10,7 @@ public class FindObjsToFade : MonoBehaviour
     private Transform player;
     public RaycastHit[] hits = new RaycastHit[6];
     
-    private int numOfHits;
+    public int numOfHits;
 
     private CapsuleCollider col;
 
@@ -38,13 +38,18 @@ public class FindObjsToFade : MonoBehaviour
 
         numOfHits = Physics.CapsuleCastNonAlloc(
             point1, point2, col.radius, directionCast, hits, 
-            (player.position - transform.position).magnitude
-            , LayerMask.GetMask("Default"), QueryTriggerInteraction.Ignore);
-        for (int i = 0; i < numOfHits-1; i++){
+            (player.position - transform.position).magnitude*0.9f,
+            LayerMask.GetMask("Default"), QueryTriggerInteraction.Ignore);
+
+        Debug.DrawLine(player.position, transform.position, Color.green);
+        Debug.Log(numOfHits);
+        for (int i = 0; i < numOfHits; i++){
             // Minus one to not count player object
             ObjectFader fader = hits[i].transform.GetComponent<ObjectFader>();
+
             if (fader != null)
             {
+                
                 if (!fader.IsFade()){
                     fader.Fade();
                 }
