@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-
+using TMPro;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -44,6 +45,10 @@ public class PauseMenu : MonoBehaviour
     void Start(){
         
         firstTime = true;
+
+        GameObject title = GameObject.Find("Level Title");
+        TMP_Text texty = title.GetComponent<TextMeshProUGUI>();
+        texty.text = "Level " + Int32.Parse(SceneManager.GetActiveScene().name.Split(" ")[1]);
     }
 
     private void OnDisable() {
