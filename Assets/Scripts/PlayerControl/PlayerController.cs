@@ -247,7 +247,7 @@ public class PlayerController : MonoBehaviour
 
         if (RaycastMinusX && RaycastPlusX && RaycastMinusZ && RaycastPlusZ)
         {
-            Debug.Log("Raycast hit");
+
             isNotNearEdge = true;
         } else {
             isNotNearEdge = false;
