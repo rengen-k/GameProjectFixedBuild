@@ -6,7 +6,8 @@ public class ObjectFader : MonoBehaviour
 {
 
     FindObjsToFade hitList;
-    bool faded;
+    public bool faded;
+
     void Awake()
     {
         // Find Camera's list of collisions hit, 
@@ -18,7 +19,7 @@ public class ObjectFader : MonoBehaviour
 
     public void Fade()
     {
-        Debug.Log(transform.name + " should be faded");
+        //Debug.Log(transform.name + " should be faded");
         faded = true;
 
         Renderer objectRenderer = GetComponent<Renderer>();
@@ -38,24 +39,28 @@ public class ObjectFader : MonoBehaviour
         // So long as we are faded, keep checking if we are still inside the list to be faded, if not, unfade. 
         if (faded)
         {
-            bool unfadeCheck = false;
+            bool stayFaded = false;
             int i = 0;
             int max = hitList.numOfHits;
+
             foreach (RaycastHit hit in hitList.hits)
             {
                 
                 if (transform == hit.transform)
                 {
-                    unfadeCheck = true;
+                    stayFaded = true;
                 }
                 
-                if (i < max){
+                if (i > max){
                     break;
                 }
-                i++;
+                if (hit.collider != null){
+                    i++;
+                }
             }
-            faded = unfadeCheck;
-            if (!unfadeCheck){
+            
+            faded = stayFaded;
+            if (!stayFaded){
                 Unfade();
             }
         }
@@ -65,7 +70,7 @@ public class ObjectFader : MonoBehaviour
 
     private void Unfade()
     {
-        Debug.Log("Unfading " + transform.name);
+        //Debug.Log("Unfading " + transform.name);
 
         Renderer objectRenderer = GetComponent<Renderer>();
         foreach (Material material in objectRenderer.materials)
