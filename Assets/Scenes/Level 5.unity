@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028577, g: 0.225716, b: 0.30692482, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -237,6 +237,7 @@ GameObject:
   - component: {fileID: 234411087}
   - component: {fileID: 234411086}
   - component: {fileID: 234411085}
+  - component: {fileID: 234411089}
   m_Layer: 0
   m_Name: NothingToSeeHere (1)
   m_TagString: Untagged
@@ -323,6 +324,18 @@ Transform:
   m_Father: {fileID: 1151932544}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &234411089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234411084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba4164cfb15bf9044a2e113be98c8227, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &352691679
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -428,15 +441,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3973020546687877900, guid: 5e3169962f0d29c44b99cf8d3c27918c, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.039892107
+      value: 0.03989211
       objectReference: {fileID: 0}
     - target: {fileID: 3973020546687877900, guid: 5e3169962f0d29c44b99cf8d3c27918c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.011100211
+      value: 0.011100207
       objectReference: {fileID: 0}
     - target: {fileID: 3973020546687877900, guid: 5e3169962f0d29c44b99cf8d3c27918c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.00044319086
+      value: -0.00044319074
       objectReference: {fileID: 0}
     - target: {fileID: 3973020546687877900, guid: 5e3169962f0d29c44b99cf8d3c27918c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -509,6 +522,7 @@ GameObject:
   - component: {fileID: 461208598}
   - component: {fileID: 461208597}
   - component: {fileID: 461208601}
+  - component: {fileID: 461208602}
   m_Layer: 0
   m_Name: SuspiciousWall
   m_TagString: Untagged
@@ -608,15 +622,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 461208596}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1643461b90433842b94de05429bdb82, type: 3}
+  m_Script: {fileID: 11500000, guid: ba4164cfb15bf9044a2e113be98c8227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeType: 1
-  customFade: 0
-  fadeTo: 0
-  otherObjects: []
-  checkParentObject: 0
-  faded: 0
+--- !u!114 &461208602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 461208596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba4164cfb15bf9044a2e113be98c8227, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &461978455
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1425,15 +1445,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1151932540}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1643461b90433842b94de05429bdb82, type: 3}
+  m_Script: {fileID: 11500000, guid: ba4164cfb15bf9044a2e113be98c8227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeType: 0
-  customFade: 0
-  fadeTo: 0
-  otherObjects: []
-  checkParentObject: 0
-  faded: 0
 --- !u!1001 &1173845497
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1789,7 +1803,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8822408530620717310, guid: e35a72e5aefafc7408171db31ee6d438, type: 3}
   m_PrefabInstance: {fileID: 352691679}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1353094078
+--- !u!114 &1353094072
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1798,15 +1812,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1353094071}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1643461b90433842b94de05429bdb82, type: 3}
+  m_Script: {fileID: 11500000, guid: ba4164cfb15bf9044a2e113be98c8227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeType: 0
-  customFade: 0
-  fadeTo: 0
-  otherObjects: []
-  checkParentObject: 0
-  faded: 0
 --- !u!1 &1410515011
 GameObject:
   m_ObjectHideFlags: 0
@@ -2199,15 +2207,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8183061160448072967, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.039892107
+      value: 0.03989211
       objectReference: {fileID: 0}
     - target: {fileID: 8183061160448072967, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.011100211
+      value: 0.011100207
       objectReference: {fileID: 0}
     - target: {fileID: 8183061160448072967, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.00044319086
+      value: -0.00044319074
       objectReference: {fileID: 0}
     - target: {fileID: 8183061160448072968, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_Follow
@@ -2239,15 +2247,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8183061161519230016, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.029169297
+      value: 0.029169302
       objectReference: {fileID: 0}
     - target: {fileID: 8183061161519230016, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.71465623
+      value: 0.7146561
       objectReference: {fileID: 0}
     - target: {fileID: 8183061161519230016, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.02985554
+      value: -0.029855544
       objectReference: {fileID: 0}
     - target: {fileID: 8183061161519230017, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_Follow
