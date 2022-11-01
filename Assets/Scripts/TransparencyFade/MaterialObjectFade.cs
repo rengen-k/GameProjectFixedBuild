@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class MaterialObjectFade
 {
+    
     public static void MakeFade(Material material)
     {
         material.SetOverrideTag("RenderType", "Transparent");
