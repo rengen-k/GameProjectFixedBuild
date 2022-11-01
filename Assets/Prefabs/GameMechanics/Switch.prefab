@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6468012470044109446}
   - component: {fileID: 6468012470044109447}
   - component: {fileID: 6468012470044109448}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: ButtonTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 6468012470481845390}
   - component: {fileID: 6468012470481845391}
   - component: {fileID: 6468012470481845388}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Switch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,7 @@ Transform:
   - {fileID: 6468012470353081405}
   - {fileID: 6468012471372542711}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6468012470481845390
 MeshFilter:
@@ -336,6 +336,7 @@ MonoBehaviour:
   spring: {fileID: 6468012470353081404}
   trigger:
   - {fileID: 0}
+  playnt: 0
 --- !u!65 &6468012471372542710
 BoxCollider:
   m_ObjectHideFlags: 0
