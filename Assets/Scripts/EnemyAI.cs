@@ -7,24 +7,42 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    NavMeshAgent agent;
+    private Transform player;
+    private NavMeshAgent agent;
     public Transform[] waypoints;
-    int waypointIndex;
-    Vector3 target;
+    private int waypointIndex;
+    private Vector3 target;
+    private float originalSpeed;
+    [SerializeField] private bool followsPlayer;
+    [SerializeField] private float followSpeed;
+    [SerializeField] private float followPlayerDist;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        player = GameObject.Find("Player").transform;
+        originalSpeed = agent.speed;
         UpdateDestination();
     }
 
     void Update()
     {
-        if (Vector3.Distance(transform.position, target) < 1)
+        if (followsPlayer && Vector3.Distance(transform.position, player.position) < followPlayerDist)
+        {
+            agent.SetDestination(player.position);
+            agent.speed = followSpeed;
+        }
+        else if (followsPlayer)
+        {
+            agent.speed = originalSpeed;
+            UpdateDestination();
+        }
+        if (Vector3.Distance(transform.position, target) < 2)
         {
             IterateWaypointIndex();
             UpdateDestination();
         }
+        //Debug.Log(target);
     }
 
     void UpdateDestination()
