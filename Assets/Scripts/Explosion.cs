@@ -11,7 +11,7 @@ public class Explosion : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(scaleOverTime(transform, new Vector3(bombRadious, bombRadious, bombRadious), 0.15f));
+        StartCoroutine(scaleOverTime(transform, new Vector3(bombRadious, bombRadious, bombRadious), 0.2f));
     }
 
     // Update is called once per frame
