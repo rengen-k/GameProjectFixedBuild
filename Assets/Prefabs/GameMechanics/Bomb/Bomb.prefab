@@ -115,6 +115,8 @@ MonoBehaviour:
   pickupDist: 0
   throwForce: 10
   itemPickedUp: 0
+  bombPrefab: {fileID: 0}
+  hasBeenThrown: 0
 --- !u!54 &8764487633592206593
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -144,3 +146,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 3
+  blastRadius: 0
+  blastForce: 0
+  hasExploded: 0
+  respawnPoint: {fileID: 0}
+  explosion: {fileID: 1881445222762696272, guid: 61fabae3ebc850c469cdb7f01dba3afa, type: 3}

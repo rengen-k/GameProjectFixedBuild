@@ -11,6 +11,7 @@ public class Bomb : MonoBehaviour
     public bool hasExploded = false;
     PickupItem pickupScript;
     public Transform respawnPoint;
+    [SerializeField] private GameObject explosion;
 
     void OnEnable()
     {
@@ -55,6 +56,7 @@ public class Bomb : MonoBehaviour
             Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
             if (rb != null)
             {
+                Instantiate(explosion, transform.position, transform.rotation).GetComponent<Explosion>().bombRadious = blastRadius;
                 rb.AddExplosionForce(blastForce, transform.position, blastRadius);
             }
         }
