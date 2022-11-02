@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-// code from https://www.youtube.com/watch?v=c8Nq19gkNfs
+// some code from https://www.youtube.com/watch?v=c8Nq19gkNfs
 
 public class EnemyAI : MonoBehaviour
 {
     private Transform player;
+    public Transform respawnPoint;
     private NavMeshAgent agent;
     public Transform[] waypoints;
     private int waypointIndex;
@@ -58,5 +59,10 @@ public class EnemyAI : MonoBehaviour
         {
             waypointIndex = 0;
         }
+    }
+
+    public void Respawn()
+    {
+        transform.position = respawnPoint.position;
     }
 }

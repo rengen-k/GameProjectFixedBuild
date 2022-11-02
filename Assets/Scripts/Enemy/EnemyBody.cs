@@ -1,8 +1,8 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBody : MonoBehaviour
+public class EnemyTestBehavior : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
