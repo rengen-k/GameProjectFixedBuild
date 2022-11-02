@@ -9,9 +9,12 @@ public class Explosion : MonoBehaviour
     private float radious;
     private bool isScaling = false;
 
+    [SerializeField] float timeToExpand;
+    [SerializeField] float timeToStayFull;
+
     void Start()
     {
-        StartCoroutine(scaleOverTime(transform, new Vector3(bombRadious, bombRadious, bombRadious), 0.2f));
+        StartCoroutine(scaleOverTime(transform, new Vector3(bombRadious, bombRadious, bombRadious), timeToExpand));
     }
 
     // Update is called once per frame
@@ -43,7 +46,7 @@ public class Explosion : MonoBehaviour
         }
 
         isScaling = false;
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(timeToStayFull);
         Object.Destroy(gameObject);
     }
 }
