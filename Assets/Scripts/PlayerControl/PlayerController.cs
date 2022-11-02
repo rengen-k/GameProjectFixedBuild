@@ -296,6 +296,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision) {
+        Debug.Log(collision.gameObject);
         if (collision.gameObject.tag == "HurtTag1" && !isHurt) {
             //Debug.Log("Collided with HurtTag1");
             currentHealth -= 1;
