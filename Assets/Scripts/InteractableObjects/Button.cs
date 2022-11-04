@@ -14,6 +14,7 @@ public class Button : MonoBehaviour
 
     //Put in the inspector of the button, the object with the triggerable child script to run when the button is pressed.
     [SerializeField] Triggerable[] trigger;
+    [SerializeField] bool playnt;
 
     void Start()
     {
@@ -33,6 +34,11 @@ public class Button : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (playnt){
+            if (other.name == "Player"){
+                return;
+                }
+        }
         //Debug.Log("Trigger triggered!" + other.name);
         foreach (Triggerable t in trigger)
         {

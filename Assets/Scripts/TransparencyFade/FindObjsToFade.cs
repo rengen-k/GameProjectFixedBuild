@@ -31,8 +31,8 @@ public class FindObjsToFade : MonoBehaviour
         var direction = new Vector3 {[col.direction] = 1};
         var offset = (col.height) / 2 - col.radius;
 
-        Vector3 point1 = transform.TransformPoint(col.center - direction * (offset+0.1f));
-        Vector3 point2 = transform.TransformPoint(col.center + direction * (offset+0.1f));
+        Vector3 point1 = transform.TransformPoint(col.center - direction * (offset-0.1f));
+        Vector3 point2 = transform.TransformPoint(col.center + direction * (offset-0.1f));
 
         Vector3 directionCast = (player.position - transform.position).normalized;
         
