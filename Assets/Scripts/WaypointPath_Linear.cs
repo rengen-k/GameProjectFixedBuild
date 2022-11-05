@@ -4,14 +4,14 @@ using UnityEngine;
 
 // Source: https://www.youtube.com/watch?v=ly9mK0TGJJo
 
-public class WaypointPath_Linear : MonoBehaviour
+public class WaypointPath_Linear : WaypointPath
 {
-    public Transform GetWaypoint(int waypointIndex)
+    public override Transform GetWaypoint(int waypointIndex)
     {
         return transform.GetChild(waypointIndex);
     }
 
-    public int GetNextWaypointIndex(int currentWaypointIndex)
+    public override int GetNextWaypointIndex(int currentWaypointIndex)
     {
         int nextWaypointIndex = currentWaypointIndex + 1;
 

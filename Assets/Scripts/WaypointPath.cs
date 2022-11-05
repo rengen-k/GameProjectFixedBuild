@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class WaypointPath : MonoBehaviour
 {
-    public Transform GetWaypoint(int waypointIndex)
+    public virtual Transform GetWaypoint(int waypointIndex)
     {
         return transform.GetChild(waypointIndex);
     }
 
-    public int GetNextWaypointIndex(int currentWaypointIndex)
+    public virtual int GetNextWaypointIndex(int currentWaypointIndex)
     {
         int nextWaypointIndex = currentWaypointIndex + 1;
 
