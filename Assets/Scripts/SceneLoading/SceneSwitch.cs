@@ -19,10 +19,6 @@ public class SceneSwitch : MonoBehaviour
     }
 
     private void LoadScene() {
-        if (loadWithIndex) {
-            SceneManager.LoadScene(indexOfSceneToLoad);
-        } else {
-            SceneManager.LoadScene(nameOfSceneToLoad);
-        }
+        SceneManager.LoadScene(nameOfSceneToLoad);
     }
 }
