@@ -18,6 +18,7 @@ public class DoorTrigger : Triggerable
  
     public override void triggerAct(){
         transform.position = new Vector3(transform.position.x, transform.position.y - 10f, transform.position.z);
+        gameObject.SetActive(false);
 
     }
 

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ReturningDoorScript : Triggerable
 {
-    // Start is called before the first frame update
+    // Number of buttons connected to door that are currently pressed.
+    private int pressedCount = 0;
     void Start()
     {
         
@@ -17,12 +18,18 @@ public class ReturningDoorScript : Triggerable
     }
 
     public override void triggerAct(){
-        transform.position = new Vector3(transform.position.x, transform.position.y - 10f, transform.position.z);
+        pressedCount++;
+        if (pressedCount != 0){
+            gameObject.SetActive(false);
+        }
 
     }
 
     public override void triggerUnAct(){
-        transform.position = new Vector3(transform.position.x, transform.position.y + 10f, transform.position.z);
+        pressedCount--;
+        if (pressedCount == 0) {
+            gameObject.SetActive(true);
+        }
 
     }
 }
