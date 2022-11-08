@@ -321,15 +321,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3973020546687877900, guid: 5e3169962f0d29c44b99cf8d3c27918c, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.014057787
+      value: 0.014057807
       objectReference: {fileID: 0}
     - target: {fileID: 3973020546687877900, guid: 5e3169962f0d29c44b99cf8d3c27918c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0039057573
+      value: 0.0039057918
       objectReference: {fileID: 0}
     - target: {fileID: 3973020546687877900, guid: 5e3169962f0d29c44b99cf8d3c27918c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000054912147
+      value: -0.000054912714
       objectReference: {fileID: 0}
     - target: {fileID: 3973020546687877900, guid: 5e3169962f0d29c44b99cf8d3c27918c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1411,7 +1411,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "This is a bomb, \nyou can pick it up, and throw with q.\nOnce thrown,
-    it will destroy all destructible blocks \nin its vicinity after a short delay"
+    it will destroy all destructible blocks \nin its vicinity after a short delay\nIn
+    the prototype, destructible blocks are blue"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1542,7 +1543,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -14.68, y: 3.54}
+  m_AnchoredPosition: {x: -15.62, y: 4.24}
   m_SizeDelta: {x: 10.4053, y: 4.0859}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1429330331
@@ -1861,7 +1862,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6bb0c03aeeead4bde96f8bfc4ef6ced7, type: 2}
+  - {fileID: 2100000, guid: c22962f63da093f4eaedbf41495bab34, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2246,11 +2247,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8183061160430607729, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.0039057576
+      value: -0.003905792
       objectReference: {fileID: 0}
     - target: {fileID: 8183061160430607729, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.000054912158
+      value: -0.000054912725
       objectReference: {fileID: 0}
     - target: {fileID: 8183061160430607729, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.y
@@ -2258,7 +2259,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8183061160430607729, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.014057789
+      value: -0.0140578095
       objectReference: {fileID: 0}
     - target: {fileID: 8183061160430607730, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_Follow
@@ -2282,15 +2283,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8183061160448072967, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.014057787
+      value: 0.014057807
       objectReference: {fileID: 0}
     - target: {fileID: 8183061160448072967, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0039057573
+      value: 0.0039057918
       objectReference: {fileID: 0}
     - target: {fileID: 8183061160448072967, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000054912147
+      value: -0.000054912714
       objectReference: {fileID: 0}
     - target: {fileID: 8183061160448072968, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_Follow
@@ -2310,19 +2311,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8183061161519230016, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.70426977
+      value: 0.7042697
       objectReference: {fileID: 0}
     - target: {fileID: 8183061161519230016, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0099015385
+      value: 0.009901532
       objectReference: {fileID: 0}
     - target: {fileID: 8183061161519230016, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.70979327
+      value: 0.7097933
       objectReference: {fileID: 0}
     - target: {fileID: 8183061161519230016, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.009979196
+      value: -0.00997919
       objectReference: {fileID: 0}
     - target: {fileID: 8183061161519230017, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_Follow
@@ -2378,7 +2379,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8183061161559810044, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_ChildCameras.Array.size
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8183061161559810045, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_Name
