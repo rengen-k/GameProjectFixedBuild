@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Source: https://www.youtube.com/watch?v=ly9mK0TGJJo
+// Source: Some code from https://www.youtube.com/watch?v=ly9mK0TGJJo
 
 public class WaypointPath_Oscillate : WaypointPath
 {
@@ -13,6 +13,7 @@ public class WaypointPath_Oscillate : WaypointPath
         return transform.GetChild(waypointIndex);
     }
 
+    // Oscillate between the index 0 and the number of waypoint children
     public override int GetNextWaypointIndex(int currentWaypointIndex)
     {
         int nextWaypointIndex = 0;

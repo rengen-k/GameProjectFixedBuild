@@ -25,6 +25,7 @@ public class MovingPlatform : MonoBehaviour
         TargetNextWaypoint();
     }
 
+    // Move platform from previous waypoint position to target waypoint position
     void FixedUpdate()
     {
         _elapsedTime += Time.deltaTime;
@@ -40,6 +41,7 @@ public class MovingPlatform : MonoBehaviour
         }
     }
 
+    // Get next waypoint (whenever elapsed percentage is 1)
     private void TargetNextWaypoint()
     {
         _previousWaypoint = _waypointPath.GetWaypoint(_targetWaypointIndex);
@@ -52,6 +54,7 @@ public class MovingPlatform : MonoBehaviour
         _timeToWaypoint = distanceToWaypoint / _speed;
     }
 
+    // Make an object a child whenever it is on the platform
     private void OnTriggerEnter(Collider other)
     {
         other.transform.SetParent(transform);
