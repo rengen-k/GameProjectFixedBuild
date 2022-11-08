@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed = 12;
     [SerializeField] private float jumpMultiplier = 10.5f;
     private float fallMultiplier = 2f;
-    [SerializeField] private float frictionAmount;
+    [SerializeField] private float frictionAmount = 0.3f;
 
     private Vector3 rotation = new Vector3(0, 90f, 0);
 
@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
     private bool isNotNearEdge; // determines correct respawn position
 
     [SerializeField] private float acceleration = 17;
-    [SerializeField] private float deceleration = 35;
+    [SerializeField] private float deceleration = 25;
     private float velPower = 1.5f;
 
     
