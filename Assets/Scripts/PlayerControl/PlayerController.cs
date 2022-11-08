@@ -214,7 +214,7 @@ public class PlayerController : MonoBehaviour
             amount *= Mathf.Sign(Rb.velocity.z);
             Rb.AddForce(Vector3.forward * -amount, ForceMode.Impulse);
         }
-        else if (isGrounded && Mathf.Abs(inputVector.x) < 0.01f)
+        else if (isGrounded && Mathf.Abs(inputVector.x) < 0.01f && (currentCam == 0 || currentCam == 2))
         {
             float amount = Mathf.Min(Mathf.Abs(Rb.velocity.x), Mathf.Abs(frictionAmount));
             amount *= Mathf.Sign(Rb.velocity.x);
