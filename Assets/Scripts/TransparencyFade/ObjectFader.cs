@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectFader : MonoBehaviour
 {
-
+    // Handles makeing an object transparent or opaque as needed. According to if the object is between player and camera.
     FindObjsToFade hitList;
     public bool faded;
 
@@ -13,12 +13,11 @@ public class ObjectFader : MonoBehaviour
         // Find Camera's list of collisions hit, 
         hitList = GameObject.FindWithTag("MainCamera").GetComponent<FindObjsToFade>();
         faded = false;
-
-
     }
 
     public void Fade()
     {
+        // Only called once per frame, if and only if Camera says this needs to be faded.
         //Debug.Log(transform.name + " should be faded");
         faded = true;
 

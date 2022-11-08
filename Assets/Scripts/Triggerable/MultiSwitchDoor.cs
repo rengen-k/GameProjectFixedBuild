@@ -5,8 +5,10 @@ using UnityEngine;
 public class MultiSwitchDoor : Triggerable
 {
     // Number of buttons connected to door that are currently pressed.
-    [SerializeField] private int pressedCount = 0;
+    
+    private int pressedCount = 0;
     // Number of buttons that needs to be pressed.
+    [Tooltip("The number of buttons that needs to be pressed to open this door.")]
     [SerializeField] private int pressedRequire;
     void Start()
     {

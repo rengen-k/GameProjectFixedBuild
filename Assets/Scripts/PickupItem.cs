@@ -5,17 +5,24 @@ using UnityEngine.InputSystem;
 
 public class PickupItem : MonoBehaviour
 {
+    // A script indicating that an object can be picked up with 'e'.
+
     private PlayerActionsScript playerActionsScript;
     private Transform pickupPoint;
     private Transform player;
     private Vector3 velocity;
+    [Tooltip("Values indicating properties of picking up.")]
     public float pickupDist;
+    [Tooltip("Values indicating properties of picking up.")]
     public float throwForce;
+    [Tooltip("Values indicating properties of picking up.")]
     public bool itemPickedUp;
+    [Tooltip("Value used to determine if Player can pick up object at this point in time.")]
     public static bool ableToPickup;
+
+    public GameObject bombPrefab;
     private Rigidbody rb;
     private bool reset;
-    public GameObject bombPrefab;
     public bool hasBeenThrown = false;
 
     void Start()

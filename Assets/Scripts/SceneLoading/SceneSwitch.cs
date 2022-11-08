@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class SceneSwitch : MonoBehaviour
 {
+    //Level Loader script, to advance to next level
+    [Tooltip("Fields deciding what the next level to load is.")]
     [SerializeField] private string nameOfSceneToLoad;
     [SerializeField] private int indexOfSceneToLoad;
     [SerializeField] private bool loadWithIndex;

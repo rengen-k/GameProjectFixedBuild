@@ -8,15 +8,21 @@ using TMPro;
 
 public class PauseMenu : MonoBehaviour
 {
-    
-    private PlayerActionsScript playerActionsScript;
+    // PauseMenu handler.
 
+    private PlayerActionsScript playerActionsScript;
+    [Tooltip("Fields representing status of pausemenu.")]
     public static bool GamePaused = false;
+    [Tooltip("Fields representing status of pausemenu.")]
     public static bool helpToggle = false;
+    [Tooltip("Fields representing status of pausemenu.")]
     public static bool levelsToggle = false;
-    
+
+    [Tooltip("Reference to child game object.")]
     public GameObject PauseMenuUI;
+    [Tooltip("Reference to child game object.")]
     public GameObject helpPanel;
+    [Tooltip("Reference to child game object.")]
     public GameObject levelPanel;
 
     private Vector2 helpPosOn;
@@ -33,7 +39,7 @@ public class PauseMenu : MonoBehaviour
         playerActionsScript.Player.Enable();
         playerActionsScript.Player.Menu.performed += TriggerPause;
         
-        //Code meant to make the panals slide in from off screen, todo, figure out how to translate points 
+        //Code meant to make the panals slide in from off screen, TODO, figure out how to translate points 
         helpPosOn = helpPanel.transform.TransformPoint(new Vector2(0f, 1950f)); //Off: local y = -2900  On, local y = -950
         helpPosOff = helpPanel.transform.TransformPoint(new Vector2(0f, 0f));
         levelsPosOn = levelPanel.transform.TransformPoint(new Vector2(0f, -2000f));
@@ -76,25 +82,6 @@ public class PauseMenu : MonoBehaviour
             }
         }
             
-
-        Vector2 vel = Vector2.zero;
-        
-        /*
-        if (helpToggle){
-            helpPanel.transform.position = Vector2.Lerp(helpPanel.transform.position, helpPosOn, Time.fixedDeltaTime);
-        }
-        else{
-            helpPanel.transform.position = Vector2.Lerp(helpPanel.transform.position, helpPosOff, Time.fixedDeltaTime);
-        }
-
-        if (levelsToggle){
-            levelPanel.transform.position = Vector2.Lerp(levelPanel.transform.position, levelsPosOn, Time.fixedDeltaTime);
-        }
-        else{
-            levelPanel.transform.position = Vector2.Lerp(levelPanel.transform.position, levelsPosOff, Time.fixedDeltaTime);
-        }
-        */
-
         if (helpToggle){
             helpPanel.SetActive(true);
         }
@@ -140,7 +127,7 @@ public class PauseMenu : MonoBehaviour
         
     }
 
-
+    
     public void LevelsToggle()
     {
         helpToggle = false;

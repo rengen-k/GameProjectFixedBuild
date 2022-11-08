@@ -3,7 +3,8 @@ using UnityEngine.InputSystem;
  
 public class PlayerInputErrorWorkaround : MonoBehaviour
 {
-    //Credit user erikDo
+    // Exists to attempt to suppress a non fatal error.
+    // Credit user erikDo
     // https://forum.unity.com/threads/type-of-instance-in-array-does-not-match-expected-type.1320564/#post-8396772
     private PlayerInput Input;
    

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Level6Updater : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Special Script forcing a certain level to update its collectible status immediately.
     void Start()
     {
 

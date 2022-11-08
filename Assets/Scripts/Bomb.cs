@@ -5,8 +5,13 @@ using UnityEngine.UI;
 
 public class Bomb : MonoBehaviour
 {
+    // Bomb, an object that can be picked up and thrown. When thrown, creates explosion that destroys objects with the destructible script.
+
+    [Tooltip("Values that decide bombs explosion properties.")]
     public float delay;
+    [Tooltip("Values that decide bombs explosion properties.")]
     public float blastRadius;
+    [Tooltip("Values that decide bombs explosion properties.")]
     public float blastForce;
 
     private float countdown;
@@ -15,7 +20,9 @@ public class Bomb : MonoBehaviour
     PickupItem pickupScript;
     public Transform respawnPoint;
 
+    [Tooltip("References prefab that will spawn to simulate explosion")]
     [SerializeField] private GameObject explosion;
+    [Tooltip("References child UI element called BombCountdown. To indicate when bomb will explode.")]
     [SerializeField] private GameObject timer;
 
     void Start()
@@ -32,7 +39,7 @@ public class Bomb : MonoBehaviour
 
     void Update()
     {
-        // To make camera look towards 
+        // To make UI timer look towards camera
         Camera camera = Camera.main ;
         timer.transform.LookAt(transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation * Vector3.up);
 
@@ -54,8 +61,8 @@ public class Bomb : MonoBehaviour
 
     void Explode()
     {
-        //this is for whenever we add an explosion effect
-        // Instantiate(explosionEffect (this is a GameObject), transform.position, transform.rotation);
+        //Find every destructible object inside explosion. Destroy. For everything else that can move, push away.
+        Instantiate(explosion, transform.position, transform.rotation).GetComponent<Explosion>().bombRadious = blastRadius;
 
         Collider[] collidersToDestroy = Physics.OverlapSphere(transform.position, blastRadius);
 
@@ -75,7 +82,6 @@ public class Bomb : MonoBehaviour
             Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                Instantiate(explosion, transform.position, transform.rotation).GetComponent<Explosion>().bombRadious = blastRadius;
                 rb.AddExplosionForce(blastForce, transform.position, blastRadius);
             }
         }

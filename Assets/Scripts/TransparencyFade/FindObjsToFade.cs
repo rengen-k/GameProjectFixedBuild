@@ -6,10 +6,11 @@ using System;
 
 public class FindObjsToFade : MonoBehaviour
 {
-
+    // Script attached to main camera, uses raycasts to determine any objects between player and camera.
     private Transform player;
+    [Tooltip("All colliders between player and camera stored here.")]
     public RaycastHit[] hits = new RaycastHit[6];
-    
+    [Tooltip("Amount of colliders detected.")]
     public int numOfHits;
 
     private CapsuleCollider col;
@@ -18,16 +19,15 @@ public class FindObjsToFade : MonoBehaviour
     void Awake()
     {
         player = GameObject.Find("Player").transform;
-
         col = player.GetComponent<CapsuleCollider>();
-
-
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Every frame, cast a capsule about the size of the player, from camera, to player. Store any colliders in the way inside hits.
 
+        // Calculates the capsules dimensions.
         var direction = new Vector3 {[col.direction] = 1};
         var offset = (col.height) / 2 - col.radius;
 
@@ -37,7 +37,7 @@ public class FindObjsToFade : MonoBehaviour
         Vector3 directionCast = (player.position - transform.position).normalized;
         
 
-        //Every object that should be transparentable needs to belong to one of these layers, can add layers as needed here
+        // Every object that should be transparentable needs to belong to one of these layers, can add layers as needed here
         int layers = LayerMask.GetMask("Default", "Ground", "StableGround");
 
         
@@ -50,6 +50,7 @@ public class FindObjsToFade : MonoBehaviour
 
         Debug.DrawLine(player.position, transform.position, Color.green);
 
+        // Check every collider inside hits found this frame. Fade them, if possible.
         for (int i = 0; i < numOfHits; i++){
             ObjectFader fader = hits[i].transform.GetComponent<ObjectFader>();
             if (fader != null)

@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Attached to sphere, to make sphere prefab simulate explosion.
+
     public float bombRadious;
     private float radious;
     private bool isScaling = false;
-
+    [Tooltip("How long will it take for the explosion to reach maximum radious.")]
     [SerializeField] float timeToExpand;
+    [Tooltip("How long explosion will stay are maximum radious.")]
     [SerializeField] float timeToStayFull;
 
     void Start()
@@ -22,10 +24,11 @@ public class Explosion : MonoBehaviour
     {
         
     }
-
-
+    // Credit Programmer
+    // https://stackoverflow.com/a/46587297
     IEnumerator scaleOverTime(Transform objectToScale, Vector3 toScale, float duration)
     {
+        //Code to increase object scale over time. Modified slightly.
         //Make sure there is only one instance of this function running
         if (isScaling)
         {

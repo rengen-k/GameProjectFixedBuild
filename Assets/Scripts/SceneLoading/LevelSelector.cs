@@ -6,9 +6,10 @@ using TMPro;
 
 public class LevelSelector : MonoBehaviour
 {
-
+    // Script attached to a level button in the pausemenu, handles loading the level selected by clicking the UI button.
     public int level;
     private GameObject levelText; 
+    [Tooltip("Reference to pauseMenu in canvas")]
     [SerializeField] private PauseMenu pauseMenu;
 
     void Awake()

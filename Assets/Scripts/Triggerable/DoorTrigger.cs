@@ -4,18 +4,8 @@ using UnityEngine;
 
 public class DoorTrigger : Triggerable
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    // A door that opens once a connected switch is pressed.
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
- 
     public override void triggerAct(){
         gameObject.SetActive(false);
 

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ReturningDoorScript : Triggerable
 {
+    // A door that only opens while the connected switch is pressed down.
+
     // Number of buttons connected to door that are currently pressed.
     private int pressedCount = 0;
     void Start()

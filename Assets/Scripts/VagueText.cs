@@ -5,6 +5,7 @@ using UnityEngine;
 public class VagueText : MonoBehaviour
 {
     // Start is called before the first frame update
+    [Tooltip("How long until this text should appear.")]
     [SerializeField] float timeToAppear = -1f;
     void Start()
     {

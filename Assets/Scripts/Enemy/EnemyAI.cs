@@ -7,13 +7,17 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
+    //Enemy AI, handles enemy movement.
     private Transform player;
     public Transform respawnPoint;
     private NavMeshAgent agent;
+    //The list of waypoints- gameobjects, it will try to travel to.
     public Transform[] waypoints;
     private int waypointIndex;
     private Vector3 target;
     private float originalSpeed;
+
+    [Tooltip("Indicates whether the enemy will follow the player when they are close enough.")]
     [SerializeField] private bool followsPlayer;
     [SerializeField] private float followSpeed;
     [SerializeField] private float followPlayerDist;

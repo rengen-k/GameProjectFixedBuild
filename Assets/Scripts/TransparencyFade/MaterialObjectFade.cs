@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class MaterialObjectFade
 {
+    // Static class used to define what an object that is transparent looks like. Only part of code that falls under LICENSE
     //Credit to jhutchines 
     //https://github.com/jhutchines/Unity-Object-Fade
     public static void MakeFade(Material material)
