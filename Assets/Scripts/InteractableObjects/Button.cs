@@ -9,11 +9,12 @@ public class Button : MonoBehaviour
     //set this to true in unity editor to indicate button will not rise when nothing pushes it.
     public bool isStuck = false;
 
-    private bool press;
+    private bool isPressed;
     [SerializeField] SpringJoint spring;
 
     //Put in the inspector of the button, the object with the triggerable child script to run when the button is pressed.
     [SerializeField] Triggerable[] trigger;
+    [Tooltip("WHether or not the player can push the button down with themselves, if true, have to use an object to press it down.")]
     [SerializeField] bool playnt;
 
     void Start()
@@ -39,7 +40,11 @@ public class Button : MonoBehaviour
                 return;
                 }
         }
-        //Debug.Log("Trigger triggered!" + other.name);
+        if (isPressed){
+            return;
+        }
+        Debug.Log("Trigger triggered!" + other.name);
+        StartCoroutine(ButtonCooldown());
         foreach (Triggerable t in trigger)
         {
             t.triggerAct();
@@ -48,9 +53,20 @@ public class Button : MonoBehaviour
 
     private void OnTriggerExit(Collider other){
 
+        if (isPressed){
+            return;
+        }
+        StartCoroutine(ButtonCooldown());
         foreach (Triggerable t in trigger)
         {
             t.triggerUnAct();
         }
+    }
+
+    private IEnumerator ButtonCooldown()
+    {
+        isPressed = true;
+        yield return new WaitForSeconds(0.01f);
+        isPressed = false;
     }
 }

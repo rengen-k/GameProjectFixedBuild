@@ -77,13 +77,13 @@ public class PickupItem : MonoBehaviour
             ableToPickup = true;
             rb.isKinematic = false;
             reset = false;
-            Debug.Log("Item dropped?");
+            //Debug.Log("Item dropped?");
         }
 
         // picks up the object and makes it a child of the the player's pickupPoint
         if (reset && pickupDist < 2 && !itemPickedUp && ableToPickup)
         {
-            Debug.Log("picked up");
+            //Debug.Log("picked up");
             rb.isKinematic = true;
             transform.parent = GameObject.Find("pickupPoint").transform;
             transform.position = pickupPoint.position + (transform.localScale.x * -GameObject.Find("Model").transform.forward);

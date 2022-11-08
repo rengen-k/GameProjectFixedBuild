@@ -296,7 +296,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision) {
-        Debug.Log(collision.gameObject);
+        //Debug.Log(collision.gameObject);
         if (collision.gameObject.tag == "HurtTag1" && !isHurt) {
             //Debug.Log("Collided with HurtTag1");
             currentHealth -= 1;
@@ -304,7 +304,7 @@ public class PlayerController : MonoBehaviour
             if (currentHealth <= 0) {
             Respawn();
             } else {
-                Debug.Log("currentHealth: " + currentHealth);
+                //Debug.Log("currentHealth: " + currentHealth);
                 Rb.AddForce(Vector3.up * 12f, ForceMode.Impulse);
             }
         }
@@ -313,7 +313,7 @@ public class PlayerController : MonoBehaviour
             Respawn();
         }
         else if(collision.gameObject.tag == "JumpTag" && !isJumpTrampoline){
-            Debug.Log("Should be forced up");
+            //Debug.Log("Should be forced up");
             coyoteTimeCounter = 0f;
             StartCoroutine(TrampolineCooldown());
             //For now, trampoline forces you up with twice the force of the jump. When the carryable tag is entered, this should instead query the value the trampoline says
