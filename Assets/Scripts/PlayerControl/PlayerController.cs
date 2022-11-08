@@ -7,105 +7,137 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-
+    //-------------------------//
+    // Init
     private Rigidbody Rb;
-
+    private Transform model;
     private PlayerInput playerInput;
     private PlayerActionsScript playerActionsScript;
 
+    //-------------------------//
+    // Camera
     public CameraSwitchScript camScript;
     private int currentCam = 0;
 
-    //Stats
-
+    //-------------------------//
+    // Stats
     [SerializeField] private int currentHealth;
     [SerializeField] private int maxHealth = 1;
 
+    //-------------------------//
     // Damage
-
     private bool isHurt = false;
-    private bool isJumpTrampoline = false;
-
-    //Movement
-
+    
+    //-------------------------//
+    // Movement
     private Vector3 movement;
-
-    private float coyoteTime = 0.06f;
-    public float coyoteTimeCounter;
-
-    private float jumpBufferTime = 0.4f;
-    public float jumpBufferCounter;
-    private bool isJumping = false;
-    private bool jumpRequest;
-    [SerializeField] private float lastGrounded;
-    [SerializeField] private float jumpCutMultiplier = 0.5f;
-
+    private float velPower = 1.5f;
     [SerializeField] private float speed = 12;
-    [SerializeField] private float jumpMultiplier = 10.5f;
-    private float fallMultiplier = 2f;
-    [SerializeField] private float frictionAmount = 0.3f;
-
-    private Vector3 rotation = new Vector3(0, 90f, 0);
-
-    [SerializeField] private Transform groundCheck;
-    private float groundRadius;
-    [SerializeField] private LayerMask whatIsGround;
-    private bool isGrounded;
-    private bool isStableGrounded;
-    private bool isNotNearEdge; // determines correct respawn position
-
+    [SerializeField] private float frictionAmount = 0.45f;
     [SerializeField] private float acceleration = 17;
     [SerializeField] private float deceleration = 25;
-    private float velPower = 1.5f;
-
     
-    private Transform model;
+    //-------------------------//
+    // Coyote Time
+    private float coyoteTime = 0.06f;
+    private float coyoteTimeCounter;
 
-    // Respawn variables
+    //-------------------------//
+    // Jump
+    private float jumpBufferTime = 0.4f;
+    private float jumpBufferCounter;
+    private bool isJumping = false;
+    private bool jumpRequest;
+    private float lastGrounded;
+    private float jumpCutMultiplier = 0.5f;
+    private float fallMultiplier = 2f;
+    [SerializeField] private float jumpMultiplier = 10.5f;
+
+    private float jumpTrampolineHeight = 19.0f;
+    
+    //-------------------------//
+    // Ground Check
+    private Vector3 rotation = new Vector3(0, 90f, 0);
+    private float groundRadius;
+    private bool isGrounded;
+    private bool isStableGrounded;
+    private bool isJumpTrampoline = false;
+    [SerializeField] private LayerMask whatIsGround;
+    [SerializeField] private Transform groundCheck;
+    
+    //-------------------------//
+    // Respawn
     private Vector3 lastGroundedPosition;
     private bool updateRespawnPosition = true;
+    private bool isNotNearEdge;
+    private Vector3 originalPos;
 
-    // private Vector3 originalPos;
+    private bool RespawnRaycastMinusX;
+    private bool RespawnRaycastMinusZ;
+    private bool RespawnRaycastPlusX;
+    private bool RespawnRaycastPlusZ;
 
-    // Raycast variables that determine whether player is not near edge
-    private bool RaycastMinusX;
-    private bool RaycastMinusZ;
-    private bool RaycastPlusX;
-    private bool RaycastPlusZ;
 
-    void Awake()
+    //-----------------------------------------//
+    // ####################################### //
+    // -------------  Methods  --------------- //
+    // ####################################### //
+    //-----------------------------------------//
+
+
+    //-----------------------------------------//
+    // Awake
+    //-----------------------------------------//
+    private void Awake()
     {
         Rb = GetComponent<Rigidbody>();
-        movement = new Vector3(0.0f, 0.0f, 0.0f);
+        ConfigureMovement();
+        ConfigureGroundCheckAndRadius();
+    }
 
+    private void ConfigureMovement() 
+    {
+        movement = new Vector3(0.0f, 0.0f, 0.0f);
+    }
+
+    private void ConfigureGroundCheckAndRadius() 
+    {
         var col = GetComponent<CapsuleCollider>();
         var direction = new Vector3 {[col.direction] = 1};
         var offset = (col.height) / 2 - col.radius;
-        groundRadius = col.radius - 0.01f;
         var localPoint0 = col.center - direction * (offset+0.1f);
+        groundRadius = col.radius - 0.01f;
         groundCheck.position = transform.TransformPoint(localPoint0);
-
     }
 
-    void Start()
+    //-----------------------------------------//
+    // Start
+    //-----------------------------------------//
+    private void Start()
     {
         lastGroundedPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.3f, gameObject.transform.position.z);
-        currentHealth = maxHealth;
-        // originalPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.3f, gameObject.transform.position.z);
-
+        ResetPlayerHealth();
         playerInput = GetComponent<PlayerInput>();
         model = transform.Find("Model");
-        //playerActionsScript = new PlayerActionsScript();
-        //playerActionsScript.Player.Enable();
-        //playerActionsScript.Player.Jump.performed += Jump;
-        //playerActionsScript.Player.Look.performed += Look;
-
     }
 
+    //-----------------------------------------//
+    // OnEnable and OnDisable
+    //-----------------------------------------//
     private void OnEnable()
+    {
+        InitPlayerInput();
+        ConfigPlayerInput();
+    }
+
+    private void InitPlayerInput() 
     {
         playerActionsScript = new PlayerActionsScript();
         playerActionsScript.Player.Enable();
+    }
+
+    private void ConfigPlayerInput() 
+    {
         playerActionsScript.Player.Jump.started += Jump;
         playerActionsScript.Player.Jump.canceled += Jump;
         playerActionsScript.Player.Look.performed += Look;
@@ -116,10 +148,24 @@ public class PlayerController : MonoBehaviour
         playerActionsScript.Player.Disable();
     }
 
-    // Update is called once per frame
-    void Update()
+    //-----------------------------------------//
+    // Update
+    //-----------------------------------------//
+    private void Update()
     {
+        InitJumpGroundDetection();
+        ConfigCoyoteTimeCounter();
+        UpdateRespawn();
+    }
 
+    private void InitJumpGroundDetection() 
+    {
+        jumpBufferCounter -= Time.deltaTime;
+        lastGrounded -= Time.deltaTime;
+    }
+
+    private void ConfigCoyoteTimeCounter() 
+    {
         if (isGrounded)
         {
             coyoteTimeCounter = coyoteTime;
@@ -128,25 +174,51 @@ public class PlayerController : MonoBehaviour
         {
             coyoteTimeCounter -= Time.deltaTime;
         }
+    }
 
-        jumpBufferCounter -= Time.deltaTime;
-        lastGrounded -= Time.deltaTime;
-
+    private void UpdateRespawn() 
+    {
         if (isNotNearEdge && isStableGrounded && updateRespawnPosition && coyoteTimeCounter == coyoteTime) {
-            //Debug.Log("respawn pos updated");
             lastGroundedPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.3f, gameObject.transform.position.z);
             StartCoroutine(RespawnPositionCooldown());
         }
-        
     }
 
+
+    //-----------------------------------------//
+    // FixedUpdate
+    //-----------------------------------------//
     private void FixedUpdate()
+    {
+        CheckIfGroundedorStableGrounded();
+        Vector2 inputVector = playerActionsScript.Player.Move.ReadValue<Vector2>();
+
+        SetMovementDirection(inputVector);
+        ConfigPlayerModelRotationDirection();
+        ConfigMovementAmount();
+
+        ApplyFriction(inputVector);  
+
+        Rb.AddForce(movement * Time.fixedDeltaTime);
+
+        if (jumpRequest)
+        {
+            ExecuteJump();
+        }
+
+        ModifyFallSpeed();
+
+        isNotNearEdge = CheckIfPlayerNotNearEdge();
+    }
+
+    // Check whether sphere is colliding with ground or stableground
+    private void CheckIfGroundedorStableGrounded() 
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (int)whatIsGround) || Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
         isStableGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
-        
-        Vector2 inputVector = playerActionsScript.Player.Move.ReadValue<Vector2>();
+    }
 
+    private void SetMovementDirection(Vector2 inputVector) {
         if (currentCam == 0)
         {
             movement = new Vector3(inputVector.x, 0.0f, 0.0f);
@@ -163,32 +235,32 @@ public class PlayerController : MonoBehaviour
         {
             movement = new Vector3(0f, 0.0f, -inputVector.x);
         }
+    }
 
-        // character model looks left and right
+    private void ConfigPlayerModelRotationDirection() 
+    {
         if (movement.x > 0)
         {
             model.rotation = transform.rotation * Quaternion.Euler(0, -90, 0);
-            //model.rotation = Quaternion.Euler(0, -90, 0);
         }
         else if (movement.x < 0)
         {
             model.rotation = transform.rotation * Quaternion.Euler(0, 90, 0);
-            //model.rotation = Quaternion.Euler(0, 90, 0);
         }
         else if (movement.z < 0)
         {
             model.rotation = transform.rotation * Quaternion.Euler(0, 0, 0);
-            //model.rotation = Quaternion.Euler(0, 90, 0);
         }
         else if (movement.z > 0)
         {
             model.rotation = transform.rotation * Quaternion.Euler(0, 180, 0);
-            //model.rotation = Quaternion.Euler(0, 90, 0);
         }
+    }
 
+    private void ConfigMovementAmount() 
+    {
         if (currentCam == 1 || currentCam == 3)
         {
-            //Debug.Log("in z loop");
             float targetSpeed = movement.z * speed;
             float speedDif = targetSpeed - Rb.velocity.z;
             float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : deceleration;
@@ -198,7 +270,6 @@ public class PlayerController : MonoBehaviour
         }
         else if (currentCam == 0 || currentCam == 2)
         {
-            //Debug.Log("in x loop");
             float targetSpeed = movement.x * speed;
             float speedDif = targetSpeed - Rb.velocity.x;
             float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : deceleration;
@@ -206,8 +277,11 @@ public class PlayerController : MonoBehaviour
             movement.x = move;
             movement.z = 0f;
         }
+    }
 
-        // apply friction
+    // Apply opposite force to player movement to imitate friction
+    private void ApplyFriction(Vector2 inputVector) 
+    {
         if (isGrounded && Mathf.Abs(inputVector.x) < 0.01f && (currentCam == 1 || currentCam == 3))
         {
             float amount = Mathf.Min(Mathf.Abs(Rb.velocity.z), Mathf.Abs(frictionAmount));
@@ -220,16 +294,12 @@ public class PlayerController : MonoBehaviour
             amount *= Mathf.Sign(Rb.velocity.x);
             Rb.AddForce(Vector3.right * -amount, ForceMode.Impulse);
         }
+    }
 
-        // transform.Translate(movement * speed * Time.fixedDeltaTime);
-        //Debug.Log(movement);
-        Rb.AddForce(movement * Time.fixedDeltaTime);
-
-        if (jumpRequest)
-        {
-            if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f && !isJumping)
+    private void ExecuteJump() 
+    {
+        if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f && !isJumping)
             {
-
                 jumpBufferCounter = jumpBufferTime;
                 coyoteTimeCounter = 0f;
                 jumpRequest = false;
@@ -237,42 +307,46 @@ public class PlayerController : MonoBehaviour
                 Rb.velocity = new Vector3(Rb.velocity.x, 0f, Rb.velocity.z);
                 Rb.AddForce(Vector3.up * jumpMultiplier, ForceMode.Impulse);
                 StartCoroutine(JumpCooldown());
-
             }
+    }
 
-        }
-
-        // Player will fall faster to the ground
+    // Modifies fall speed to become faster or slower
+    private void ModifyFallSpeed() 
+    {
         if (Rb.velocity.y < 0)
         {
             Rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
         }
         Rb.AddForce(Physics.gravity * 1.2f, ForceMode.Acceleration);
-
-        // 4 Raycasts to determine whether player is not too close to the edge to check whether it's a safe place to respawn
-        // Bit shift the index of the layer (8) to get a bit mask
-        int layerMask = 1 << 8;
-
-        // This would cast rays only against colliders in layer 8. Layer 8 is stableground.
-
-        RaycastMinusX = Physics.Raycast(transform.position + new Vector3(-0.3f, 0.0f, 0.0f), transform.TransformDirection(Vector3.down), 1, layerMask);
-        RaycastPlusX = Physics.Raycast(transform.position + new Vector3(0.3f, 0.0f, 0.0f), transform.TransformDirection(Vector3.down), 1, layerMask);
-        RaycastMinusZ = Physics.Raycast(transform.position + new Vector3(0.0f, 0.0f, -0.3f), transform.TransformDirection(Vector3.down), 1, layerMask);
-        RaycastPlusZ = Physics.Raycast(transform.position + new Vector3(0.0f, 0.0f, 0.3f), transform.TransformDirection(Vector3.down), 1, layerMask);
-
-        if (RaycastMinusX && RaycastPlusX && RaycastMinusZ && RaycastPlusZ)
-        {
-
-            isNotNearEdge = true;
-        } else {
-            isNotNearEdge = false;
-        }
-
     }
 
+    // Determines whether player is not near the edge - main use is to respawn at correct locations
+    private bool CheckIfPlayerNotNearEdge() 
+    {
+        int layerMask = 1 << 8;
+
+        RespawnRaycastMinusX = Physics.Raycast(transform.position + new Vector3(-0.3f, 0.0f, 0.0f), transform.TransformDirection(Vector3.down), 1, layerMask);
+        RespawnRaycastPlusX = Physics.Raycast(transform.position + new Vector3(0.3f, 0.0f, 0.0f), transform.TransformDirection(Vector3.down), 1, layerMask);
+        RespawnRaycastMinusZ = Physics.Raycast(transform.position + new Vector3(0.0f, 0.0f, -0.3f), transform.TransformDirection(Vector3.down), 1, layerMask);
+        RespawnRaycastPlusZ = Physics.Raycast(transform.position + new Vector3(0.0f, 0.0f, 0.3f), transform.TransformDirection(Vector3.down), 1, layerMask);
+
+        bool nearEdge = true;
+
+        if (RespawnRaycastMinusX && RespawnRaycastPlusX && RespawnRaycastMinusZ && RespawnRaycastPlusZ)
+        {
+            nearEdge = true;
+        } else {
+            nearEdge = false;
+        }
+
+        return nearEdge;
+    }
+
+    //-----------------------------------------//
+    // Jump
+    //-----------------------------------------//
     public void Jump(InputAction.CallbackContext context)
     {
-        //Debug.Log("in jump");
         jumpRequest = true;
         jumpBufferCounter = jumpBufferTime;
         if (context.canceled)
@@ -285,24 +359,28 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //-----------------------------------------//
+    // Look
+    //-----------------------------------------//
     public void Look(InputAction.CallbackContext context)
     {
-
-        //Debug.Log(context);
         if (context.ReadValue<Vector2>().x <= -0.5f)
         {
             currentCam = camScript.SwitchState(-1);
-            //Debug.Log("currentCam: " + currentCam);
             model.transform.Rotate(rotation);
         }
         else if (context.ReadValue<Vector2>().x >= 0.5f)
         {
             currentCam = camScript.SwitchState(1);
-            //Debug.Log("currentCam: " + currentCam);
             model.transform.Rotate(-rotation);
         }
     
-        // Rigidbody constraints to prevent movement in an axis that is not intended to be moved in
+        ModifyConstraintsBasedOnCamera();
+    }
+
+    // Rigidbody constraints to prevent movement in an axis that is not intended to be moved in
+    private void ModifyConstraintsBasedOnCamera() 
+    {
         if (currentCam == 0 | currentCam == 2) {
             Rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
         } else if (currentCam == 1 | currentCam == 3) {
@@ -310,55 +388,54 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision) {
-        //Debug.Log(collision.gameObject);
-        if (collision.gameObject.tag == "HurtTag1" && !isHurt) {
-            //Debug.Log("Collided with HurtTag1");
+    //-----------------------------------------//
+    // OnCollisionEnter
+    //-----------------------------------------//
+    // OnCollisionEnter - behaviour changes depending on tag that player collides with
+    // --Tags:--
+    // HurtTag1 - take damage
+    // KillPlane - Respawn
+    // JumpTag - Bounce Up
+    private void OnCollisionEnter(Collision collision) 
+    {
+        if (collision.gameObject.tag == "HurtTag1" && !isHurt) 
+        {
             currentHealth -= 1;
             StartCoroutine(HurtCooldown());
             if (currentHealth <= 0) {
             Respawn();
             } else {
-                //Debug.Log("currentHealth: " + currentHealth);
                 Rb.AddForce(Vector3.up * 12f, ForceMode.Impulse);
             }
         }
+
         else if (collision.gameObject.name == "KillPlane")
         {
             Respawn();
         }
-        else if(collision.gameObject.tag == "JumpTag" && !isJumpTrampoline){
-            //Debug.Log("Should be forced up");
+
+        else if (collision.gameObject.tag == "JumpTag" && !isJumpTrampoline){
             coyoteTimeCounter = 0f;
             StartCoroutine(TrampolineCooldown());
-            //For now, trampoline forces you up with twice the force of the jump. When the carryable tag is entered, this should instead query the value the trampoline says
-            // Rb.AddForce(Vector3.up * jumpVelocity * collision.gameObject.getJumpMult(), ForceMode.Impulse);
-            // No need to have jumpVelocity in calculation.
             Rb.velocity = Vector3.zero;
-            Rb.AddForce(Vector3.up * 19f, ForceMode.Impulse);
+            Rb.AddForce(Vector3.up * jumpTrampolineHeight, ForceMode.Impulse);
         }
     }
 
-    private void OnCollisionExit(Collision collision)
-    {
-
-    }
-
+    // Reset Player health to maxHealth
     private void ResetPlayerHealth() {
         currentHealth = maxHealth;
     }
 
+    // Set player to lastGroundedPosition and reset their health
     private void Respawn() {
         ResetPlayerHealth();
-        // respawn from originalPos
-        // transform.position = originalPos;
         transform.position = lastGroundedPosition;
-        // respawn by reloading the level to reset the placement of other objects
-        // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-
-
+    //-----------------------------------------//
+    // Cooldowns (Coroutines)
+    //-----------------------------------------//
     private IEnumerator JumpCooldown()
     {
         isJumping = true;
@@ -386,7 +463,4 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         updateRespawnPosition = true;
     }
-
-
-
 }
