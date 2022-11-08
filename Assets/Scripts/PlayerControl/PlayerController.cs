@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed = 12;
     [SerializeField] private float jumpMultiplier = 10.5f;
     private float fallMultiplier = 2f;
+    [SerializeField] private float frictionAmount;
 
     private Vector3 rotation = new Vector3(0, 90f, 0);
 
@@ -53,8 +54,8 @@ public class PlayerController : MonoBehaviour
     private bool isStableGrounded;
     private bool isNotNearEdge; // determines correct respawn position
 
-    private float acceleration = 17;
-    private float deceleration = 35;
+    [SerializeField] private float acceleration = 17;
+    [SerializeField] private float deceleration = 35;
     private float velPower = 1.5f;
 
     
@@ -204,6 +205,20 @@ public class PlayerController : MonoBehaviour
             float move = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, velPower) * Mathf.Sign(speedDif);
             movement.x = move;
             movement.z = 0f;
+        }
+
+        // apply friction
+        if (isGrounded && Mathf.Abs(inputVector.x) < 0.01f && (currentCam == 1 || currentCam == 3))
+        {
+            float amount = Mathf.Min(Mathf.Abs(Rb.velocity.z), Mathf.Abs(frictionAmount));
+            amount *= Mathf.Sign(Rb.velocity.z);
+            Rb.AddForce(Vector3.forward * -amount, ForceMode.Impulse);
+        }
+        else if (isGrounded && Mathf.Abs(inputVector.x) < 0.01f)
+        {
+            float amount = Mathf.Min(Mathf.Abs(Rb.velocity.x), Mathf.Abs(frictionAmount));
+            amount *= Mathf.Sign(Rb.velocity.x);
+            Rb.AddForce(Vector3.right * -amount, ForceMode.Impulse);
         }
 
         // transform.Translate(movement * speed * Time.fixedDeltaTime);
