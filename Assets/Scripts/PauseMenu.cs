@@ -8,7 +8,7 @@ using TMPro;
 
 public class PauseMenu : MonoBehaviour
 {
-    // PauseMenu handler.
+    // PauseMenu handler. Attached to canvas.
 
     private PlayerActionsScript playerActionsScript;
     [Tooltip("Fields representing status of pausemenu.")]
@@ -18,12 +18,9 @@ public class PauseMenu : MonoBehaviour
     [Tooltip("Fields representing status of pausemenu.")]
     public static bool levelsToggle = false;
 
-    [Tooltip("Reference to child game object.")]
-    public GameObject PauseMenuUI;
-    [Tooltip("Reference to child game object.")]
-    public GameObject helpPanel;
-    [Tooltip("Reference to child game object.")]
-    public GameObject levelPanel;
+    private GameObject PauseMenuUI;
+    private GameObject helpPanel;
+    private GameObject levelPanel;
 
     private Vector2 helpPosOn;
     private Vector2 helpPosOff;
@@ -35,6 +32,11 @@ public class PauseMenu : MonoBehaviour
     private bool firstTime;
 
     void Awake(){
+
+        PauseMenuUI = transform.Find("PauseMenu").gameObject;
+        helpPanel = transform.Find("PauseMenu/HelpScreen").gameObject;
+        levelPanel = transform.Find("PauseMenu/LevelScreen").gameObject;
+
         playerActionsScript = new PlayerActionsScript();
         playerActionsScript.Player.Enable();
         playerActionsScript.Player.Menu.performed += TriggerPause;

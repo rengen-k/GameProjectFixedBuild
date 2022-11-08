@@ -10,7 +10,6 @@ public class Button : MonoBehaviour
     [Tooltip("Boolean expessing if the button will not spring back when nothing holds it down.")]
     public bool isStuck = false;
 
-    private bool isPressed;
     [Tooltip("The spring attached to the button, if the button stays down once pressed, the spring is set to break.")]
     [SerializeField] SpringJoint spring;
 
@@ -62,10 +61,5 @@ public class Button : MonoBehaviour
         }
     }
 
-    private IEnumerator ButtonCooldown()
-    {
-        isPressed = true;
-        yield return new WaitForSeconds(0.01f);
-        isPressed = false;
-    }
+
 }

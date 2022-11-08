@@ -22,11 +22,16 @@ public class Bomb : MonoBehaviour
 
     [Tooltip("References prefab that will spawn to simulate explosion")]
     [SerializeField] private GameObject explosion;
-    [Tooltip("References child UI element called BombCountdown. To indicate when bomb will explode.")]
-    [SerializeField] private GameObject timer;
+    private GameObject timer;
 
+    void Awake()
+    {
+        timer = transform.Find("WorldSpaceCanvas/BombCountdown").gameObject;
+    }
     void Start()
     {
+        
+        
         timer.transform.parent.gameObject.GetComponent<Canvas>().worldCamera = GameObject.Find("UICamera").GetComponent<Camera>();
     }
 

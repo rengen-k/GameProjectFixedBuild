@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-
+    // Player movement.
     private Rigidbody Rb;
 
     private PlayerInput playerInput;
@@ -17,9 +17,8 @@ public class PlayerController : MonoBehaviour
     private int currentCam = 0;
 
     //Stats
-
-    [SerializeField] private int currentHealth;
-    [SerializeField] private int maxHealth = 1;
+    private int currentHealth;
+    private int maxHealth = 1;
 
     // Damage
 
@@ -30,32 +29,32 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 movement;
 
-    private float coyoteTime = 0.06f;
+    private float coyoteTime = 0.08f;
     public float coyoteTimeCounter;
 
     private float jumpBufferTime = 0.4f;
     public float jumpBufferCounter;
     private bool isJumping = false;
     private bool jumpRequest;
-    [SerializeField] private float lastGrounded;
-    [SerializeField] private float jumpCutMultiplier = 0.5f;
 
-    [SerializeField] private float speed = 12;
-    [SerializeField] private float jumpMultiplier = 10.5f;
+    private float jumpCutMultiplier = 0.5f;
+
+    private float speed = 12;
+    private float jumpMultiplier = 10.5f;
     private float fallMultiplier = 2f;
-    [SerializeField] private float frictionAmount = 0.3f;
+    private float frictionAmount = 0.45f;
 
     private Vector3 rotation = new Vector3(0, 90f, 0);
 
-    [SerializeField] private Transform groundCheck;
+    private Transform groundCheck;
     private float groundRadius;
-    [SerializeField] private LayerMask whatIsGround;
+    private LayerMask whatIsGround;
     private bool isGrounded;
     private bool isStableGrounded;
     private bool isNotNearEdge; // determines correct respawn position
 
-    [SerializeField] private float acceleration = 17;
-    [SerializeField] private float deceleration = 25;
+    private float acceleration = 17;
+    private float deceleration = 25;
     private float velPower = 1.5f;
 
     
@@ -75,6 +74,7 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
+        groundCheck = transform.Find("Model/groundCheck");
         Rb = GetComponent<Rigidbody>();
         movement = new Vector3(0.0f, 0.0f, 0.0f);
 
@@ -119,7 +119,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (isGrounded)
         {
             coyoteTimeCounter = coyoteTime;
@@ -130,7 +129,6 @@ public class PlayerController : MonoBehaviour
         }
 
         jumpBufferCounter -= Time.deltaTime;
-        lastGrounded -= Time.deltaTime;
 
         if (isNotNearEdge && isStableGrounded && updateRespawnPosition && coyoteTimeCounter == coyoteTime) {
             //Debug.Log("respawn pos updated");
@@ -142,7 +140,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (int)whatIsGround) || Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 7)) || Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
         isStableGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
         
         Vector2 inputVector = playerActionsScript.Player.Move.ReadValue<Vector2>();
