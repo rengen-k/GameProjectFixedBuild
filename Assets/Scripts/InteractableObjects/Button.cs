@@ -23,7 +23,7 @@ public class Button : MonoBehaviour
     void Start()
     {
         if (isStuck){
-            spring.breakForce = 10;
+            spring.breakForce = 20;
         }
         
     }
@@ -50,7 +50,12 @@ public class Button : MonoBehaviour
     }
 
     private void OnTriggerExit(Collider other){
-
+        if (playnt){
+            if (other.name == "Player"){
+                return;
+                }
+        }
+        
         foreach (Triggerable t in trigger)
         {
             t.triggerUnAct();
