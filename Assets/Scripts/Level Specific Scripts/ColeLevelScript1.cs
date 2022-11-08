@@ -5,6 +5,7 @@ using UnityEngine;
 public class ColeLevelScript1 : Triggerable
 {
     private bool triggered;
+    // alows you to specify which platforms will be visible when the level starts
     [SerializeField] private bool startActive;
 
     private void Start()
@@ -13,6 +14,7 @@ public class ColeLevelScript1 : Triggerable
         GetComponent<BoxCollider>().enabled = startActive;
     }
 
+    // if button is pressed in level 8, the platforms that are visible alternate
     void Update()
     {
         if (triggered)
