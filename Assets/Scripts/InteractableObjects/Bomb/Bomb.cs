@@ -20,6 +20,8 @@ public class Bomb : MonoBehaviour
     PickupItem pickupScript;
     public Transform respawnPoint;
 
+    private Rigidbody rb;
+
     [Tooltip("References prefab that will spawn to simulate explosion")]
     [SerializeField] private GameObject explosion;
     private GameObject timer;
@@ -30,8 +32,7 @@ public class Bomb : MonoBehaviour
     }
     void Start()
     {
-        
-        
+        rb = GetComponent<Rigidbody>();
         timer.transform.parent.gameObject.GetComponent<Canvas>().worldCamera = GameObject.Find("UICamera").GetComponent<Camera>();
     }
 
@@ -92,10 +93,22 @@ public class Bomb : MonoBehaviour
         }
 
         // Removing bomb and resetting
+        ResetBomb();
+    }
+
+    private void ResetBomb() {
         gameObject.SetActive(false);
         transform.position = respawnPoint.position;
         gameObject.SetActive(true);
         hasExploded = false;
         timer.GetComponent<Image>().fillAmount = 1;
+    }
+
+    private void OnCollisionEnter(Collision other) {
+        if (other.gameObject.name == "KillPlane") 
+        {
+            rb.velocity = new Vector3(0.0f, 0.0f, 0.0f);
+            ResetBomb();
+        }
     }
 }

@@ -25,12 +25,16 @@ public class PickupItem : MonoBehaviour
     private bool reset;
     public bool hasBeenThrown = false;
 
+    private Vector3 respawnPos;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         player = GameObject.Find("Player").transform;
         pickupPoint = GameObject.Find("pickupPoint").transform;
         ableToPickup = true;
+        respawnPos = transform.position;
+
     }
 
     private void OnEnable()
@@ -111,5 +115,16 @@ public class PickupItem : MonoBehaviour
             itemPickedUp = false;
             hasBeenThrown = true;
         }
+    }
+
+    private void OnCollisionEnter(Collision other) {
+        if (other.gameObject.name == "KillPlane") 
+        {
+            Respawn();
+        }
+    }
+
+    private void Respawn() {
+        transform.position = respawnPos;
     }
 }

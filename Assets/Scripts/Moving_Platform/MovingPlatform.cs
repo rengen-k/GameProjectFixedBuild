@@ -6,11 +6,9 @@ using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
-    [SerializeField]
-    private WaypointPath _waypointPath;
-
-    [SerializeField]
-    private float _speed;
+    [SerializeField] private WaypointPath _waypointPath;
+    [SerializeField] private float _speed;
+    [SerializeField] private int _startingIndex;
 
     private int _targetWaypointIndex;
 
@@ -22,6 +20,7 @@ public class MovingPlatform : MonoBehaviour
 
     void Start()
     {
+        _targetWaypointIndex = _startingIndex;
         TargetNextWaypoint();
     }
 
