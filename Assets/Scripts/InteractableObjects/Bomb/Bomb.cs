@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//-----------------------------------------//
+// Bomb
+//-----------------------------------------//
+// Bomb, an object that can be picked up and thrown. When thrown, creates explosion that destroys objects with the destructible script.
+
 public class Bomb : MonoBehaviour
 {
-    // Bomb, an object that can be picked up and thrown. When thrown, creates explosion that destroys objects with the destructible script.
-
     [Tooltip("Values that decide bombs explosion properties.")]
     public float delay;
     [Tooltip("Values that decide bombs explosion properties.")]
@@ -26,24 +29,25 @@ public class Bomb : MonoBehaviour
     [SerializeField] private GameObject explosion;
     private GameObject timer;
 
-    void Awake()
+    private void Awake()
     {
         timer = transform.Find("WorldSpaceCanvas/BombCountdown").gameObject;
     }
-    void Start()
+
+    private void Start()
     {
         rb = GetComponent<Rigidbody>();
         timer.transform.parent.gameObject.GetComponent<Canvas>().worldCamera = GameObject.Find("UICamera").GetComponent<Camera>();
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         countdown = delay;
         pickupScript = GetComponent<PickupItem>();
         timer.SetActive(false);
     }
 
-    void Update()
+    private void Update()
     {
         // To make UI timer look towards camera
         Camera camera = Camera.main ;
@@ -65,9 +69,9 @@ public class Bomb : MonoBehaviour
         }
     }
 
-    void Explode()
+    // Find every destructible object inside explosion. Destroy it. For everything else that can move, push away.
+    private void Explode()
     {
-        //Find every destructible object inside explosion. Destroy. For everything else that can move, push away.
         Instantiate(explosion, transform.position, transform.rotation).GetComponent<Explosion>().bombRadious = blastRadius;
 
         Collider[] collidersToDestroy = Physics.OverlapSphere(transform.position, blastRadius);

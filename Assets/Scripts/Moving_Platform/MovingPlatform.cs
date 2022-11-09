@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//-----------------------------------------//
+// MovingPlatform
+//-----------------------------------------//
+// Moving Platform that uses a waypointPath object to determine locations where the platform should move to
 // Source: https://www.youtube.com/watch?v=ly9mK0TGJJo
 
 public class MovingPlatform : MonoBehaviour

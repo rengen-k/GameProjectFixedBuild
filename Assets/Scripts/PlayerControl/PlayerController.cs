@@ -5,6 +5,11 @@ using UnityEngine.InputSystem;
 using System.Linq;
 using UnityEngine.SceneManagement;
 
+//-----------------------------------------//
+// Player Controller
+//-----------------------------------------//
+// Governs Player physics, movement, jumping, basic input, player respawn, and interactions with game mechanics
+
 public class PlayerController : MonoBehaviour
 {
     //-------------------------//
@@ -38,11 +43,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float deceleration = 25;
     
     //-------------------------//
-    // Coyote Time
-    private float coyoteTime = 0.06f;
-    private float coyoteTimeCounter;
-
-    //-------------------------//
     // Jump
     private float jumpBufferTime = 0.4f;
     private float jumpBufferCounter;
@@ -54,7 +54,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpMultiplier = 10.5f;
 
     private float jumpTrampolineHeight = 19.0f;
-    
+
+    //-------------------------//
+    // Coyote Time
+    private float coyoteTime = 0.06f;
+    private float coyoteTimeCounter;
+
     //-------------------------//
     // Ground Check
     private Vector3 rotation = new Vector3(0, 90f, 0);
@@ -78,12 +83,6 @@ public class PlayerController : MonoBehaviour
     private bool RespawnRaycastPlusZ;
 
 
-    //-----------------------------------------//
-    // ####################################### //
-    // -------------  Methods  --------------- //
-    // ####################################### //
-    //-----------------------------------------//
-
 
     //-----------------------------------------//
     // Awake
@@ -91,11 +90,11 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         Rb = GetComponent<Rigidbody>();
-        ConfigureMovement();
+        InitMovement();
         ConfigureGroundCheckAndRadius();
     }
 
-    private void ConfigureMovement() 
+    private void InitMovement() 
     {
         movement = new Vector3(0.0f, 0.0f, 0.0f);
     }
@@ -151,14 +150,15 @@ public class PlayerController : MonoBehaviour
     //-----------------------------------------//
     // Update
     //-----------------------------------------//
+    // Monitors variables associated with jumping, coyote time counter, and refreshes the respawn position
     private void Update()
     {
-        InitJumpGroundDetection();
+        JumpGroundDetection();
         ConfigCoyoteTimeCounter();
         UpdateRespawn();
     }
 
-    private void InitJumpGroundDetection() 
+    private void JumpGroundDetection() 
     {
         jumpBufferCounter -= Time.deltaTime;
         lastGrounded -= Time.deltaTime;
@@ -176,6 +176,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Update respawn position when player is not near an edge and is grounded
     private void UpdateRespawn() 
     {
         if (isNotNearEdge && isStableGrounded && updateRespawnPosition && coyoteTimeCounter == coyoteTime) {
@@ -184,10 +185,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     //-----------------------------------------//
     // FixedUpdate
     //-----------------------------------------//
+    // Performs movement, jumping, ground detection, and physics while there is an input
     private void FixedUpdate()
     {
         CheckIfGroundedorStableGrounded();
@@ -218,6 +219,7 @@ public class PlayerController : MonoBehaviour
         isStableGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
     }
 
+    // Set the direction of movement based on current camera used
     private void SetMovementDirection(Vector2 inputVector) {
         if (currentCam == 0)
         {
@@ -237,6 +239,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // While moving, changes the rotation of the model to be relative to the camera
     private void ConfigPlayerModelRotationDirection() 
     {
         if (movement.x > 0)
@@ -257,6 +260,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Changes amount of movement in the z or x axis depending on a number of physics variables
     private void ConfigMovementAmount() 
     {
         if (currentCam == 1 || currentCam == 3)
@@ -296,6 +300,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Execute Jump only when certain conditions are met eg. when not jumping
     private void ExecuteJump() 
     {
         if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f && !isJumping)
@@ -345,6 +350,7 @@ public class PlayerController : MonoBehaviour
     //-----------------------------------------//
     // Jump
     //-----------------------------------------//
+    // Jump Input to be used when the player presses the Jump button in the input system
     public void Jump(InputAction.CallbackContext context)
     {
         jumpRequest = true;
@@ -362,6 +368,7 @@ public class PlayerController : MonoBehaviour
     //-----------------------------------------//
     // Look
     //-----------------------------------------//
+    // Look input to be used when the player rotates the camera using left and right x axis input
     public void Look(InputAction.CallbackContext context)
     {
         if (context.ReadValue<Vector2>().x <= -0.5f)
@@ -436,6 +443,7 @@ public class PlayerController : MonoBehaviour
     //-----------------------------------------//
     // Cooldowns (Coroutines)
     //-----------------------------------------//
+    // Coroutines that act as cooldowns to ensure that action is only performed at specified intervals
     private IEnumerator JumpCooldown()
     {
         isJumping = true;
