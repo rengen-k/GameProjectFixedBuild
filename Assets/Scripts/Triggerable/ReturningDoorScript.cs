@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //-----------------------------------------//
-// WaypointPath_Linear
+// ReturningDoorScript
 //-----------------------------------------//
 // A door that only opens while the connected switch is pressed down.
 
