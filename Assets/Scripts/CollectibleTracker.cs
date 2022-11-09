@@ -9,6 +9,7 @@ using UnityEngine.UI;
 // CollectibleTracker
 //-----------------------------------------//
 // Singleton that keeps track of which levels has had all of their collectibles collectied. Updates the internal representation of the level when EndLevel is called, normally when levelloader is touched.
+
 public class CollectibleTracker : MonoBehaviour
 {
     private static bool[] levelsCollected;
@@ -17,8 +18,6 @@ public class CollectibleTracker : MonoBehaviour
 
     // Needs panel inside LevelScreen from prefab, should be one with the grid of buttons.
     private GameObject levelPanel;
-
-    private GameObject msg;
 
     private int thisLevelCollectibles;
 
@@ -37,17 +36,18 @@ public class CollectibleTracker : MonoBehaviour
 
             //Generating list, with every level represented by a bool in levelsCollected
             levelPanel = GameObject.Find("LevelGrid");
-            msg = GameObject.Find("CollectibleNotify");
             levelsCollected = new bool[levelPanel.transform.childCount];
-            instance.UpdateGlobalInstance();
         }
         // Can't this be simplified?
+        levelPanel = GameObject.Find("LevelGrid");
+        thisLevelCollectibles =
+            GameObject.FindGameObjectsWithTag("Collectible").Length;
+        UpdateLevels();
     }
 
     public void EndLevel()
     {
-        // End level reached, update singleton if all collectibles of this level was attained.
-
+        // End level reached, update singleton if all collectibles of this level was attained. 
         if (thisLevelCollectibles == 0)
         {
             int levelNum =
@@ -60,10 +60,6 @@ public class CollectibleTracker : MonoBehaviour
     public void Collected()
     {
         thisLevelCollectibles--;
-        if (thisLevelCollectibles == 0)
-        {
-            msg.SetActive(true);
-        }
     }
 
     // UpdateLevels gets called during object creation, and whenever a collectible is picked up, after the levelsCollected gets updated.
@@ -87,8 +83,6 @@ public class CollectibleTracker : MonoBehaviour
         levelPanel = GameObject.Find("LevelGrid");
         thisLevelCollectibles =
             GameObject.FindGameObjectsWithTag("Collectible").Length;
-        msg = GameObject.Find("CollectibleNotify");
-        msg.SetActive(false);
 
         UpdateLevels();
     }
