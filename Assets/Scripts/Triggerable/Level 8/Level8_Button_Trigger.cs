@@ -2,7 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ColeLevelScript1 : Triggerable
+//-----------------------------------------//
+// Level8_Button_Trigger
+//-----------------------------------------//
+// Triggers platform block configurations in Level 8 when a button is pressed
+
+public class Level8_Button_Trigger : Triggerable
 {
     private bool triggered;
     // alows you to specify which platforms will be visible when the level starts
@@ -15,7 +20,7 @@ public class ColeLevelScript1 : Triggerable
     }
 
     // if button is pressed in level 8, the platforms that are visible alternate
-    void Update()
+    private void Update()
     {
         if (triggered)
         {

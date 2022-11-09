@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//-----------------------------------------//
+// ItemRespawn
+//-----------------------------------------//
+// Respawns bomb when it explodes
+
 public class ItemRespawn : MonoBehaviour
 {
     public GameObject itemPrefab;

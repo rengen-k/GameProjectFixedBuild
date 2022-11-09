@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+//-----------------------------------------//
+// PickupItem
+//-----------------------------------------//
+// A script indicating that an object can be picked up with 'e' (default keybind).
 public class PickupItem : MonoBehaviour
 {
-    // A script indicating that an object can be picked up with 'e'.
-
     private PlayerActionsScript playerActionsScript;
     private Transform pickupPoint;
     private Transform player;
@@ -34,7 +36,6 @@ public class PickupItem : MonoBehaviour
         pickupPoint = GameObject.Find("pickupPoint").transform;
         ableToPickup = true;
         respawnPos = transform.position;
-
     }
 
     private void OnEnable()
@@ -44,7 +45,6 @@ public class PickupItem : MonoBehaviour
         playerActionsScript.Player.Fire.performed += Fire;
         playerActionsScript.Player.Interact.performed += Interact;
         hasBeenThrown = false;
-
     }
 
     private void OnDisable()
@@ -52,7 +52,7 @@ public class PickupItem : MonoBehaviour
         playerActionsScript.Player.Disable();
     }
 
-    void Update()
+    private void Update()
     {
         pickupDist = Vector3.Distance(player.position, transform.position);
 
@@ -63,7 +63,7 @@ public class PickupItem : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if (itemPickedUp)
         {
@@ -75,7 +75,7 @@ public class PickupItem : MonoBehaviour
         rb.AddForce(Physics.gravity * 1.2f, ForceMode.Acceleration);
     }
 
-    public void Interact (InputAction.CallbackContext context)
+    public void Interact(InputAction.CallbackContext context)
     {
         // this is so you can't pick up and drop the item on the same keystroke
         reset = true;
@@ -88,13 +88,11 @@ public class PickupItem : MonoBehaviour
             ableToPickup = true;
             rb.isKinematic = false;
             reset = false;
-            //Debug.Log("Item dropped?");
         }
 
         // picks up the object and makes it a child of the the player's pickupPoint
         if (reset && pickupDist < 2 && !itemPickedUp && ableToPickup)
         {
-            //Debug.Log("picked up");
             rb.isKinematic = true;
             transform.parent = GameObject.Find("pickupPoint").transform;
             transform.position = pickupPoint.position + (transform.localScale.x * -GameObject.Find("Model").transform.forward);
@@ -102,10 +100,9 @@ public class PickupItem : MonoBehaviour
             itemPickedUp = true;
         }
     }
-
-    public void Fire (InputAction.CallbackContext context)
+    // throws the object based on player's current velocity
+    public void Fire(InputAction.CallbackContext context)
     {
-        // throws the object based on player's current velocity
         if (itemPickedUp)
         {
             rb.isKinematic = false;
@@ -117,14 +114,16 @@ public class PickupItem : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision other) {
+    private void OnCollisionEnter(Collision other)
+    {
         if (other.gameObject.name == "KillPlane") 
         {
             Respawn();
         }
     }
 
-    private void Respawn() {
+    private void Respawn()
+    {
         transform.position = respawnPos;
     }
 }

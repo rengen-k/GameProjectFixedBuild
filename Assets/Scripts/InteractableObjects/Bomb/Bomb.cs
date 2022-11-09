@@ -100,7 +100,8 @@ public class Bomb : MonoBehaviour
         ResetBomb();
     }
 
-    private void ResetBomb() {
+    private void ResetBomb()
+    {
         gameObject.SetActive(false);
         transform.position = respawnPoint.position;
         gameObject.SetActive(true);
@@ -108,7 +109,8 @@ public class Bomb : MonoBehaviour
         timer.GetComponent<Image>().fillAmount = 1;
     }
 
-    private void OnCollisionEnter(Collision other) {
+    private void OnCollisionEnter(Collision other)
+    {
         if (other.gameObject.name == "KillPlane") 
         {
             rb.velocity = new Vector3(0.0f, 0.0f, 0.0f);

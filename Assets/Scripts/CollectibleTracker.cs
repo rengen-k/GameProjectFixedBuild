@@ -5,14 +5,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+//-----------------------------------------//
+// CollectibleTracker
+//-----------------------------------------//
+// Singleton that keeps track of which levels has had all of their collectibles collectied. Updates the internal representation of the level when EndLevel is called, normally when levelloader is touched.
+
 public class CollectibleTracker : MonoBehaviour
 {
-    // Singleton that keeps track of which levels has had all of their collectibles collectied. Updates the internal representation of the level when EndLevel is called, normally when levelloader is touched.
     private static bool[] levelsCollected;
 
     public static CollectibleTracker instance;
 
-    //Needs panel inside LevelScreen from prefab, should be one with the grid of buttons.
+    // Needs panel inside LevelScreen from prefab, should be one with the grid of buttons.
     private GameObject levelPanel;
 
     private int thisLevelCollectibles;
@@ -41,10 +45,6 @@ public class CollectibleTracker : MonoBehaviour
         UpdateLevels();
     }
 
-    void Start()
-    {
-    }
-
     public void EndLevel()
     {
         // End level reached, update singleton if all collectibles of this level was attained. 
@@ -54,7 +54,6 @@ public class CollectibleTracker : MonoBehaviour
                 Int32.Parse(SceneManager.GetActiveScene().name.Split(" ")[1]);
             levelsCollected[levelNum] = true;
         }
-
         UpdateLevels();
     }
 
@@ -74,7 +73,6 @@ public class CollectibleTracker : MonoBehaviour
             {
                 btnObj.gameObject.GetComponent<Image>().color = Color.green;
             }
-
             index++;
         }
     }

@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-// some code from https://www.youtube.com/watch?v=c8Nq19gkNfs
+//-----------------------------------------//
+// EnemyAI
+//-----------------------------------------//
+// Some code from https://www.youtube.com/watch?v=c8Nq19gkNfs
+// Enemy AI, handles enemy movement.
 
 public class EnemyAI : MonoBehaviour
 {
-    //Enemy AI, handles enemy movement.
     private Transform player;
     public Transform respawnPoint;
     private NavMeshAgent agent;
@@ -22,7 +25,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float followSpeed;
     [SerializeField] private float followPlayerDist;
 
-    void Start()
+    private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.Find("Player").transform;
@@ -30,7 +33,7 @@ public class EnemyAI : MonoBehaviour
         UpdateDestination();
     }
 
-    void Update()
+    private void Update()
     {
         if (followsPlayer && Vector3.Distance(transform.position, player.position) < followPlayerDist)
         {
@@ -47,16 +50,15 @@ public class EnemyAI : MonoBehaviour
             IterateWaypointIndex();
             UpdateDestination();
         }
-        //Debug.Log(target);
     }
 
-    void UpdateDestination()
+    private void UpdateDestination()
     {
         target = waypoints[waypointIndex].position;
         agent.SetDestination(target);
     }
 
-    void IterateWaypointIndex()
+    private void IterateWaypointIndex()
     {
         waypointIndex++;
         if (waypointIndex == waypoints.Length)

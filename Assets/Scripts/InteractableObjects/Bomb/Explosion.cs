@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//-----------------------------------------//
+// Explosion
+//-----------------------------------------//
+// Attached to sphere to make sphere prefab simulate explosion.
+
 public class Explosion : MonoBehaviour
 {
-    // Attached to sphere, to make sphere prefab simulate explosion.
-
     public float bombRadious;
     private float radious;
     private bool isScaling = false;
@@ -19,17 +22,12 @@ public class Explosion : MonoBehaviour
         StartCoroutine(scaleOverTime(transform, new Vector3(bombRadious, bombRadious, bombRadious), timeToExpand));
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     // Credit Programmer
     // https://stackoverflow.com/a/46587297
+    // Code to increase object scale over time. Modified slightly.
+    // Make sure there is only one instance of this function running
     IEnumerator scaleOverTime(Transform objectToScale, Vector3 toScale, float duration)
     {
-        //Code to increase object scale over time. Modified slightly.
-        //Make sure there is only one instance of this function running
         if (isScaling)
         {
             yield break; ///exit if this is still running

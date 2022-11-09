@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 //-----------------------------------------//
 // MovingPlatform
 //-----------------------------------------//
@@ -21,14 +22,14 @@ public class MovingPlatform : MonoBehaviour
     private float _timeToWaypoint;
     private float _elapsedTime;
 
-    void Start()
+    private void Start()
     {
         _targetWaypointIndex = _startingIndex;
         TargetNextWaypoint();
     }
 
     // Move platform from previous waypoint position to target waypoint position
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         _elapsedTime += Time.deltaTime;
 

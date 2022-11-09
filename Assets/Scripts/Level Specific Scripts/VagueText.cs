@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//-----------------------------------------//
+// VagueText
+//-----------------------------------------//
+// Creates text to appear after a certain duration
+
 public class VagueText : MonoBehaviour
 {
-    // Start is called before the first frame update
     [Tooltip("How long until this text should appear.")]
     [SerializeField] float timeToAppear = -1f;
     void Start()
@@ -16,7 +20,6 @@ public class VagueText : MonoBehaviour
         GetComponent<Renderer>().enabled = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         timeToAppear -= Time.deltaTime;

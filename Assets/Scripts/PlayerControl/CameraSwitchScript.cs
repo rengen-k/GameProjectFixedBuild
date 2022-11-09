@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+//-----------------------------------------//
+// CameraSwitchScript
+//-----------------------------------------//
+// Script handling the changing camera perspective.
 
 public class CameraSwitchScript : MonoBehaviour
 {
-    // Script handling the changing camera perspective.
-
     [Tooltip("Game Object connecting Camera to input system.")]
     [SerializeField] private InputAction action;
 
@@ -15,23 +17,14 @@ public class CameraSwitchScript : MonoBehaviour
 
     private Animator animator;
 
-    void Awake()
+    private void Awake()
     {
         animator = GetComponent<Animator>();
         animator.Play("0Angle");
-
     }
 
-    // Update is called once per frame
-    void Start(){
-
-    }
-    void Update()
+    public int SwitchState(int direction)
     {
-        
-    }
-
-    public int SwitchState(int direction){
         //Change which virtual cam main camera will go.
 
         //direction is either -1 or 1, indicating whether we are going left or right.
@@ -45,5 +38,4 @@ public class CameraSwitchScript : MonoBehaviour
         animator.Play(views[cameraPos]);
         return cameraPos;
     }
-
 }
