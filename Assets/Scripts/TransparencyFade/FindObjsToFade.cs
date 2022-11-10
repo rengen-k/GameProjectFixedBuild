@@ -43,7 +43,7 @@ public class FindObjsToFade : MonoBehaviour
         
         numOfHits = Physics.CapsuleCastNonAlloc(
             point1, point2, col.radius-0.1f, directionCast, hits, 
-            (player.position - transform.position).magnitude,
+            (player.position - transform.position).magnitude - col.radius,
             layers, QueryTriggerInteraction.Ignore);
 
         if (numOfHits == 0) {Array.Clear(hits,0,hits.Length);}
