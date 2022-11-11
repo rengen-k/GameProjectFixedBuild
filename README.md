@@ -27,56 +27,58 @@ https://www.youtube.com/watch?v=c8Nq19gkNfs
 
 ##### Keyboard:
 
-A – Left
+- A – Left
 
-D – Right
+- D – Right
 
-E – Pickup Object
+- E – Pickup Object
 
-Q – Throw Object (Not possible on all objects)
+- Q – Throw Object (Not possible on all objects)
 
-Space – Jump
+- Space – Jump
 
-Left Arrow Key – Rotate Camera Left
+- Left Arrow Key – Rotate Camera Left
 
-Right Arrow Key – Rotate Camera Right
+- Right Arrow Key – Rotate Camera Right
 
 
 
 ##### Controller:
 
-Left Analog Stick – Left and Right Movement
+- Left Analog Stick – Left and Right Movement
 
-Right Analog Stick – Left and Right Camera Rotation
+- Right Analog Stick – Left and Right Camera Rotation
 
-Button South – Jump
+- Button South – Jump
 
-Button West – Pick Up Object
+- Button West – Pick Up Object
+
+- Right Trigger - Throw Object (Not possible on all objects)
 
 
 #### Start Menu:
 
 ##### Mouse
 
-Point and click.
+- Point and click
 
 ##### Keyboard
 
-Start – Enable or Disable Menu Screen
+- Backspace – Enable or Disable Menu Screen
 
-WASD – Navigate Up, Left, Down, Right
+- WASD – Navigate Up, Left, Down, Right
 
-Enter – Confirm Selection
+- Enter – Confirm Selection
 
 ##### Controller
 
-Start - Enable or Disable Menu Screen
+- Start - Enable or Disable Menu Screen
 
-Directional Buttons - Navigate Up, Left, Down, Right
+- Directional Buttons - Navigate Up, Left, Down, Right
 
-Left Analog Stick - Navigate Up, Left, Down, Right
+- Left Analog Stick - Navigate Up, Left, Down, Right
 
-Button South – Confirm Selection
+- Button South – Confirm Selection
 
 
 
