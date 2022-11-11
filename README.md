@@ -1,31 +1,21 @@
 # GameDevGrpProjectAM
 
+### Description
+
 The game is a level based puzzle platformer that combines intelligent puzzle solving and precision platforming in various ways to create unique gameplay experiences.
 
 The camera dictates player movement, player rotation, and also reveals parts of the level that are not viewable unless rotated to. This can reveal specific puzzle pieces, new parts of the level to explore, hidden secrets, and things to collect.
 
+### Instructions on How to Play
 
-### References:
+Move the Player and rotate the camera to solve the puzzles presented to you during the level. As you progress, you may collect the golden collectibles if you wish. Touch the Cyan block at the end of the level to continue to the next level.
+To switch between levels, access the Pause Menu screen by pressing Backspace.
 
-#### Scripts
+### Known Bugs:
 
-- Unity Object Fade by jhuthins
-https://github.com/jhutchines/Unity-Object-Fade
-- PlayerInputErrorWorkaround
-https://forum.unity.com/threads/type-of-instance-in-array-does-not-match-expected-type.1320564/#post-8396772
-- Moving Platforms
-https://www.youtube.com/watch?v=ly9mK0TGJJo
-- Scaling gameobject with time by Stack Overflow user Programmer
-https://stackoverflow.com/a/46587297
-- Player Movement with Forces
-https://youtu.be/KbtcEVCM7bw
-- Better Jump
-https://www.youtube.com/watch?v=7KiK0Aqtmzc
-- Enemy AI
-https://www.youtube.com/watch?v=c8Nq19gkNfs
+It is possible for the menu screen button text to become invisible during full screen mode.
 
-
-### Instructions:
+### Controls:
 
 
 #### Player Movement:
@@ -47,7 +37,6 @@ https://www.youtube.com/watch?v=c8Nq19gkNfs
 - Right Arrow Key – Rotate Camera Right
 
 
-
 ##### Controller:
 
 - Left Analog Stick – Left and Right Movement
@@ -59,6 +48,7 @@ https://www.youtube.com/watch?v=c8Nq19gkNfs
 - Button West – Pick Up Object
 
 - Right Trigger - Throw Object (Not possible on all objects)
+
 
 
 #### Start Menu:
@@ -84,6 +74,28 @@ https://www.youtube.com/watch?v=c8Nq19gkNfs
 - Left Analog Stick - Navigate Up, Left, Down, Right
 
 - Button South – Confirm Selection
+
+### References:
+
+#### Scripts
+
+- Unity Object Fade by jhuthins
+https://github.com/jhutchines/Unity-Object-Fade
+- PlayerInputErrorWorkaround
+https://forum.unity.com/threads/type-of-instance-in-array-does-not-match-expected-type.1320564/#post-8396772
+- Moving Platforms
+https://www.youtube.com/watch?v=ly9mK0TGJJo
+- Scaling gameobject with time by Stack Overflow user Programmer
+https://stackoverflow.com/a/46587297
+- Player Movement with Forces
+https://youtu.be/KbtcEVCM7bw
+- Better Jump
+https://www.youtube.com/watch?v=7KiK0Aqtmzc
+- Enemy AI
+https://www.youtube.com/watch?v=c8Nq19gkNfs
+
+
+
 
 
 
