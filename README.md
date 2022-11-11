@@ -1,5 +1,10 @@
 # GameDevGrpProjectAM
 
+The game is a level based puzzle platformer that combines intelligent puzzle solving and precision platforming in various ways to create unique gameplay experiences.
+
+The camera dictates player movement, player rotation, and also reveals parts of the level that are not viewable unless rotated to. This can reveal specific puzzle pieces, new parts of the level to explore, hidden secrets, and things to collect.
+
+
 ### References:
 
 #### Scripts
