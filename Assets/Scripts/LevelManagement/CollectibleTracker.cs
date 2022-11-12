@@ -41,7 +41,7 @@ public class CollectibleTracker : MonoBehaviour
             levelsCollected = new bool[levelPanel.transform.childCount];
             instance.UpdateGlobalInstance();
         }
-        // Can't this be simplified?
+
     }
 
     public void EndLevel()
