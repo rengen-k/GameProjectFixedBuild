@@ -14,17 +14,25 @@ using UnityEngine.UI;
 // TODO
 // merge LevelSlector into Level, tie scripts to structure moer cleanly,
 // CollectibleTracker in here.
+// GameState finds refs to levels inside sets- passes done and collected.
 
 public class GameState : MonoBehaviour
 {
     public static GameState instance;
 
+    //Level completion management
     // Set range to (0, X+1) where X is the number of levels
     private static int [] levelList = Enumerable.Range(0, 10).ToArray();
     private bool [] levelDones;
-    private bool [] levelsCollected;
     private GameObject levelPanel;
     private LevelLine [] lines;
+
+    // Collectible Management
+    private bool [] levelsCollected;
+    private GameObject msg;
+    private int thisLevelCollectibles;
+    
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -62,6 +70,7 @@ public class GameState : MonoBehaviour
         foreach (LevelLine l in lines)
         {
             l.SetRef(levelLineNames[i]);
+            //l.setCompletion(levelDones, levelsCollected);
             i++;
         }
     }
@@ -76,6 +85,16 @@ public class GameState : MonoBehaviour
         
         lines[0].debugShout();
 
+    }
+
+    public markDone(int levelNum)
+    {
+        levelDones[levelNum] = true;
+    }
+
+    public markComplete(int levelNum)
+    {
+        levelsCollected[levelNum] = true;
     }
 
     // Update is called once per frame

@@ -12,7 +12,7 @@ public class LevelLine : MonoBehaviour
     void Start()
     {
         // Say first set first level is open
-        // Get GameStates level order, send down to sets
+
         // ASk each set if quota up, open next set
     }
 
