@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class LevelSet : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Check all internal levels, which is done? if quota amount is done, return should Open next set
+    
+    private Level levels;
+    private int quota;
     void Start()
     {
-        
     }
 
     // Update is called once per frame

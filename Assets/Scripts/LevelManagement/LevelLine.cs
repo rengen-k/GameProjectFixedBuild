@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelLine 
+public class LevelLine : MonoBehaviour
 {
-
+    // Handles levelSet management, marks first level in open set as open
     private GameObject panalRef;
-    private LevelSet [] sets;
+    public LevelSet [] sets;
 
 
-    public LevelLine(string panalRef)
+    void Start()
     {
-        // verify if given string is level line
-        this.panalRef = GameObject.Find(panalRef);
-
+        // Say first set first level is open
+        // Get GameStates level order, send down to sets
+        // ASk each set if quota up, open next set
     }
 
     public void debugShout()

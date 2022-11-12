@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
 //-----------------------------------------//
 // CollectibleTracker
 //-----------------------------------------//
@@ -38,7 +39,7 @@ public class CollectibleTracker : MonoBehaviour
             //Generating list, with every level represented by a bool in levelsCollected
             levelPanel = GameObject.Find("LevelGrid");
             msg = GameObject.Find("CollectibleNotify");
-            levelsCollected = new bool[levelPanel.transform.childCount];
+            levelsCollected = new bool[GameState.LevelCount()];
             instance.UpdateGlobalInstance();
         }
 

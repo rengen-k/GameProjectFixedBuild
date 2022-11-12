@@ -11,12 +11,18 @@ using UnityEngine.UI;
 //-----------------------------------------//
 // Singleton that keeps track of which levels are completed, and which levels should be asseccible. 
 
+// TODO
+// merge LevelSlector into Level, tie scripts to structure moer cleanly,
+// CollectibleTracker in here.
+
 public class GameState : MonoBehaviour
 {
     public static GameState instance;
 
     // Set range to (0, X+1) where X is the number of levels
-    public int [] levelList = Enumerable.Range(0, 10).ToArray();
+    private static int [] levelList = Enumerable.Range(0, 10).ToArray();
+    private bool [] levelDones;
+    private bool [] levelsCollected;
     private GameObject levelPanel;
     private LevelLine [] lines;
     // Start is called before the first frame update
@@ -42,13 +48,15 @@ public class GameState : MonoBehaviour
         //FindWithTag("LevelLine") 
         string [] levelLineNames = {"TutorialLine", "SimpleLine", "BlockLine", "MetaLine"};
         lines = new LevelLine[levelLineNames.Length];
+        levelDones = new bool[levelLineNames.Length];
+        levelsCollected = new bool[levelLineNames.Length];
 
-        lines[0] = new LevelLine("Player");
+
     }
 
     private void updateLevelLines()
     {
-        //Gives level lines the correct panel ref
+        //Gives level lines the correct panel ref, sets each level line to value from varaibles levelDones
         string [] levelLineNames = {"TutorialLine", "SimpleLine", "BlockLine", "MetaLine"};
         int i = 0;
         foreach (LevelLine l in lines)
@@ -56,6 +64,11 @@ public class GameState : MonoBehaviour
             l.SetRef(levelLineNames[i]);
             i++;
         }
+    }
+    
+    public static int LevelCount ()
+    {
+        return levelList.Length;
     }
 
     void Start()

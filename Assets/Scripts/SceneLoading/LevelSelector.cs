@@ -8,6 +8,7 @@ public class LevelSelector : MonoBehaviour
 {
     // Script attached to a level button in the pausemenu, handles loading the level selected by clicking the UI button.
     public int level;
+    private bool open = false;
     private GameObject levelText; 
     [Tooltip("Reference to pauseMenu in canvas")]
     [SerializeField] private PauseMenu pauseMenu;
@@ -21,7 +22,15 @@ public class LevelSelector : MonoBehaviour
 
     public void OpenScene()
     {   
-        pauseMenu.Resume();
-        SceneManager.LoadScene("Level " + level.ToString());
+        if (open){
+            pauseMenu.Resume();
+            SceneManager.LoadScene("Level " + level.ToString());
+        }
+        
+    }
+
+    public void Open()
+    {
+        open = true;
     }
 }

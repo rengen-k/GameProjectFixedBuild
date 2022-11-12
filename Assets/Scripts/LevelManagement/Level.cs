@@ -1,23 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
 
-public class Level
+public class Level : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Attached to level button, decides if open or not, colours and loads select scene.
     private int num;
+    private bool open = false;
     private bool done;
+    private GameObject levelText; 
+    [Tooltip("Reference to pauseMenu in canvas")]
+    [SerializeField] private PauseMenu pauseMenu;
     
-    public Level (int level)
+    void Awake()
     {
-        num = level;
-        done = false;
+        levelText = this.gameObject.transform.GetChild(0).gameObject;
+        TMP_Text texty = levelText.GetComponent<TextMeshProUGUI>();
+        texty.text = level.ToString();
     }
 
-    public Level (int level, bool d)
+    public void OpenScene()
+    {   
+        if (open){
+            pauseMenu.Resume();
+            SceneManager.LoadScene("Level " + level.ToString());
+        }
+        
+    }
+
+    public void Open()
     {
-        num = level;
-        done = true;
+        open = true;
     }
 
     public void Finish()
