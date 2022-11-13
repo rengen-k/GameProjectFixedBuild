@@ -12,9 +12,10 @@ using UnityEngine.UI;
 // Singleton that keeps track of which levels are completed, and which levels should be asseccible. 
 
 // TODO
-// merge LevelSlector into Level, tie scripts to structure moer cleanly,
 // CollectibleTracker in here.
-// GameState finds refs to levels inside sets- passes done and collected.
+// 
+// Handle end of level events- yell at the correct levelLines
+//When levelloader touched, mark level complete in gamestate, load map menu,
 
 public class GameState : MonoBehaviour
 {
@@ -36,6 +37,11 @@ public class GameState : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        
+    }
+
+    void Start()
+    {
         if (instance != null && instance != this)
         {
             instance.updateLevelLines();
@@ -47,11 +53,6 @@ public class GameState : MonoBehaviour
             instance = this;
             SetUp();
         }
-    }
-
-    void Start()
-    {
-        
         //lines[0].debugShout();
 
     }

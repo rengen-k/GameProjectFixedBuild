@@ -10,7 +10,7 @@ public class LevelSet : MonoBehaviour
     [Tooltip("The amount of levels inside a set that needs to be completed before the next set opens.")]
     [SerializeField] private int quota;
     
-    private bool open;
+    private bool open = false;
 
     void Start()
     {
@@ -40,12 +40,12 @@ public class LevelSet : MonoBehaviour
                 }
             }
         }
+        open = dones >= quota;
         return dones >= quota;
     }
 
     public void setLevel(bool done, bool collected, int index)
     {
-        Debug.Log("This is levelset " + transform.name + " setting index " + index);
         transform.GetChild(index).GetComponent<Level>().SetValues(done, collected);
     }
 
