@@ -35,8 +35,7 @@ public class LevelLine : MonoBehaviour
     }
 
     public void setCompletion(bool[] levelDones, bool[] levelCollectibles, int startIndex){
-        // given the correct bools, starting at start index, up to startindex + level count top exclusive, stuff the values inside into the correct sets, for the sets to push into the levels.
-        
+
         int setCount = 0;
         int setLevelCount = sets[0].transform.childCount;
         int setLevelIndex = 0;
@@ -48,6 +47,10 @@ public class LevelLine : MonoBehaviour
 
             if (setLevelCount == setLevelIndex)
             {
+                if (sets[setCount].isDone() && setCount + 1 < sets.Length)
+                {
+                    sets[setCount+1].ForceOpen();
+                }
                 setCount++;
                 setLevelCount = sets[setCount].transform.childCount;
                 setLevelIndex = 0;
@@ -56,6 +59,10 @@ public class LevelLine : MonoBehaviour
             setLevelIndex++;
 
         }
+
+
+        
+
     }
 }
 

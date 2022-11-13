@@ -12,12 +12,8 @@ using UnityEngine.UI;
 //-----------------------------------------//
 // Singleton that keeps track of which levels are completed, and which levels should be asseccible. 
 
-// TODO
-// CollectibleTracker in here.
-// 
-// Handle end of level events- yell at the correct levelLines
-//When levelloader touched, mark level complete in gamestate, load map menu,
-
+// TODO 
+// Organise
 public class GameState : MonoBehaviour
 {
     public static GameState instance;
@@ -28,6 +24,8 @@ public class GameState : MonoBehaviour
     private bool [] levelDones;
     private GameObject levelPanel;
     private LevelLine [] lines;
+
+    private string [] levelLineNames = {"TutorialLine", "SimpleLine", "BlockLine", "MetaLine"};
 
     // Collectible Management
     private bool [] levelsCollected;
@@ -71,7 +69,6 @@ public class GameState : MonoBehaviour
         //FindWithTag("LevelLine") 
         levelDones = new bool[levelList.Length];
         levelsCollected = new bool[levelList.Length];
-        string [] levelLineNames = {"TutorialLine", "SimpleLine", "BlockLine", "MetaLine"};
         lines = new LevelLine[levelLineNames.Length];
         msg = GameObject.Find("CollectibleNotify");
         updateLevelLines();
@@ -89,7 +86,6 @@ public class GameState : MonoBehaviour
         msg.SetActive(false);
 
         //Gives level lines the correct panel ref, sets each level line to value from varaibles levelDones
-        string [] levelLineNames = {"TutorialLine", "SimpleLine", "BlockLine", "MetaLine"};
         int startIndex = 0;
         for (int i = 0; i < levelLineNames.Length; i++)
         {
@@ -106,7 +102,6 @@ public class GameState : MonoBehaviour
 
     public void EndLevel()
     {
-        Debug.Log("We ending");
         int levelNum =
             Int32.Parse(SceneManager.GetActiveScene().name.Split(" ")[1]);
         if (thisLevelCollectibles == 0)
@@ -114,7 +109,12 @@ public class GameState : MonoBehaviour
             levelsCollected[levelNum] = true;
         }
         levelDones[levelNum] = true;
-        updateLevelLines();
+        int startIndex = 0;
+        foreach (LevelLine l in lines)
+        {
+            l.setCompletion(levelDones, levelsCollected, startIndex);
+            startIndex += l.levelCount;
+        }
 
     }
 
@@ -132,16 +132,7 @@ public class GameState : MonoBehaviour
         return levelList.Length;
     }
 
-    
-    public void markDone(int levelNum)
-    {
-        levelDones[levelNum] = true;
-    }
 
-    public void markComplete(int levelNum)
-    {
-        levelsCollected[levelNum] = true;
-    }
 
     // Update is called once per frame
     void Update()

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class LevelSet : MonoBehaviour
 {
     // Check all internal levels, which is done? if quota amount is done, return should Open next set
@@ -9,8 +8,8 @@ public class LevelSet : MonoBehaviour
     private Level levels;
     [Tooltip("The amount of levels inside a set that needs to be completed before the next set opens.")]
     [SerializeField] private int quota;
-    [SerializeField]
-    private bool open = false;
+    [Tooltip("Set to true to force all levels open, default value is false.")]
+    [SerializeField] private bool open = false;
 
     void Start()
     {
@@ -19,7 +18,7 @@ public class LevelSet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public bool isOpen()
@@ -40,7 +39,6 @@ public class LevelSet : MonoBehaviour
                 }
             }
         }
-        open = dones >= quota;
         return dones >= quota;
     }
 

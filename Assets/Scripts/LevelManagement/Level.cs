@@ -11,8 +11,6 @@ public class Level : MonoBehaviour
     // Mark open and closed levels
     [Tooltip("Number Level loads to.")]
     [SerializeField]private int num;
-    private bool done;
-    private bool collected;
 
     public enum stat
     {
@@ -96,11 +94,6 @@ public class Level : MonoBehaviour
         updateVisuals();
     }
 
-    public void Finish()
-    {
-        done = true;
-    }
-
     public int GetLevel()
     {
         return num;
@@ -108,6 +101,6 @@ public class Level : MonoBehaviour
 
     public bool GetDone()
     {
-        return done;
+        return status == stat.done || status == stat.collected; 
     }
 }

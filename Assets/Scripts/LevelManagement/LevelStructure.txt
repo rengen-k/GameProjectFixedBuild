@@ -1,0 +1,28 @@
+All levelines (Called [WORD]Line, contains sets)
+All sets (black box) contain levels.
+Every level belongs in a set- even if its by itself.
+
+GameState singleton works to update all of these levellines accordingly.
+
+Adding LevelLine:
+Add LevelLine to Canvas
+Add to GameState the levelLine, append to GameState.levelLineNames the name of the gameObject that is the LevelLine.
+
+To add new Levels:
+Add level button under set
+Increment values Level Line level Count
+Inside GameState.cs increase upperrange of line 23 by 1
+
+If adding new set to level line, make sure new set is inside Sets of LevelLine.cs
+
+To Delete Level:
+Remove level button, 
+devrement levelCount
+decrement GameState.cs line 23
+
+TO move Level:
+Move level set or button, make sure both level lines change level Count
+
+
+Set.Quota:
+Value inside set, indicates how many levels needs to be completed in set until next set becomes available. default 1. 
