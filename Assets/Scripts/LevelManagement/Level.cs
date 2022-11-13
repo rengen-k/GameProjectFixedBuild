@@ -2,15 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using TMPro;
 
 public class Level : MonoBehaviour
 {
     // Attached to level button, decides if open or not, colours and loads select scene.
     private int num;
-    private bool open = false;
     private bool done;
+    private bool collected;
+
     private GameObject levelText; 
+    private LevelSet parentSet;
+
     [Tooltip("Reference to pauseMenu in canvas")]
     [SerializeField] private PauseMenu pauseMenu;
     
@@ -18,21 +22,39 @@ public class Level : MonoBehaviour
     {
         levelText = this.gameObject.transform.GetChild(0).gameObject;
         TMP_Text texty = levelText.GetComponent<TextMeshProUGUI>();
-        texty.text = level.ToString();
+        texty.text = num.ToString();
+    }
+
+    void Start()
+    {
+        parentSet = this.transform.parent.GetComponent<LevelSet>();
+    }
+
+    public void updateVisuals()
+    {
+        if (done)
+        {
+            gameObject.GetComponent<Image>().color = Color.green;
+        }
+        if (collected)
+        {
+            gameObject.GetComponent<Image>().color = Color.yellow;
+        }
     }
 
     public void OpenScene()
     {   
-        if (open){
+        if (parentSet.isOpen()){
             pauseMenu.Resume();
-            SceneManager.LoadScene("Level " + level.ToString());
+            SceneManager.LoadScene("Level " + num.ToString());
         }
         
     }
 
-    public void Open()
+    public void SetValues(bool d, bool c)
     {
-        open = true;
+        done = d;
+        collected = c;
     }
 
     public void Finish()
@@ -40,12 +62,12 @@ public class Level : MonoBehaviour
         done = true;
     }
 
-    public int getLevel()
+    public int GetLevel()
     {
         return num;
     }
 
-    public bool isDone()
+    public bool GetDone()
     {
         return done;
     }

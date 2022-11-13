@@ -67,11 +67,13 @@ public class GameState : MonoBehaviour
         //Gives level lines the correct panel ref, sets each level line to value from varaibles levelDones
         string [] levelLineNames = {"TutorialLine", "SimpleLine", "BlockLine", "MetaLine"};
         int i = 0;
+        int startIndex = 0;
         foreach (LevelLine l in lines)
         {
             l.SetRef(levelLineNames[i]);
-            //l.setCompletion(levelDones, levelsCollected);
+            //l.setCompletion(levelDones, levelsCollected, startIndex);
             i++;
+            startIndex += l.levelCount;
         }
     }
     
@@ -87,12 +89,12 @@ public class GameState : MonoBehaviour
 
     }
 
-    public markDone(int levelNum)
+    public void markDone(int levelNum)
     {
         levelDones[levelNum] = true;
     }
 
-    public markComplete(int levelNum)
+    public void markComplete(int levelNum)
     {
         levelsCollected[levelNum] = true;
     }
