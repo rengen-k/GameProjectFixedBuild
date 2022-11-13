@@ -29,7 +29,7 @@ public class collectible : MonoBehaviour
             {
                 tracker = GameObject.Find("GlobalGameState");
             }
-            tracker.GetComponent<CollectibleTracker>().Collected();
+            tracker.GetComponent<GameState>().Collected();
             Destroy(gameObject);
         }
     }

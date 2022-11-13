@@ -15,7 +15,11 @@ public class SceneSwitch : MonoBehaviour
         GameObject collisionGameObject = collision.gameObject;
         if (collisionGameObject.tag == "Player") {
             var tracker = GameObject.Find("CollectibleTracker");
-            tracker.GetComponent<CollectibleTracker>().EndLevel();
+            if (tracker == null)
+            {
+                tracker = GameObject.Find("GlobalGameState");
+            }
+            tracker.GetComponent<GameState>().EndLevel();
             LoadScene();
         }
     }

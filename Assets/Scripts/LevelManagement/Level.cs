@@ -14,7 +14,7 @@ public class Level : MonoBehaviour
     private bool done;
     private bool collected;
 
-    private enum stat
+    public enum stat
     {
         closed,
         open,
@@ -22,7 +22,7 @@ public class Level : MonoBehaviour
         collected
     }
 
-    private stat status = stat.closed;
+    public stat status = stat.closed;
 
     private GameObject levelText; 
     private LevelSet parentSet;
@@ -82,6 +82,7 @@ public class Level : MonoBehaviour
         
         if (parentSet.isOpen())
         {
+
             status = stat.open;
         }
         if (d)

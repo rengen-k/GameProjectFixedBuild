@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ public class GameState : MonoBehaviour
 
     //Level completion management
     // Set range to (0, X+1) where X is the number of levels
-    private static int [] levelList = Enumerable.Range(0, 10).ToArray();
+    private static int [] levelList = Enumerable.Range(0, 11).ToArray();
     private bool [] levelDones;
     private GameObject levelPanel;
     private LevelLine [] lines;
@@ -34,16 +35,21 @@ public class GameState : MonoBehaviour
     private int thisLevelCollectibles;
     
 
+    
+
     // Start is called before the first frame update
     void Awake()
     {
         
     }
 
+    //Setting up.
+
     void Start()
     {
         if (instance != null && instance != this)
         {
+            instance.setMsg();
             instance.updateLevelLines();
             Destroy(this.gameObject);
         }
@@ -67,6 +73,23 @@ public class GameState : MonoBehaviour
         levelsCollected = new bool[levelList.Length];
         string [] levelLineNames = {"TutorialLine", "SimpleLine", "BlockLine", "MetaLine"};
         lines = new LevelLine[levelLineNames.Length];
+        msg = GameObject.Find("CollectibleNotify");
+        updateLevelLines();
+        
+
+
+    }
+
+    // Passing data down, updating panal.
+
+    private void updateLevelLines()
+    {
+        // Updates GameState references to refer to the current scenes objects. And then passes down data to those objects
+        
+        msg.SetActive(false);
+
+        //Gives level lines the correct panel ref, sets each level line to value from varaibles levelDones
+        string [] levelLineNames = {"TutorialLine", "SimpleLine", "BlockLine", "MetaLine"};
         int startIndex = 0;
         for (int i = 0; i < levelLineNames.Length; i++)
         {
@@ -74,23 +97,33 @@ public class GameState : MonoBehaviour
             lines[i].setCompletion(levelDones, levelsCollected, startIndex);
             startIndex += lines[i].levelCount;
         }
-        
 
+        thisLevelCollectibles =
+            GameObject.FindGameObjectsWithTag("Collectible").Length;
+    }
+
+    // Updating attributes
+
+    public void EndLevel()
+    {
+        Debug.Log("We ending");
+        int levelNum =
+            Int32.Parse(SceneManager.GetActiveScene().name.Split(" ")[1]);
+        if (thisLevelCollectibles == 0)
+        {            
+            levelsCollected[levelNum] = true;
+        }
+        levelDones[levelNum] = true;
+        updateLevelLines();
 
     }
 
-    private void updateLevelLines()
+    public void Collected()
     {
-        //Gives level lines the correct panel ref, sets each level line to value from varaibles levelDones
-        string [] levelLineNames = {"TutorialLine", "SimpleLine", "BlockLine", "MetaLine"};
-        int i = 0;
-        int startIndex = 0;
-        foreach (LevelLine l in lines)
+        thisLevelCollectibles--;
+        if (thisLevelCollectibles == 0)
         {
-            l.SetRef(levelLineNames[i]);
-            l.setCompletion(levelDones, levelsCollected, startIndex);
-            i++;
-            startIndex += l.levelCount;
+            msg.SetActive(true);
         }
     }
     
@@ -115,4 +148,11 @@ public class GameState : MonoBehaviour
     {
         
     }
+
+    private void setMsg()
+    {
+        msg = GameObject.Find("CollectibleNotify");
+    }
+
+    
 }

@@ -9,7 +9,7 @@ public class LevelSet : MonoBehaviour
     private Level levels;
     [Tooltip("The amount of levels inside a set that needs to be completed before the next set opens.")]
     [SerializeField] private int quota;
-    
+    [SerializeField]
     private bool open = false;
 
     void Start()

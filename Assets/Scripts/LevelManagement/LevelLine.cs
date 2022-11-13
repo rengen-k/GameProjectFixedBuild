@@ -12,7 +12,7 @@ public class LevelLine : MonoBehaviour
     public int levelCount;
 
 
-    void Start()
+    void Awake()
     {
         // Say first set first level is open
 
