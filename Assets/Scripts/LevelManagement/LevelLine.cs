@@ -15,7 +15,11 @@ public class LevelLine : MonoBehaviour
     void Start()
     {
         // Say first set first level is open
+
         sets[0].ForceOpen();
+
+
+        
 
         // ASk each set if quota up, open next set
     }
@@ -36,7 +40,7 @@ public class LevelLine : MonoBehaviour
         int setCount = 0;
         int setLevelCount = sets[0].transform.childCount;
         int setLevelIndex = 0;
-
+        Debug.Log("This is level line " + transform.name + " values " + startIndex);
         for (int i = startIndex; i < startIndex + levelCount; i++)
         {
             bool thisLevelDone = levelDones[i];
@@ -48,7 +52,7 @@ public class LevelLine : MonoBehaviour
                 setLevelCount = sets[setCount].transform.childCount;
                 setLevelIndex = 0;
             }
-
+            Debug.Log("This is level line " + transform.name + " setting " + sets[setCount].name + " with " + thisLevelDone + " " +  thisLevelCollectibles + " " +  setLevelIndex);
             sets[setCount].setLevel(thisLevelDone, thisLevelCollectibles, setLevelIndex);
             setLevelIndex++;
 

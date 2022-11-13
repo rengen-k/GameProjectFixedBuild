@@ -45,6 +45,7 @@ public class LevelSet : MonoBehaviour
 
     public void setLevel(bool done, bool collected, int index)
     {
+        Debug.Log("This is levelset " + transform.name + " setting index " + index);
         transform.GetChild(index).GetComponent<Level>().SetValues(done, collected);
     }
 

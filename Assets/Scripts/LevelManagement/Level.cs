@@ -8,9 +8,10 @@ using TMPro;
 public class Level : MonoBehaviour
 {
     // Attached to level button, decides if open or not, colours and loads select scene.
-    private int num;
+    [Tooltip("Number Level loads to.")]
+    [SerializeField]private int num;
     private bool done;
-    private bool collected;
+     private bool collected;
 
     private GameObject levelText; 
     private LevelSet parentSet;
@@ -28,6 +29,10 @@ public class Level : MonoBehaviour
     void Start()
     {
         parentSet = this.transform.parent.GetComponent<LevelSet>();
+    }
+    //ORGANISE
+    void Update()
+    {
     }
 
     public void updateVisuals()
@@ -53,8 +58,10 @@ public class Level : MonoBehaviour
 
     public void SetValues(bool d, bool c)
     {
+        Debug.Log("This is " + transform.name + " setting values as " + d + ", " + c);
         done = d;
         collected = c;
+        updateVisuals();
     }
 
     public void Finish()

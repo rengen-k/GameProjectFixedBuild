@@ -49,15 +49,31 @@ public class GameState : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        
+        //lines[0].debugShout();
+
+    }
+
+
     private void SetUp()
     {
         // Set up level object structure.
         // TODO, make more automatic
         //FindWithTag("LevelLine") 
+        levelDones = new bool[levelList.Length];
+        levelsCollected = new bool[levelList.Length];
         string [] levelLineNames = {"TutorialLine", "SimpleLine", "BlockLine", "MetaLine"};
         lines = new LevelLine[levelLineNames.Length];
-        levelDones = new bool[levelLineNames.Length];
-        levelsCollected = new bool[levelLineNames.Length];
+        int startIndex = 0;
+        for (int i = 0; i < levelLineNames.Length; i++)
+        {
+            lines[i] = GameObject.Find(levelLineNames[i]).GetComponent<LevelLine>();
+            lines[i].setCompletion(levelDones, levelsCollected, startIndex);
+            startIndex += lines[i].levelCount;
+        }
+        
 
 
     }
@@ -71,7 +87,7 @@ public class GameState : MonoBehaviour
         foreach (LevelLine l in lines)
         {
             l.SetRef(levelLineNames[i]);
-            //l.setCompletion(levelDones, levelsCollected, startIndex);
+            l.setCompletion(levelDones, levelsCollected, startIndex);
             i++;
             startIndex += l.levelCount;
         }
@@ -82,13 +98,7 @@ public class GameState : MonoBehaviour
         return levelList.Length;
     }
 
-    void Start()
-    {
-        
-        lines[0].debugShout();
-
-    }
-
+    
     public void markDone(int levelNum)
     {
         levelDones[levelNum] = true;
