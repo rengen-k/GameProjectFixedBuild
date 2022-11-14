@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+// DEPRECATED
 
 //-----------------------------------------//
 // CollectibleTracker
@@ -86,7 +86,7 @@ public class CollectibleTracker : MonoBehaviour
     {
         // Update singleton just loaded from another scene.
         levelPanel = GameObject.Find("LevelGrid");
-        thisLevelCollectibles =
+        thisTotalLevelCollectibles =
             GameObject.FindGameObjectsWithTag("Collectible").Length;
         msg = GameObject.Find("CollectibleNotify");
         msg.SetActive(false);

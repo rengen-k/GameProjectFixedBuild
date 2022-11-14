@@ -30,11 +30,12 @@ public class GameState : MonoBehaviour
     // Collectible Management
     private bool [] levelsCollected;
     private GameObject msg;
-    private int thisLevelCollectibles;
+    //Global counter, updates on end level
+    [Tooltip("The total collectibles collected this game session, updates at the end of a level, assuming all has been retrieved.")]
+    public int totalCollectibles = 0;
+    private int thisLevelTotalCollectibles;
+    private int thisLevelCollectibles = 0;
     
-
-    
-
     // Start is called before the first frame update
     void Awake()
     {
@@ -47,8 +48,8 @@ public class GameState : MonoBehaviour
     {
         if (instance != null && instance != this)
         {
-            instance.setMsg();
-            instance.updateLevelLines();
+            instance.ResetSingleton();
+            instance.UpdateLevelLines();
             Destroy(this.gameObject);
         }
         else
@@ -56,6 +57,8 @@ public class GameState : MonoBehaviour
             DontDestroyOnLoad(transform.gameObject);
             instance = this;
             SetUp();
+            ResetSingleton();
+            UpdateLevelLines();
         }
         //lines[0].debugShout();
 
@@ -65,21 +68,30 @@ public class GameState : MonoBehaviour
     private void SetUp()
     {
         // Set up level object structure.
-        // TODO, make more automatic
+        // TODO, make more automatic, can remove levelLineNames entirely
+        //unsure about levelList, would need to count scenes of format 'Level X'
         //FindWithTag("LevelLine") 
         levelDones = new bool[levelList.Length];
         levelsCollected = new bool[levelList.Length];
         lines = new LevelLine[levelLineNames.Length];
-        msg = GameObject.Find("CollectibleNotify");
-        updateLevelLines();
         
+        
+
+
+    }
+
+    private void ResetSingleton()
+    {
+        //Sets reference to loaded scene, resets counter.
+        msg = GameObject.Find("CollectibleNotify");
+        thisLevelCollectibles = 0;
 
 
     }
 
     // Passing data down, updating panal.
 
-    private void updateLevelLines()
+    private void UpdateLevelLines()
     {
         // Updates GameState references to refer to the current scenes objects. And then passes down data to those objects
         
@@ -94,9 +106,11 @@ public class GameState : MonoBehaviour
             startIndex += lines[i].levelCount;
         }
 
-        thisLevelCollectibles =
+        thisLevelTotalCollectibles =
             GameObject.FindGameObjectsWithTag("Collectible").Length;
     }
+
+   
 
     // Updating attributes
 
@@ -104,10 +118,12 @@ public class GameState : MonoBehaviour
     {
         int levelNum =
             Int32.Parse(SceneManager.GetActiveScene().name.Split(" ")[1]);
-        if (thisLevelCollectibles == 0)
+        if (thisLevelCollectibles == thisTotalLevelCollectibles)
         {            
             levelsCollected[levelNum] = true;
+            totalCollectibles += thisLevelCollectibles;
         }
+        thisLevelCollectibles = 0;
         levelDones[levelNum] = true;
         int startIndex = 0;
         foreach (LevelLine l in lines)
@@ -120,8 +136,8 @@ public class GameState : MonoBehaviour
 
     public void Collected()
     {
-        thisLevelCollectibles--;
-        if (thisLevelCollectibles == 0)
+        thisLevelCollectibles++;
+        if (thisLevelCollectibles == thisTotalLevelCollectibles)
         {
             msg.SetActive(true);
         }
@@ -132,18 +148,6 @@ public class GameState : MonoBehaviour
         return levelList.Length;
     }
 
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void setMsg()
-    {
-        msg = GameObject.Find("CollectibleNotify");
-    }
 
     
 }
