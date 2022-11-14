@@ -25,8 +25,6 @@ public class GameState : MonoBehaviour
     // Reference Array to each LevelLine Object, automatically generated.
     private LevelLine [] lines;
 
-    private string [] levelLineNames = {"TutorialLine", "SimpleLine", "BlockLine", "MetaLine"};
-
     // Collectible Management
     private bool [] levelsCollected;
     private GameObject msg;
@@ -74,8 +72,6 @@ public class GameState : MonoBehaviour
     private void ResetSingleton()
     {
         //Sets references to loaded scene, resets counter.
-        // TODO, make this method pack GameState.lines with the correct references to the canvas.
-        // Every canvas element with the script LevelLine, specifically. 
         GameObject [] linesObj = GameObject.FindGameObjectsWithTag("LevelLine");
         lines = linesObj.Select( line => line.GetComponent<LevelLine>()).ToArray();
         
@@ -95,9 +91,8 @@ public class GameState : MonoBehaviour
 
         //Gives level lines the correct panel ref, sets each level line to value from varaibles levelDones
         int startIndex = 0;
-        for (int i = 0; i < levelLineNames.Length; i++)
+        for (int i = 0; i < lines.Length; i++)
         {
-            //TODO, when lines is filled automatically, no need for next line.
             lines[i].setCompletion(levelDones, levelsCollected, startIndex);
             startIndex += lines[i].levelCount;
         }
