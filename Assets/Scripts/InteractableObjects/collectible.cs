@@ -24,11 +24,8 @@ public class collectible : MonoBehaviour
     {   
         if (other.gameObject.tag == "Player" && onceTouch){
             onceTouch = false;
-            var tracker = GameObject.Find("CollectibleTracker");
-            if (tracker == null)
-            {
-                tracker = GameObject.Find("GlobalGameState");
-            }
+            GameObject tracker = GameObject.Find("GlobalGameState");
+            
             tracker.GetComponent<GameState>().Collected();
             Destroy(gameObject);
         }

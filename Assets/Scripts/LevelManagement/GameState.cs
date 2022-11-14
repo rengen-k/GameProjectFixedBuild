@@ -22,7 +22,7 @@ public class GameState : MonoBehaviour
     // Set range to (0, X+1) where X is the number of levels
     private static int [] levelList = Enumerable.Range(0, 11).ToArray();
     private bool [] levelDones;
-    private GameObject levelPanel;
+    // Reference Array to each LevelLine Object, automatically generated.
     private LevelLine [] lines;
 
     private string [] levelLineNames = {"TutorialLine", "SimpleLine", "BlockLine", "MetaLine"};
@@ -66,23 +66,19 @@ public class GameState : MonoBehaviour
 
 
     private void SetUp()
-    {
-        // Set up level object structure.
-        // TODO, make more automatic, can remove levelLineNames entirely
-        //unsure about levelList, would need to count scenes of format 'Level X'
-        //FindWithTag("LevelLine") 
+    {      
         levelDones = new bool[levelList.Length];
         levelsCollected = new bool[levelList.Length];
-        lines = new LevelLine[levelLineNames.Length];
-        
-        
-
-
     }
 
     private void ResetSingleton()
     {
-        //Sets reference to loaded scene, resets counter.
+        //Sets references to loaded scene, resets counter.
+        // TODO, make this method pack GameState.lines with the correct references to the canvas.
+        // Every canvas element with the script LevelLine, specifically. 
+        GameObject [] linesObj = GameObject.FindGameObjectsWithTag("LevelLine");
+        lines = linesObj.Select( line => line.GetComponent<LevelLine>()).ToArray();
+        
         msg = GameObject.Find("CollectibleNotify");
         thisLevelCollectibles = 0;
 
@@ -101,7 +97,7 @@ public class GameState : MonoBehaviour
         int startIndex = 0;
         for (int i = 0; i < levelLineNames.Length; i++)
         {
-            lines[i] = GameObject.Find(levelLineNames[i]).GetComponent<LevelLine>();
+            //TODO, when lines is filled automatically, no need for next line.
             lines[i].setCompletion(levelDones, levelsCollected, startIndex);
             startIndex += lines[i].levelCount;
         }
@@ -118,7 +114,7 @@ public class GameState : MonoBehaviour
     {
         int levelNum =
             Int32.Parse(SceneManager.GetActiveScene().name.Split(" ")[1]);
-        if (thisLevelCollectibles == thisTotalLevelCollectibles)
+        if (thisLevelCollectibles == thisLevelTotalCollectibles)
         {            
             levelsCollected[levelNum] = true;
             totalCollectibles += thisLevelCollectibles;
@@ -137,7 +133,7 @@ public class GameState : MonoBehaviour
     public void Collected()
     {
         thisLevelCollectibles++;
-        if (thisLevelCollectibles == thisTotalLevelCollectibles)
+        if (thisLevelCollectibles == thisLevelTotalCollectibles)
         {
             msg.SetActive(true);
         }

@@ -7,8 +7,9 @@ public class MetaLevelSkip : MonoBehaviour
     // Special Script forcing a certain level to update its collectible status immediately.
     void Start()
     {
-
-        GetComponent<GameState>().EndLevel();
+        
+        GameObject obj = GameObject.Find("GlobalGameState");
+        obj.GetComponent<GameState>().EndLevel();
     }
 
 }
