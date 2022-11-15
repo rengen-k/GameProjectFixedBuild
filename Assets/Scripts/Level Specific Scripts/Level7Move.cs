@@ -9,6 +9,8 @@ public class Level7Move : Triggerable
     private bool move = false;
 
     private Vector3 goTo;
+    [Tooltip("How far out the platform will extend when pressed. Default 1")]
+    [SerializeField] private int extend = 1;
 
     private float speed = 2f;
 
@@ -17,7 +19,7 @@ public class Level7Move : Triggerable
         goTo =
             new Vector3(transform.position.x,
                 transform.position.y,
-                transform.position.z + 1);
+                transform.position.z + extend);
     }
 
     // Update is called once per frame
