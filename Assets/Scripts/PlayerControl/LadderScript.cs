@@ -21,8 +21,8 @@ public class LadderScript : MonoBehaviour
     private Vector3 ladderMovement;
     private Vector2 inputVector;
     private Vector3 tempPos;
-    private float frictionAmount = 2f;
-    private float ladderSpeed = 10000;
+    private float frictionAmount = 0.5f;
+    private float ladderSpeed = 10;
 
     // init
     private Rigidbody rb;
