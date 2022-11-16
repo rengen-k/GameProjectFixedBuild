@@ -19,12 +19,14 @@ public class LadderScript : MonoBehaviour
     [SerializeField] private Transform ladderCheck;
     [SerializeField] private LayerMask whatIsLadder;
     private float velPower = 1.5f;
-    private float acceleration = 17;
-    private float deceleration = 25;
+    private float acceleration = 30;
+    private float deceleration = 40;
+    RigidbodyConstraints originalConstraints;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        originalConstraints = rb.constraints;
         inLadder = false;
         onLadder = false;
     }
@@ -55,11 +57,11 @@ public class LadderScript : MonoBehaviour
 
         if (inLadder && onLadder)
         {
+            rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
             rb.AddForce(ladderMovement * Time.fixedDeltaTime);
             float amount = Mathf.Min(Mathf.Abs(rb.velocity.y), Mathf.Abs(frictionAmount));
             amount *= Mathf.Sign(rb.velocity.y);
             rb.AddForce(Vector3.up * -amount, ForceMode.Impulse);
-            //rb.MovePosition(transform.position + ladderMovement * ladderSpeed * Time.fixedDeltaTime);
         }
     }
 
@@ -68,22 +70,9 @@ public class LadderScript : MonoBehaviour
         if (!inLadder)
         {
             onLadder = false;
-            //GetComponent<PlayerController>().enabled = true;
+            rb.constraints = originalConstraints;
             rb.useGravity = true;
         }
-
-        //if (inLadder && onLadder)
-        //{
-        //    ladderMovement = new Vector3(0f, inputVector.y, 0f);
-        //    rb.AddForce(ladderMovement * ladderSpeed * Time.deltaTime);
-        //    float amount = Mathf.Min(Mathf.Abs(rb.velocity.y), Mathf.Abs(frictionAmount));
-        //    amount *= Mathf.Sign(rb.velocity.y);
-        //    rb.AddForce(Vector3.up * -amount, ForceMode.Impulse);
-        //    //rb.MovePosition(transform.position + ladderMovement * ladderSpeed * Time.fixedDeltaTime);
-        //}
-
-        Debug.Log("inLadder: " + inLadder);
-        Debug.Log("onLadder: " + onLadder);
     }
 
     public void Interact(InputAction.CallbackContext context)
@@ -91,13 +80,13 @@ public class LadderScript : MonoBehaviour
         if (inLadder && !onLadder)
         {
             onLadder = true;
-            //GetComponent<PlayerController>().enabled = false;
+            rb.constraints = rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
             rb.useGravity = false;
         }
         else if (onLadder)
         {
             onLadder = false;
-            //GetComponent<PlayerController>().enabled = true;
+            rb.constraints = originalConstraints;
             rb.useGravity = true;
         }
     }
