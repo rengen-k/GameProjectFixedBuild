@@ -28,14 +28,13 @@ public class LadderScript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         originalConstraints = rb.constraints;
         inLadder = false;
-        onLadder = false;
+        onLadder = true;
     }
 
     private void OnEnable()
     {
         playerActionsScript = new PlayerActionsScript();
-        playerActionsScript.Player.Enable();
-        playerActionsScript.Player.Interact.performed += Interact;
+        
         //camScript = GameObject.Find("StateDrivenCamera").GetComponent<CameraSwitchScript>();
     }
 
@@ -63,7 +62,7 @@ public class LadderScript : MonoBehaviour
         and you have clicked interact */
         if (inLadder && onLadder)
         {
-            rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
+            //rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
             rb.AddForce(ladderMovement * Time.fixedDeltaTime);
             float amount = Mathf.Min(Mathf.Abs(rb.velocity.y), Mathf.Abs(frictionAmount));
             amount *= Mathf.Sign(rb.velocity.y);
@@ -80,22 +79,12 @@ public class LadderScript : MonoBehaviour
             rb.constraints = originalConstraints;
             rb.useGravity = true;
         }
-    }
-
-    // if you click the interact button and are close enough to the ladder you will be able to climb it
-    public void Interact(InputAction.CallbackContext context)
-    {
-        if (inLadder && !onLadder)
-        {
+        else{
             onLadder = true;
-            rb.constraints = rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
+            //rb.constraints = rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
             rb.useGravity = false;
         }
-        else if (onLadder)
-        {
-            onLadder = false;
-            rb.constraints = originalConstraints;
-            rb.useGravity = true;
-        }
     }
+
+    
 }
