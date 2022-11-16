@@ -20,8 +20,8 @@ public class WaveScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        Camera camera = Camera.main ;
-        transform.GetChild(0).GetChild(0).transform.LookAt(transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation * Vector3.up);
+        Camera camera = Camera.main;
+        transform.GetChild(0).transform.LookAt(new Vector3(camera.transform.position.x, transform.GetChild(0).transform.position.y, camera.transform.position.z));
         Waves();
 		
 	}
