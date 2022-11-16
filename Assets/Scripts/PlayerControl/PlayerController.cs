@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     // Jump
     private float jumpBufferTime = 0.4f;
     private float jumpBufferCounter;
-    private bool isJumping = false;
+    public bool isJumping = false;
     private bool jumpRequest;
     private float lastGrounded;
     private float jumpCutMultiplier = 0.5f;
@@ -81,6 +81,8 @@ public class PlayerController : MonoBehaviour
     private bool RespawnRaycastMinusZ;
     private bool RespawnRaycastPlusX;
     private bool RespawnRaycastPlusZ;
+
+    public LadderScript ladderScript;
 
 
     //-----------------------------------------//
@@ -117,6 +119,7 @@ public class PlayerController : MonoBehaviour
         ResetPlayerHealth();
         playerInput = GetComponent<PlayerInput>();
         model = transform.Find("Model");
+        ladderScript = GetComponent<LadderScript>();
     }
 
     //-----------------------------------------//
@@ -209,6 +212,11 @@ public class PlayerController : MonoBehaviour
         ModifyFallSpeed();
 
         isNotNearEdge = CheckIfPlayerNotNearEdge();
+
+        if (ladderScript.onLadder && inputVector.x != 0)
+        {
+            isGrounded = true;
+        }
     }
 
     // Check whether sphere is colliding with ground or stableground

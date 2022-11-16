@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class LadderScript : MonoBehaviour
 {
     public bool inLadder;
-    private bool onLadder;
+    public bool onLadder;
     [SerializeField] private float frictionAmount = 2f;
     [SerializeField] private float ladderSpeed = 10000;
     private Vector3 ladderMovement;
@@ -22,6 +22,7 @@ public class LadderScript : MonoBehaviour
     private float acceleration = 30;
     private float deceleration = 40;
     RigidbodyConstraints originalConstraints;
+    private PlayerController playerController;
 
     void Start()
     {
@@ -29,6 +30,7 @@ public class LadderScript : MonoBehaviour
         originalConstraints = rb.constraints;
         inLadder = false;
         onLadder = false;
+        playerController = GetComponent<PlayerController>();
     }
 
     private void OnEnable()
@@ -74,7 +76,7 @@ public class LadderScript : MonoBehaviour
                 onLadder = true;
             }
         }
-        if (inLadder && onLadder)
+        if (inLadder && onLadder && !playerController.isJumping)
         {
             rb.AddForce(ladderMovement * Time.fixedDeltaTime);
             float amount = Mathf.Min(Mathf.Abs(rb.velocity.y), Mathf.Abs(frictionAmount));
