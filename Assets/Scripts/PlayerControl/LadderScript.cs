@@ -64,6 +64,18 @@ public class LadderScript : MonoBehaviour
         if (inLadder)
         {
             //rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
+            //rb.AddForce(ladderMovement * Time.fixedDeltaTime);
+            //float amount = Mathf.Min(Mathf.Abs(rb.velocity.y), Mathf.Abs(frictionAmount));
+            //amount *= Mathf.Sign(rb.velocity.y);
+            //rb.AddForce(Vector3.up * -amount, ForceMode.Impulse);
+
+            if (inputVector.y != 0)
+            {
+                onLadder = true;
+            }
+        }
+        if (inLadder && onLadder)
+        {
             rb.AddForce(ladderMovement * Time.fixedDeltaTime);
             float amount = Mathf.Min(Mathf.Abs(rb.velocity.y), Mathf.Abs(frictionAmount));
             amount *= Mathf.Sign(rb.velocity.y);
@@ -80,6 +92,11 @@ public class LadderScript : MonoBehaviour
             rb.constraints = originalConstraints;
             rb.useGravity = true;
         }
+        if (onLadder)
+        {
+            rb.useGravity = false;
+        }
+        Debug.Log("onLadder: " + onLadder);
     }
 
     //// if you click the interact button and are close enough to the ladder you will be able to climb it

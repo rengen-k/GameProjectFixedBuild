@@ -321,10 +321,10 @@ public class PlayerController : MonoBehaviour
         {
             Rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
         }
-        //if (Rb.useGravity == true)
-        //{
-        //    Rb.AddForce(Physics.gravity * 1.2f, ForceMode.Acceleration);
-        //}
+        if (Rb.useGravity == true)
+        {
+            Rb.AddForce(Physics.gravity * 1.2f, ForceMode.Acceleration);
+        }
     }
 
     // Determines whether player is not near the edge - main use is to respawn at correct locations
