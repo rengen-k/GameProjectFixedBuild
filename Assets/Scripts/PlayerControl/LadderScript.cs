@@ -46,15 +46,21 @@ public class LadderScript : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // check if we are near a ladder
         inLadder = Physics.CheckSphere(ladderCheck.position,ladderRadius, (int) whatIsLadder);
+
         inputVector = playerActionsScript.Player.Move.ReadValue<Vector2>();
 
+        /* same movement as in PlayerController but for up and down. I initially tried using rb.movePosition
+        but it ignored collisions so I went back to adding forces. */
         float targetSpeed = inputVector.y * ladderSpeed;
         float speedDif = targetSpeed - rb.velocity.y;
         float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : deceleration;
         float move = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, velPower) * Mathf.Sign(speedDif);
         ladderMovement.y = move;
 
+        /* allows you to move up and down and also applies friction if you are within distance of a ladder
+        and you have clicked interact */
         if (inLadder && onLadder)
         {
             rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
@@ -67,6 +73,7 @@ public class LadderScript : MonoBehaviour
 
     void Update()
     {
+        // if you move out of range of a ladder, you will not be able to continue moving up and down
         if (!inLadder)
         {
             onLadder = false;
@@ -75,6 +82,7 @@ public class LadderScript : MonoBehaviour
         }
     }
 
+    // if you click the interact button and are close enough to the ladder you will be able to climb it
     public void Interact(InputAction.CallbackContext context)
     {
         if (inLadder && !onLadder)
