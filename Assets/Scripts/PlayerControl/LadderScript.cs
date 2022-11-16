@@ -13,7 +13,7 @@ public class LadderScript : MonoBehaviour
     private Vector3 ladderMovement;
     private Vector2 inputVector;
     private Rigidbody rb;
-    private float ladderRadius = 1.5f;
+    private float ladderRadius = 1.25f;
     private PlayerActionsScript playerActionsScript;
     //public CameraSwitchScript camScript;
     [SerializeField] private Transform ladderCheck;

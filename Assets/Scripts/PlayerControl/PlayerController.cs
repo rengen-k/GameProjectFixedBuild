@@ -293,13 +293,13 @@ public class PlayerController : MonoBehaviour
     // Apply opposite force to player movement to imitate friction
     private void ApplyFriction(Vector2 inputVector) 
     {
-        if (isGrounded && Mathf.Abs(inputVector.x) < 0.01f && (currentCam == 1 || currentCam == 3))
+        if (isGrounded && Mathf.Abs(inputVector.x) < 0.01f && (currentCam == 1 || currentCam == 3) || ladderScript.onLadder && Mathf.Abs(inputVector.x) < 0.01f && (currentCam == 1 || currentCam == 3))
         {
             float amount = Mathf.Min(Mathf.Abs(Rb.velocity.z), Mathf.Abs(frictionAmount));
             amount *= Mathf.Sign(Rb.velocity.z);
             Rb.AddForce(Vector3.forward * -amount, ForceMode.Impulse);
         }
-        else if (isGrounded && Mathf.Abs(inputVector.x) < 0.01f && (currentCam == 0 || currentCam == 2))
+        else if (isGrounded && Mathf.Abs(inputVector.x) < 0.01f && (currentCam == 0 || currentCam == 2) || ladderScript.onLadder && Mathf.Abs(inputVector.x) < 0.01f && (currentCam == 0 || currentCam == 2))
         {
             float amount = Mathf.Min(Mathf.Abs(Rb.velocity.x), Mathf.Abs(frictionAmount));
             amount *= Mathf.Sign(Rb.velocity.x);
