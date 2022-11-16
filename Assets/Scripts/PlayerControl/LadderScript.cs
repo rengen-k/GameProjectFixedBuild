@@ -6,30 +6,32 @@ using UnityEngine.InputSystem;
 
 public class LadderScript : MonoBehaviour
 {
-    public bool inLadder;
+    // ladder info
+    private bool inLadder;
     public bool onLadder;
-    [SerializeField] private float frictionAmount = 2f;
-    [SerializeField] private float ladderSpeed = 10000;
-    private Vector3 ladderMovement;
-    private Vector2 inputVector;
-    private Rigidbody rb;
     private float ladderRadius = 1.25f;
-    private PlayerActionsScript playerActionsScript;
-    //public CameraSwitchScript camScript;
     [SerializeField] private Transform ladderCheck;
     [SerializeField] private LayerMask whatIsLadder;
+
+    // movement
     private float velPower = 1.5f;
     private float acceleration = 30;
     private float deceleration = 40;
-    RigidbodyConstraints originalConstraints;
-    private PlayerController playerController;
-    private Vector3 tempPos;
     private float offset = 0.6f;
+    private Vector3 ladderMovement;
+    private Vector2 inputVector;
+    private Vector3 tempPos;
+    private float frictionAmount = 2f;
+    private float ladderSpeed = 10000;
+
+    // init
+    private Rigidbody rb;
+    private PlayerActionsScript playerActionsScript;
+    private PlayerController playerController;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        originalConstraints = rb.constraints;
         inLadder = false;
         onLadder = false;
         playerController = GetComponent<PlayerController>();
@@ -39,7 +41,6 @@ public class LadderScript : MonoBehaviour
     {
         playerActionsScript = new PlayerActionsScript();
         playerActionsScript.Player.Enable();
-        //camScript = GameObject.Find("StateDrivenCamera").GetComponent<CameraSwitchScript>();
     }
 
     private void OnDisable()
@@ -68,31 +69,8 @@ public class LadderScript : MonoBehaviour
             onLadder = true;
             tempPos = transform.position;
             Collider[] ladders = Physics.OverlapSphere(ladderCheck.position, ladderRadius, (int)whatIsLadder);
-            //if (ladders[0] != null)
-            //{
-            //    if (ladders[0].transform.rotation == Quaternion.Euler(0, 0, 0) && transform.position.x < ladders[0].transform.position.x)
-            //    {
-            //        tempPos.x = ladders[0].transform.position.x - offset;
-            //        transform.position = tempPos;
-            //    }
-            //    else if (ladders[0].transform.rotation == Quaternion.Euler(0, 90, 0) && transform.position.z < ladders[0].transform.position.z)
-            //    {
-            //        tempPos.z = ladders[0].transform.position.z - offset;
-            //        transform.position = tempPos;
-            //    }
-            //    else if (ladders[0].transform.rotation == Quaternion.Euler(0, 180, 0) && transform.position.x > ladders[0].transform.position.x)
-            //    {
-            //        tempPos.x = ladders[0].transform.position.x + offset;
-            //        transform.position = tempPos;
-            //    }
-            //    else if (ladders[0].transform.rotation == Quaternion.Euler(0, -90, 0) && transform.position.z > ladders[0].transform.position.z)
-            //    {
-            //        tempPos.z = ladders[0].transform.position.z + offset;
-            //        transform.position = tempPos;
-            //    }
 
-            //}
-
+            // checks each ladder nearby and correctly snaps the player to it
             foreach (Collider ladder in ladders)
             {
                 if (ladder.transform.rotation == Quaternion.Euler(0, 0, 0) && transform.position.x < ladder.transform.position.x)
@@ -126,32 +104,6 @@ public class LadderScript : MonoBehaviour
             float amount = Mathf.Min(Mathf.Abs(rb.velocity.y), Mathf.Abs(frictionAmount));
             amount *= Mathf.Sign(rb.velocity.y);
             rb.AddForce(Vector3.up * -amount, ForceMode.Impulse);
-
-            //tempPos = transform.position;
-            //Collider[] ladders = Physics.OverlapSphere(ladderCheck.position, ladderRadius, (int)whatIsLadder);
-            //if (ladders[0] != null)
-            //{
-            //    if (ladders[0].transform.rotation == Quaternion.Euler(0, 0, 0) && transform.position.x < ladders[0].transform.position.x)
-            //    {
-            //        tempPos.x = ladders[0].transform.position.x - offset;
-            //        transform.position = tempPos;
-            //    }
-            //    else if (ladders[0].transform.rotation == Quaternion.Euler(0, 90, 0) && transform.position.z < ladders[0].transform.position.z)
-            //    {
-            //        tempPos.z = ladders[0].transform.position.z - offset;
-            //        transform.position = tempPos;
-            //    }
-            //    else if (ladders[0].transform.rotation == Quaternion.Euler(0, 180, 0) && transform.position.x > ladders[0].transform.position.x)
-            //    {
-            //        tempPos.x = ladders[0].transform.position.x + offset;
-            //        transform.position = tempPos;
-            //    }
-            //    else if (ladders[0].transform.rotation == Quaternion.Euler(0, -90, 0) && transform.position.z > ladders[0].transform.position.z)
-            //    {
-            //        tempPos.z = ladders[0].transform.position.z + offset;
-            //        transform.position = tempPos;
-            //    }
-            //}
         }
     }
 
@@ -161,10 +113,11 @@ public class LadderScript : MonoBehaviour
         if (!inLadder)
         {
             onLadder = false;
-            rb.constraints = originalConstraints;
             rb.useGravity = true;
         }
-        // turns off gravity while on a ladder so you don't slide down
+
+        /* turns off gravity while on a ladder so you don't slide down and decreases ladderRadius so you
+        can't move too far from the ladder and look like you're floating */
         if (onLadder)
         {
             rb.useGravity = false;
