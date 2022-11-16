@@ -38,7 +38,7 @@ public class FindObjsToFade : MonoBehaviour
         
 
         // Every object that should be transparentable needs to belong to one of these layers, can add layers as needed here
-        int layers = LayerMask.GetMask("Default", "Ground", "StableGround");
+        int layers = LayerMask.GetMask("Default", "Ground", "StableGround", "Water");
 
         
         numOfHits = Physics.CapsuleCastNonAlloc(

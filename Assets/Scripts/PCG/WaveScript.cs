@@ -15,11 +15,13 @@ public class WaveScript : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
+		transform.GetChild(0).GetComponent<Canvas>().worldCamera = GameObject.Find("UICamera").GetComponent<Camera>();
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+        Camera camera = Camera.main ;
+        transform.GetChild(0).GetChild(0).transform.LookAt(transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation * Vector3.up);
         Waves();
 		
 	}
