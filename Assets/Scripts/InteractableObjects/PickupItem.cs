@@ -12,6 +12,7 @@ public class PickupItem : MonoBehaviour
     private PlayerActionsScript playerActionsScript;
     private Transform pickupPoint;
     private Transform player;
+    private Rigidbody playerRb;
     private Vector3 velocity;
     [Tooltip("Values indicating properties of picking up.")]
     public float pickupDist;
@@ -21,7 +22,8 @@ public class PickupItem : MonoBehaviour
     public bool itemPickedUp;
     [Tooltip("Value used to determine if Player can pick up object at this point in time.")]
     public static bool ableToPickup;
-
+    private bool detectPlayer;
+    private GameObject playerObj;
     public GameObject bombPrefab;
     private Rigidbody rb;
     private bool reset;
@@ -32,7 +34,9 @@ public class PickupItem : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        playerObj = GameObject.Find("Player");
         player = GameObject.Find("Player").transform;
+        playerRb = GameObject.Find("Player").GetComponent<Rigidbody>();
         pickupPoint = GameObject.Find("pickupPoint").transform;
         ableToPickup = true;
         respawnPos = transform.position;
@@ -72,7 +76,20 @@ public class PickupItem : MonoBehaviour
 
         velocity = GameObject.Find("Player").GetComponent<Rigidbody>().velocity;
 
+        RaycastHit hit;
         rb.AddForce(Physics.gravity * 1.2f, ForceMode.Acceleration);
+        if (Physics.Raycast(transform.position + new Vector3(0.0f, 0.0f, 0.0f), transform.TransformDirection(Vector3.up), out hit, 1.0f)) {
+            if (hit.collider.gameObject == playerObj) {
+                detectPlayer = true;
+            } else {
+                detectPlayer = false;
+            }
+        }
+        // detectPlayer = Physics.Raycast(transform.position + new Vector3(0.0f, 0.0f, 0.0f), transform.TransformDirection(Vector3.up), 0.3f);
+        if (detectPlayer) {
+        Debug.Log(detectPlayer);
+            
+        }
     }
 
     public void Interact(InputAction.CallbackContext context)
@@ -91,7 +108,8 @@ public class PickupItem : MonoBehaviour
         }
 
         // picks up the object and makes it a child of the the player's pickupPoint
-        if (reset && pickupDist < 2 && !itemPickedUp && ableToPickup)
+        bool isPlayerVelocity0 = playerRb.velocity.y == 0;
+        if (reset && pickupDist < 2 && !itemPickedUp && ableToPickup && isPlayerVelocity0 && !detectPlayer)
         {
             rb.isKinematic = true;
             transform.parent = GameObject.Find("pickupPoint").transform;
