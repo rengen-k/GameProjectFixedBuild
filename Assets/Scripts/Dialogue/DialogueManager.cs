@@ -1,19 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMpro;
-using ink.Runtime;
+using TMPro;
+using Ink.Runtime;
+using UnityEngine.InputSystem;
+
 
 public class DialogueManager : MonoBehaviour
 {
-    private DialogueManager instance;
+    private static DialogueManager instance;
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
 
     private Story currentStory;
     private bool dialogueIsPlaying;
+    private bool interactPressed;
+    private PlayerActionsScript playerActionsScript;
 
-    
+
+    private void OnEnable()
+    {
+        InitPlayerInput();
+        ConfigPlayerInput();
+    }
+
+    private void InitPlayerInput() 
+    {
+        playerActionsScript = new PlayerActionsScript();
+        playerActionsScript.Player.Enable();
+    }
+
+    private void ConfigPlayerInput() 
+    {
+        playerActionsScript.Player.Interact.performed += Interact;
+        playerActionsScript.Player.Interact.canceled += Interact;
+    }
+
     private void Awake()
     {
         if (instance != null)
@@ -38,15 +60,8 @@ public class DialogueManager : MonoBehaviour
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
-
-        if (currentStory.canContinue)
-        {
-            dialogueText.text = currentStory.Continue();
-        }
-        else
-        {
-            ExitDialogueMode();
-        }
+        ContinueStory();
+        
     }
 
     private void ExitDialogueMode() {
@@ -62,8 +77,29 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        if (InputManager.GetInstance().GetInteractPressed()) {
+        if (interactPressed) {
+            ContinueStory();
+        }
+    }
 
+    private void ContinueStory() 
+    {
+        if (currentStory.canContinue)
+        {
+            dialogueText.text = currentStory.Continue();
+        }
+        else
+        {
+            ExitDialogueMode();
+        }
+    }
+
+    public void Interact(InputAction.CallbackContext context)
+    {
+        interactPressed = true;
+        if (context.canceled)
+        {
+            interactPressed = false;
         }
     }
 }
