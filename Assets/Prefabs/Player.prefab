@@ -370,7 +370,7 @@ Transform:
   m_Children:
   - {fileID: 9173282484261340009}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &9173282485034384682
 Rigidbody:
@@ -508,20 +508,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camScript: {fileID: 0}
   currentHealth: 0
-  maxHealth: 2
-  coyoteTimeCounter: 0
-  jumpBufferCounter: 0
-  lastGrounded: 0
-  jumpCutMultiplier: 0.5
-  speed: 12
-  jumpMultiplier: 10.5
+  maxHealth: 1
+  speed: 13
   frictionAmount: 0.45
-  groundCheck: {fileID: 9173282484750590619}
+  acceleration: 17
+  deceleration: 25
+  jumpMultiplier: 14
   whatIsGround:
     serializedVersion: 2
     m_Bits: 128
-  acceleration: 17
-  deceleration: 25
+  groundCheck: {fileID: 9173282484750590619}
 --- !u!136 &8363808424005067768
 CapsuleCollider:
   m_ObjectHideFlags: 0
