@@ -13,7 +13,7 @@ public class CameraSwitchScript : MonoBehaviour
     [Tooltip("Game Object connecting Camera to input system.")]
     [SerializeField] private InputAction action;
 
-    private int cameraPos = 0;
+    public int cameraPos = 0;
 
     private Animator animator;
 

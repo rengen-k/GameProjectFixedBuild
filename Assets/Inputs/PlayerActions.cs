@@ -130,10 +130,10 @@ public partial class @PlayerActionsScript : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""up"",
                     ""id"": ""654be480-6a64-46d2-ba84-9c09b1bceb54"",
-                    ""path"": """",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -141,10 +141,10 @@ public partial class @PlayerActionsScript : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""down"",
                     ""id"": ""9a9c2d71-e795-4d42-af8d-9940079b9ecb"",
-                    ""path"": """",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
