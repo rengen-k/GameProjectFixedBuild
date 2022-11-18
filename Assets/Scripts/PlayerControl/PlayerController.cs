@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
     // Movement
     private Vector3 movement;
     private float velPower = 1.5f;
-    [SerializeField] private float speed = 14;
+    [SerializeField] private float speed = 12;
     [SerializeField] private float frictionAmount = 0.45f;
     [SerializeField] private float acceleration = 17;
     [SerializeField] private float deceleration = 25;
@@ -223,25 +223,34 @@ public class PlayerController : MonoBehaviour
 
         isNotNearEdge = CheckIfPlayerNotNearEdge();
 
+        /* player counts as grounded when on the ladder but they have to be moving as well which stops them
+        from jumping straight up the ladder faster than they are supposed to */
         if (ladderScript.onLadder && inputVector.x != 0)
         {
             isGrounded = true;
         }
 
+        swimming = inWater;
+
+        // adjusts movement values depending on if you are in water
         if (inWater)
         {
             acceleration = 12;
             deceleration = 12;
             speed = 6;
             frictionAmount = 0.1f;
+            jumpMultiplier = 8;
         }
         else
         {
             acceleration = 17;
             deceleration = 25;
-            speed = 14;
+            speed = 12;
             frictionAmount = 0.45f;
+            jumpMultiplier = 14;
         }
+
+        // makes it so if you are near a ledge you pop up higher in the water so you can get out
         if (nearLedge)
         {
             swimCheck = groundCheck;
@@ -252,7 +261,6 @@ public class PlayerController : MonoBehaviour
             swimCheck = ladderCheck;
             swimRadius = 0f;
         }
-        swimming = inWater;
     }
 
     // Check whether sphere is colliding with ground or stableground
@@ -261,10 +269,10 @@ public class PlayerController : MonoBehaviour
         isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (int)whatIsGround) || Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
         isStableGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
         inWater = Physics.CheckSphere(swimCheck.position, swimRadius, (int)whatIsWater);
-        nearLedge = Physics.CheckSphere(swimCheck.position, groundRadius + 0.2f, (int)whatIsGround);
+        nearLedge = Physics.CheckSphere(swimCheck.position, groundRadius + 0.3f, (int)whatIsGround);
     }
 
-    // Set the direction of movement based on current camera used
+    // Set the direction of movement based on current camera used and if the player is in water
     private void SetMovementDirection (Vector2 inputVector)
     {
         if (inWater)
@@ -275,7 +283,6 @@ public class PlayerController : MonoBehaviour
         {
             waterMov = 0.0f;
         }
-
         if (currentCam == 0)
         {
             movement = new Vector3(inputVector.x, waterMov, 0.0f);
@@ -337,18 +344,21 @@ public class PlayerController : MonoBehaviour
             movement.z = 0f;
         }
 
+        // allows for upward and downward movement while in water
         if (swimming)
         {
+            StartCoroutine(SwimCooldown());
             float targetSpeed = movement.y * speed;
             float speedDif = targetSpeed - Rb.velocity.y;
             float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : deceleration;
             float move = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, velPower) * Mathf.Sign(speedDif);
+            // multiplier for upward movement to account for gravity
             if (move > 0.01f)
             {
                 move *= 3.5f;
             }
             movement.y = move;
-            StartCoroutine(SwimCooldown());
+            //StartCoroutine(SwimCooldown());
         }
     }
 
@@ -556,10 +566,11 @@ public class PlayerController : MonoBehaviour
         updateRespawnPosition = true;
     }
 
+    // doesn't really work
     private IEnumerator SwimCooldown()
     {
-        swimming = false;
-        yield return new WaitForSeconds(0.2f);
+        swimming = true;
+        yield return new WaitForSeconds(0.3f);
         swimming = inWater;
     }
 }
