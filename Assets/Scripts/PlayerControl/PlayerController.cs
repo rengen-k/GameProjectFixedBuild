@@ -181,7 +181,8 @@ public class PlayerController : MonoBehaviour
     // Update respawn position when player is not near an edge and is grounded
     private void UpdateRespawn() 
     {
-        if (isNotNearEdge && isStableGrounded && updateRespawnPosition && coyoteTimeCounter == coyoteTime) {
+        if (isNotNearEdge && isStableGrounded && updateRespawnPosition && coyoteTimeCounter == coyoteTime)
+        {
             lastGroundedPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.3f, gameObject.transform.position.z);
             StartCoroutine(RespawnPositionCooldown());
         }
@@ -350,7 +351,9 @@ public class PlayerController : MonoBehaviour
         if (RespawnRaycastMinusX && RespawnRaycastPlusX && RespawnRaycastMinusZ && RespawnRaycastPlusZ)
         {
             nearEdge = true;
-        } else {
+        }
+        else
+        {
             nearEdge = false;
         }
 
@@ -398,9 +401,12 @@ public class PlayerController : MonoBehaviour
     // Rigidbody constraints to prevent movement in an axis that is not intended to be moved in
     private void ModifyConstraintsBasedOnCamera() 
     {
-        if (currentCam == 0 | currentCam == 2) {
+        if (currentCam == 0 | currentCam == 2)
+        {
             Rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
-        } else if (currentCam == 1 | currentCam == 3) {
+        }
+        else if (currentCam == 1 | currentCam == 3)
+        {
             Rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
         }
     }
@@ -421,17 +427,18 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(HurtCooldown());
             if (currentHealth <= 0) {
             Respawn();
-            } else {
+            }
+            else
+            {
                 Rb.AddForce(Vector3.up * 12f, ForceMode.Impulse);
             }
         }
-
         else if (collision.gameObject.name == "KillPlane")
         {
             Respawn();
         }
-
-        else if (collision.gameObject.tag == "JumpTag" && !isJumpTrampoline){
+        else if (collision.gameObject.tag == "JumpTag" && !isJumpTrampoline)
+        {
             coyoteTimeCounter = 0f;
             StartCoroutine(TrampolineCooldown());
             Rb.velocity = Vector3.zero;
@@ -440,12 +447,14 @@ public class PlayerController : MonoBehaviour
     }
 
     // Reset Player health to maxHealth
-    private void ResetPlayerHealth() {
+    private void ResetPlayerHealth()
+    {
         currentHealth = maxHealth;
     }
 
     // Set player to lastGroundedPosition and reset their health
-    private void Respawn() {
+    private void Respawn()
+    {
         ResetPlayerHealth();
         transform.position = lastGroundedPosition;
     }

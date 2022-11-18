@@ -23,6 +23,8 @@ public class LadderScript : MonoBehaviour
     private Vector3 tempPos;
     private float frictionAmount = 0.5f;
     private float ladderSpeed = 10;
+    private float smoothTime = 0.08f;
+    private Vector3 velocity = Vector3.zero;
 
     // init
     private Rigidbody rb;
@@ -63,10 +65,11 @@ public class LadderScript : MonoBehaviour
         float move = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, velPower) * Mathf.Sign(speedDif);
         ladderMovement.y = move;
 
-        // says you are on the ladder if you are within range and have clicked the up or down input
         if (inLadder && inputVector.y != 0)
         {
+            // says you are on the ladder if you are within range and have clicked the up or down input
             onLadder = true;
+
             tempPos = transform.position;
             Collider[] ladders = Physics.OverlapSphere(ladderCheck.position, ladderRadius, (int)whatIsLadder);
 
@@ -76,22 +79,22 @@ public class LadderScript : MonoBehaviour
                 if (ladder.transform.rotation == Quaternion.Euler(0, 0, 0) && transform.position.x < ladder.transform.position.x)
                 {
                     tempPos.x = ladder.transform.position.x - offset;
-                    transform.position = tempPos;
+                    transform.position = Vector3.SmoothDamp(transform.position, tempPos, ref velocity, smoothTime);
                 }
                 else if (ladder.transform.rotation == Quaternion.Euler(0, 90, 0) && transform.position.z < ladder.transform.position.z)
                 {
                     tempPos.z = ladder.transform.position.z - offset;
-                    transform.position = tempPos;
+                    transform.position = Vector3.SmoothDamp(transform.position, tempPos, ref velocity, smoothTime);
                 }
                 else if (ladder.transform.rotation == Quaternion.Euler(0, 180, 0) && transform.position.x > ladder.transform.position.x)
                 {
                     tempPos.x = ladder.transform.position.x + offset;
-                    transform.position = tempPos;
+                    transform.position = Vector3.SmoothDamp(transform.position, tempPos, ref velocity, smoothTime);
                 }
                 else if (ladder.transform.rotation == Quaternion.Euler(0, -90, 0) && transform.position.z > ladder.transform.position.z)
                 {
                     tempPos.z = ladder.transform.position.z + offset;
-                    transform.position = tempPos;
+                    transform.position = Vector3.SmoothDamp(transform.position, tempPos, ref velocity, smoothTime);
                 }
             }
         }
