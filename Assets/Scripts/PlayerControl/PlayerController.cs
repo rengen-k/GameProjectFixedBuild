@@ -70,9 +70,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Transform ladderCheck;
+    private Transform swimCheck;
+    private float swimRadius;
     private bool inWater;
+    private bool swimming;
     [SerializeField] private LayerMask whatIsWater;
     private float waterMov;
+    private bool nearLedge;
 
     //-------------------------//
     // Respawn
@@ -124,6 +128,7 @@ public class PlayerController : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         model = transform.Find("Model");
         ladderScript = GetComponent<LadderScript>();
+        swimCheck = ladderCheck;
     }
 
     //-----------------------------------------//
@@ -227,7 +232,7 @@ public class PlayerController : MonoBehaviour
         {
             acceleration = 12;
             deceleration = 12;
-            speed = 8;
+            speed = 6;
             frictionAmount = 0.1f;
         }
         else
@@ -237,6 +242,17 @@ public class PlayerController : MonoBehaviour
             speed = 14;
             frictionAmount = 0.45f;
         }
+        if (nearLedge)
+        {
+            swimCheck = groundCheck;
+            swimRadius = groundRadius;
+        }
+        else
+        {
+            swimCheck = ladderCheck;
+            swimRadius = 0f;
+        }
+        swimming = inWater;
     }
 
     // Check whether sphere is colliding with ground or stableground
@@ -244,7 +260,8 @@ public class PlayerController : MonoBehaviour
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (int)whatIsGround) || Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
         isStableGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
-        inWater = Physics.CheckSphere(groundCheck.position, groundRadius, (int)whatIsWater);
+        inWater = Physics.CheckSphere(swimCheck.position, swimRadius, (int)whatIsWater);
+        nearLedge = Physics.CheckSphere(swimCheck.position, groundRadius + 0.2f, (int)whatIsGround);
     }
 
     // Set the direction of movement based on current camera used
@@ -320,17 +337,18 @@ public class PlayerController : MonoBehaviour
             movement.z = 0f;
         }
 
-        if (inWater)
+        if (swimming)
         {
             float targetSpeed = movement.y * speed;
             float speedDif = targetSpeed - Rb.velocity.y;
             float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : deceleration;
             float move = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, velPower) * Mathf.Sign(speedDif);
-            if (move > 0.1f)
+            if (move > 0.01f)
             {
-                move *= 2;
+                move *= 3.5f;
             }
             movement.y = move;
+            StartCoroutine(SwimCooldown());
         }
     }
 
@@ -349,12 +367,6 @@ public class PlayerController : MonoBehaviour
             amount *= Mathf.Sign(Rb.velocity.x);
             Rb.AddForce(Vector3.right * -amount, ForceMode.Impulse);
         }
-        //else if (inWater)
-        //{
-        //    float amount = Mathf.Min(Mathf.Abs(Rb.velocity.y), Mathf.Abs(frictionAmount));
-        //    amount *= Mathf.Sign(Rb.velocity.y);
-        //    Rb.AddForce(Vector3.up * -amount, ForceMode.Impulse);
-        //}
     }
 
     // Execute Jump only when certain conditions are met eg. when not jumping
@@ -542,5 +554,12 @@ public class PlayerController : MonoBehaviour
         updateRespawnPosition = false;
         yield return new WaitForSeconds(0.5f);
         updateRespawnPosition = true;
+    }
+
+    private IEnumerator SwimCooldown()
+    {
+        swimming = false;
+        yield return new WaitForSeconds(0.2f);
+        swimming = inWater;
     }
 }
