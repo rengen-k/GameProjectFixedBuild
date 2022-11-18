@@ -326,7 +326,7 @@ public class PlayerController : MonoBehaviour
     // Modifies fall speed to become faster or slower
     private void ModifyFallSpeed() 
     {
-        if (Rb.velocity.y < 0)
+        if (Rb.velocity.y < 0 && Rb.useGravity == true)
         {
             Rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
         }
