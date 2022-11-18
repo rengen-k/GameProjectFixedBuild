@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
     // Movement
     private Vector3 movement;
     private float velPower = 1.5f;
-    [SerializeField] private float speed = 12;
+    [SerializeField] private float speed = 14;
     [SerializeField] private float frictionAmount = 0.45f;
     [SerializeField] private float acceleration = 17;
     [SerializeField] private float deceleration = 25;
@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
     private float lastGrounded;
     private float jumpCutMultiplier = 0.5f;
     private float fallMultiplier = 2f;
-    [SerializeField] private float jumpMultiplier = 10.5f;
+    [SerializeField] private float jumpMultiplier = 14f;
 
     private float jumpTrampolineHeight = 19.0f;
 
@@ -69,7 +69,11 @@ public class PlayerController : MonoBehaviour
     private bool isJumpTrampoline = false;
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private Transform groundCheck;
-    
+    [SerializeField] private Transform ladderCheck;
+    private bool inWater;
+    [SerializeField] private LayerMask whatIsWater;
+    private float waterMov;
+
     //-------------------------//
     // Respawn
     private Vector3 lastGroundedPosition;
@@ -218,6 +222,21 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = true;
         }
+
+        if (inWater)
+        {
+            acceleration = 12;
+            deceleration = 12;
+            speed = 8;
+            frictionAmount = 0.1f;
+        }
+        else
+        {
+            acceleration = 17;
+            deceleration = 25;
+            speed = 14;
+            frictionAmount = 0.45f;
+        }
     }
 
     // Check whether sphere is colliding with ground or stableground
@@ -225,25 +244,36 @@ public class PlayerController : MonoBehaviour
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (int)whatIsGround) || Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
         isStableGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
+        inWater = Physics.CheckSphere(groundCheck.position, groundRadius, (int)whatIsWater);
     }
 
     // Set the direction of movement based on current camera used
-    private void SetMovementDirection(Vector2 inputVector) {
+    private void SetMovementDirection (Vector2 inputVector)
+    {
+        if (inWater)
+        {
+            waterMov = inputVector.y;
+        }
+        else if (!inWater)
+        {
+            waterMov = 0.0f;
+        }
+
         if (currentCam == 0)
         {
-            movement = new Vector3(inputVector.x, 0.0f, 0.0f);
+            movement = new Vector3(inputVector.x, waterMov, 0.0f);
         }
         else if (currentCam == 1)
         {
-            movement = new Vector3(0f, 0.0f, inputVector.x);
+            movement = new Vector3(0f, waterMov, inputVector.x);
         }
         else if (currentCam == 2)
         {
-            movement = new Vector3(-inputVector.x, 0.0f, 0f);
+            movement = new Vector3(-inputVector.x, waterMov, 0f);
         }
         else if (currentCam == 3)
         {
-            movement = new Vector3(0f, 0.0f, -inputVector.x);
+            movement = new Vector3(0f, waterMov, -inputVector.x);
         }
     }
 
@@ -289,6 +319,19 @@ public class PlayerController : MonoBehaviour
             movement.x = move;
             movement.z = 0f;
         }
+
+        if (inWater)
+        {
+            float targetSpeed = movement.y * speed;
+            float speedDif = targetSpeed - Rb.velocity.y;
+            float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : deceleration;
+            float move = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, velPower) * Mathf.Sign(speedDif);
+            if (move > 0.1f)
+            {
+                move *= 2;
+            }
+            movement.y = move;
+        }
     }
 
     // Apply opposite force to player movement to imitate friction
@@ -306,6 +349,12 @@ public class PlayerController : MonoBehaviour
             amount *= Mathf.Sign(Rb.velocity.x);
             Rb.AddForce(Vector3.right * -amount, ForceMode.Impulse);
         }
+        //else if (inWater)
+        //{
+        //    float amount = Mathf.Min(Mathf.Abs(Rb.velocity.y), Mathf.Abs(frictionAmount));
+        //    amount *= Mathf.Sign(Rb.velocity.y);
+        //    Rb.AddForce(Vector3.up * -amount, ForceMode.Impulse);
+        //}
     }
 
     // Execute Jump only when certain conditions are met eg. when not jumping
@@ -326,13 +375,17 @@ public class PlayerController : MonoBehaviour
     // Modifies fall speed to become faster or slower
     private void ModifyFallSpeed() 
     {
-        if (Rb.velocity.y < 0 && Rb.useGravity == true)
+        if (Rb.velocity.y < 0 && Rb.useGravity == true && !inWater)
         {
             Rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
         }
-        if (Rb.useGravity == true)
+        if (Rb.useGravity == true && !inWater)
         {
             Rb.AddForce(Physics.gravity * 1.2f, ForceMode.Acceleration);
+        }
+        if (inWater)
+        {
+            Rb.AddForce(Physics.gravity * 0.5f, ForceMode.Acceleration);
         }
     }
 
