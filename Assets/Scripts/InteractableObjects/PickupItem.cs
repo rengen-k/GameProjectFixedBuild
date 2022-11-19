@@ -69,7 +69,7 @@ public class PickupItem : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log("inWater: " + inWater);
+
         if (itemPickedUp)
         {
             transform.position = pickupPoint.position + (transform.localScale.x * -GameObject.Find("Model").transform.forward);
