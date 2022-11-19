@@ -29,11 +29,9 @@ public class Meteor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (timeTaken < timeDuration)
-        {
-            transform.position = Vector3.Lerp(start, target, timeTaken / timeDuration);
-            timeTaken += Time.deltaTime;
-        }
+        transform.position = Vector3.LerpUnclamped(start, target, timeTaken / timeDuration);
+        timeTaken += Time.deltaTime;
+
     }
 
     void OnCollisionEnter(Collision other)

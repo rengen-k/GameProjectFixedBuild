@@ -13,15 +13,16 @@ public class MeteorTarget : MonoBehaviour
     [SerializeField] private GameObject meteor;
     [SerializeField] private float countdown;
     private Transform timer;
-
+    private Vector3 startScaleSize;
     void Awake()
     {
         timer = transform.Find("WorldSpaceCanvas/timer");
         timer.transform.parent.GetComponent<Canvas>().worldCamera = GameObject.Find("UICamera").GetComponent<Camera>();
         countdown = delay;
+        startScaleSize = timer.GetComponent<RectTransform>().localScale;
     }
 
-    public void setDelay(float d)
+    public void SetDelay(float d)
     {
         delay = d;
         countdown = d;
@@ -42,7 +43,7 @@ public class MeteorTarget : MonoBehaviour
         timer.GetComponent<Image>().fillAmount -= 1.0f / delay * Time.deltaTime;
         if (countdown <= 2)
         {
-            timer.GetComponent<RectTransform>().localScale += new Vector3(0.06f, 0.06f, 0.06f);
+            timer.GetComponent<RectTransform>().localScale = Vector3.Lerp( new Vector3(0.2f, 0.2f, 0.2f), startScaleSize, countdown/2);
             timer.GetComponent<Image>().color = new Color(1, 0, 0, 0.8f);
         }
         if (countdown <= 0)
@@ -55,9 +56,39 @@ public class MeteorTarget : MonoBehaviour
 
     {
         Vector3 pos = transform.position;
-        pos += new Vector3(Random.Range(-10, 11), 30, Random.Range(-10, 11));
+        pos += new Vector3(Random.Range(-10, 10), 30, Random.Range(-10, 11));
 
         Instantiate(meteor, pos, transform.rotation).GetComponent<Meteor>().SetUp( GetComponent<Transform>().localScale.x, transform.position);
+        enabled = false;
+        StartCoroutine(Wait());
+    }
+    
+
+    // Credit Programmer
+    // https://stackoverflow.com/a/46587297
+    // Code to increase object scale over time. Modified slightly.
+    // Make sure there is only one instance of this function running
+    IEnumerator scaleOverTime(Transform objectToScale, Vector3 toScale, float duration)
+    {
+       
+        float counter = 0;
+
+        //Get the current scale of the object to be moved
+        Vector3 startScaleSize = objectToScale.localScale;
+
+        while (counter < duration)
+        {
+            counter += Time.deltaTime;
+            objectToScale.localScale = Vector3.Lerp(startScaleSize, toScale, counter / duration);
+            yield return null;
+        }
+
+        Object.Destroy(gameObject);
+    }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(2);
         Object.Destroy(gameObject);
     }
 }

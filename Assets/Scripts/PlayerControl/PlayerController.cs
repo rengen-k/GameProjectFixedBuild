@@ -516,7 +516,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        Debug.Log("Explode");
         if (collision.gameObject.tag == "Checkpoint")
         {
             setCheckpoint(collision);
