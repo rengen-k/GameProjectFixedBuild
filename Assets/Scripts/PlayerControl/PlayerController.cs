@@ -91,6 +91,7 @@ public class PlayerController : MonoBehaviour
     private bool RespawnRaycastPlusZ;
 
     public LadderScript ladderScript;
+    private Vector3 checkpoint;
 
 
     //-----------------------------------------//
@@ -99,6 +100,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         Rb = GetComponent<Rigidbody>();
+        checkpoint = transform.position;
         InitMovement();
         ConfigureGroundCheckAndRadius();
     }
@@ -497,15 +499,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "HurtTag1" && !isHurt) 
         {
-            currentHealth -= 1;
-            StartCoroutine(HurtCooldown());
-            if (currentHealth <= 0) {
-            Respawn();
-            }
-            else
-            {
-                Rb.AddForce(Vector3.up * 12f, ForceMode.Impulse);
-            }
+            Hurt();
         }
         else if (collision.gameObject.name == "KillPlane")
         {
@@ -520,18 +514,97 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.tag == "Checkpoint")
+        {
+            setCheckpoint(collision);
+        }
+    }
+
     // Reset Player health to maxHealth
     private void ResetPlayerHealth()
     {
+        if (GameObject.Find("GlobalGameState").GetComponent<GameState>().IsEasy())
+        {
+            maxHealth = 2;
+        }
         currentHealth = maxHealth;
+    }
+
+    public void MenuIncreaseHealth()
+    {
+        int setHealth;
+        if (GameObject.Find("GlobalGameState").GetComponent<GameState>().IsEasy())
+        {
+            setHealth = 2;
+        }
+        else
+        {
+            setHealth = 1;
+        }
+        bool hpFlag = false;
+        if (maxHealth == currentHealth)
+        {
+            hpFlag = true;
+        }
+        maxHealth = setHealth;
+        if (hpFlag)
+        {
+            currentHealth = maxHealth;
+        }
     }
 
     // Set player to lastGroundedPosition and reset their health
     private void Respawn()
     {
         ResetPlayerHealth();
-        transform.position = lastGroundedPosition;
+        if (GameObject.Find("GlobalGameState").GetComponent<GameState>().isNormal())
+        {
+            GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
+            transform.position = lastGroundedPosition;
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
     }
+
+    private void setCheckpoint(Collider other)
+    {
+        checkpoint = other.transform.position;
+    }
+
+    private void RespawnAtCheckpoint()
+    {
+        ResetPlayerHealth();
+        GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
+        transform.position = checkpoint;
+    }
+
+    public void Hurt()
+    {
+
+        currentHealth -= 1;       
+        StartCoroutine(HurtCooldown());
+        if (currentHealth <= 0) {
+            if (GameObject.Find("GlobalGameState").GetComponent<GameState>().isNormal())
+            {
+                RespawnAtCheckpoint();
+            }
+            else
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+           
+        }
+        else
+        {
+            Rb.AddForce(Vector3.up * 12f, ForceMode.Impulse);
+        }
+    }
+
 
     //-----------------------------------------//
     // Cooldowns (Coroutines)
@@ -547,7 +620,10 @@ public class PlayerController : MonoBehaviour
     private IEnumerator HurtCooldown()
     {
         isHurt = true;
+
         yield return new WaitForSeconds(0.4f);
+        
+        
         isHurt = false;
     }
 
@@ -565,7 +641,6 @@ public class PlayerController : MonoBehaviour
         updateRespawnPosition = true;
     }
 
-    // doesn't really work
     private IEnumerator SwimCooldown()
     {
         swimming = true;
