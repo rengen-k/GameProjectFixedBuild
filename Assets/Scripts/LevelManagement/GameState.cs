@@ -160,7 +160,6 @@ public class GameState : MonoBehaviour
         int length = Enum.GetNames(typeof(Difficulty)).Length;
         int index = ((int) ++diff) % (length);
         diff = (Difficulty) index;
-        Debug.Log(index + " " + diff);
         return index;
 
     }
