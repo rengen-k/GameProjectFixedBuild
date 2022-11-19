@@ -12,17 +12,27 @@ using UnityEngine.UI;
 //-----------------------------------------//
 // Singleton that keeps track of which levels are completed, and which levels should be asseccible. 
 
-// TODO 
-// Organise
 public class GameState : MonoBehaviour
 {
     public static GameState instance;
+
+    public enum Difficulty
+    {
+        normal,
+        hard
+    }
+
+    // Data that needs to be saved
+
+    [SerializeField] private Difficulty diff;
 
     //Level completion management
     // Set range to (0, X+1) where X is the number of levels
     private static int [] levelList = Enumerable.Range(0, 11).ToArray();
     private bool [] levelDones;
     // Reference Array to each LevelLine Object, automatically generated.
+
+    // Data that is generated as needed.
     private LevelLine [] lines;
 
     // Collectible Management
@@ -37,7 +47,7 @@ public class GameState : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        
+        diff = Difficulty.normal;
     }
 
     //Setting up.
@@ -81,11 +91,12 @@ public class GameState : MonoBehaviour
 
     }
 
-    // Passing data down, updating panal.
+        
+    //Level Logic
 
     private void UpdateLevelLines()
     {
-        // Updates GameState references to refer to the current scenes objects. And then passes down data to those objects
+        // Updates GameState references to refer to the current scenes objects. And then passes down data from this to those objects
         
         msg.SetActive(false);
 
@@ -101,12 +112,10 @@ public class GameState : MonoBehaviour
             GameObject.FindGameObjectsWithTag("Collectible").Length;
     }
 
-   
-
-    // Updating attributes
 
     public void EndLevel()
     {
+        // When a level ends, time to update singleton to match.
         int levelNum =
             Int32.Parse(SceneManager.GetActiveScene().name.Split(" ")[1]);
         if (thisLevelCollectibles == thisLevelTotalCollectibles)
@@ -137,6 +146,13 @@ public class GameState : MonoBehaviour
     public static int LevelCount ()
     {
         return levelList.Length;
+    }
+
+    // Difficulty
+
+    public bool isNormal()
+    {
+        return diff == Difficulty.normal;
     }
 
 

@@ -37,10 +37,10 @@ public class PlayerController : MonoBehaviour
     // Movement
     private Vector3 movement;
     private float velPower = 1.5f;
-    [SerializeField] private float speed = 12;
-    [SerializeField] private float frictionAmount = 0.45f;
-    [SerializeField] private float acceleration = 17;
-    [SerializeField] private float deceleration = 25;
+    private float speed = 12;
+    private float frictionAmount = 0.45f;
+    private float acceleration = 17;
+    private float deceleration = 25;
     
     //-------------------------//
     // Jump
@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
     private float lastGrounded;
     private float jumpCutMultiplier = 0.5f;
     private float fallMultiplier = 2f;
-    [SerializeField] private float jumpMultiplier = 10.5f;
+    private float jumpMultiplier = 10.5f;
 
     private float jumpTrampolineHeight = 19.0f;
 
@@ -67,8 +67,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private bool isStableGrounded;
     private bool isJumpTrampoline = false;
-    [SerializeField] private LayerMask whatIsGround;
-    [SerializeField] private Transform groundCheck;
+    private Transform groundCheck;
     
     //-------------------------//
     // Respawn
@@ -82,8 +81,9 @@ public class PlayerController : MonoBehaviour
     private bool RespawnRaycastPlusX;
     private bool RespawnRaycastPlusZ;
 
-    public LadderScript ladderScript;
-
+    private LadderScript ladderScript;
+    
+    public Vector3 checkpoint;
 
     //-----------------------------------------//
     // Awake
@@ -91,6 +91,10 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         Rb = GetComponent<Rigidbody>();
+        checkpoint = transform.position;
+        // Setting internal references
+        groundCheck = gameObject.transform.Find("Model").transform.Find("groundCheck").transform;
+        ladderScript = GetComponent<LadderScript>();
         InitMovement();
         ConfigureGroundCheckAndRadius();
     }
@@ -223,7 +227,7 @@ public class PlayerController : MonoBehaviour
     // Check whether sphere is colliding with ground or stableground
     private void CheckIfGroundedorStableGrounded() 
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (int)whatIsGround) || Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 7)) || Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
         isStableGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
     }
 
@@ -423,15 +427,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "HurtTag1" && !isHurt) 
         {
-            currentHealth -= 1;
-            StartCoroutine(HurtCooldown());
-            if (currentHealth <= 0) {
-            Respawn();
-            }
-            else
-            {
-                Rb.AddForce(Vector3.up * 12f, ForceMode.Impulse);
-            }
+            Hurt();
         }
         else if (collision.gameObject.name == "KillPlane")
         {
@@ -446,6 +442,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.tag == "Checkpoint")
+        {
+            setCheckpoint(collision);
+        }
+    }
+
     // Reset Player health to maxHealth
     private void ResetPlayerHealth()
     {
@@ -456,8 +460,50 @@ public class PlayerController : MonoBehaviour
     private void Respawn()
     {
         ResetPlayerHealth();
-        transform.position = lastGroundedPosition;
+        if (GameObject.Find("GlobalGameState").GetComponent<GameState>().isNormal())
+        {
+            transform.position = lastGroundedPosition;
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
     }
+
+    private void setCheckpoint(Collider other)
+    {
+        checkpoint = other.transform.position;
+    }
+
+    private void RespawnAtCheckpoint()
+    {
+        ResetPlayerHealth();
+        transform.position = checkpoint;
+    }
+
+    public void Hurt()
+    {
+
+        currentHealth -= 1;       
+        StartCoroutine(HurtCooldown());
+        if (currentHealth <= 0) {
+            if (GameObject.Find("GlobalGameState").GetComponent<GameState>().isNormal())
+            {
+                RespawnAtCheckpoint();
+            }
+            else
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+           
+        }
+        else
+        {
+            Rb.AddForce(Vector3.up * 12f, ForceMode.Impulse);
+        }
+    }
+
 
     //-----------------------------------------//
     // Cooldowns (Coroutines)
