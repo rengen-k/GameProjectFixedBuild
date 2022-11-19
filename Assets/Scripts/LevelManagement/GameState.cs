@@ -48,7 +48,7 @@ public class GameState : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        diff = Difficulty.normal;
+
     }
 
     //Setting up.
@@ -168,6 +168,11 @@ public class GameState : MonoBehaviour
         diff = (Difficulty) index;
         return index;
 
+    }
+
+    public int GetDifficulty()
+    {
+        return (int) diff;
     }
 
 
