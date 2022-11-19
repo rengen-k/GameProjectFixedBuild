@@ -83,6 +83,12 @@ public class Bomb : MonoBehaviour
             {
                 dest.Destroy();
             }
+
+            PlayerController player = nearbyObject.GetComponent<PlayerController>();
+            if (player != null)
+            {
+                player.Hurt();
+            }
         }
 
         Collider[] collidersToMove = Physics.OverlapSphere(transform.position, blastRadius);
