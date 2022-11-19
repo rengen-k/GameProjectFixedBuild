@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class MeteorManager : MonoBehaviour
 {
+    //TODO, make drop background meteors on torus
     [Tooltip("The meteor target this manager spawns")]
     [SerializeField] private GameObject target;
     private bool allow = false;
