@@ -499,7 +499,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "HurtTag1" && !isHurt) 
         {
-            Hurt();
+            Hurt(collision.transform.position);
         }
         else if (collision.gameObject.name == "KillPlane")
         {
@@ -516,9 +516,14 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
+        Debug.Log("Explode");
         if (collision.gameObject.tag == "Checkpoint")
         {
             setCheckpoint(collision);
+        }
+        else if (collision.gameObject.tag == "HurtTag1" && !isHurt)
+        {
+            Hurt(collision.transform.position);
         }
     }
 
@@ -602,6 +607,28 @@ public class PlayerController : MonoBehaviour
         else
         {
             Rb.AddForce(Vector3.up * 12f, ForceMode.Impulse);
+        }
+    }
+
+    private void Hurt(Vector3 hurter)
+    {
+
+        currentHealth -= 1;       
+        StartCoroutine(HurtCooldown());
+        if (currentHealth <= 0) {
+            if (GameObject.Find("GlobalGameState").GetComponent<GameState>().isNormal())
+            {
+                RespawnAtCheckpoint();
+            }
+            else
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+           
+        }
+        else
+        {
+            Rb.AddForce(((transform.position - hurter).normalized) * 12f, ForceMode.VelocityChange);
         }
     }
 
