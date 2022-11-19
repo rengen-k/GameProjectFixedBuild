@@ -147,4 +147,19 @@ public class PauseMenu : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void Diff()
+    {
+        int diff = GameObject.Find("GlobalGameState").GetComponent<GameState>().IncrementDifficulty();
+        GameObject diffText = GameObject.Find("Diff Text");
+        TMP_Text texty = diffText.GetComponent<TextMeshProUGUI>();
+        if (diff == 0){
+            texty.text = "Diff: Normal";
+        }
+        else if (diff == 1)
+        {
+            texty.text = "Diff: Hard";
+        }
+
+    }
 }

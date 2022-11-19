@@ -460,7 +460,7 @@ public class PlayerController : MonoBehaviour
     private void Respawn()
     {
         ResetPlayerHealth();
-        if (GameObject.Find("GlobalGameState").GetComponent<GameState>().isNormal())
+        if (GameObject.Find("GlobalGameState").GetComponent<GameState>().IsNormal())
         {
             transform.position = lastGroundedPosition;
         }
@@ -488,7 +488,7 @@ public class PlayerController : MonoBehaviour
         currentHealth -= 1;       
         StartCoroutine(HurtCooldown());
         if (currentHealth <= 0) {
-            if (GameObject.Find("GlobalGameState").GetComponent<GameState>().isNormal())
+            if (GameObject.Find("GlobalGameState").GetComponent<GameState>().IsNormal())
             {
                 RespawnAtCheckpoint();
             }

@@ -150,9 +150,19 @@ public class GameState : MonoBehaviour
 
     // Difficulty
 
-    public bool isNormal()
+    public bool IsNormal()
     {
         return diff == Difficulty.normal;
+    }
+
+    public int IncrementDifficulty()
+    {
+        int length = Enum.GetNames(typeof(Difficulty)).Length;
+        int index = ((int) ++diff) % (length);
+        diff = (Difficulty) index;
+        Debug.Log(index + " " + diff);
+        return index;
+
     }
 
 
