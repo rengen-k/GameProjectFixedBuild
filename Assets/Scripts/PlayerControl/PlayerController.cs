@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
     private float lastGrounded;
     private float jumpCutMultiplier = 0.5f;
     private float fallMultiplier = 2f;
-    [SerializeField] private float jumpMultiplier = 10.5f;
+    [SerializeField] private float jumpMultiplier = 14f;
 
     private float jumpTrampolineHeight = 19.0f;
 
@@ -67,8 +67,17 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private bool isStableGrounded;
     private bool isJumpTrampoline = false;
-    private Transform groundCheck;
-    
+    [SerializeField] private LayerMask whatIsGround;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private Transform ladderCheck;
+    private Transform swimCheck;
+    private float swimRadius;
+    private bool inWater;
+    private bool swimming;
+    [SerializeField] private LayerMask whatIsWater;
+    private float waterMov;
+    private bool nearLedge;
+
     //-------------------------//
     // Respawn
     private Vector3 lastGroundedPosition;
@@ -81,9 +90,8 @@ public class PlayerController : MonoBehaviour
     private bool RespawnRaycastPlusX;
     private bool RespawnRaycastPlusZ;
 
-    private LadderScript ladderScript;
-    
-    public Vector3 checkpoint;
+    public LadderScript ladderScript;
+
 
     //-----------------------------------------//
     // Awake
@@ -91,10 +99,6 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         Rb = GetComponent<Rigidbody>();
-        checkpoint = transform.position;
-        // Setting internal references
-        groundCheck = gameObject.transform.Find("Model").transform.Find("groundCheck").transform;
-        ladderScript = GetComponent<LadderScript>();
         InitMovement();
         ConfigureGroundCheckAndRadius();
     }
@@ -120,14 +124,11 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         lastGroundedPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.3f, gameObject.transform.position.z);
-        if (GameObject.Find("GlobalGameState").GetComponent<GameState>().IsEasy())
-        {
-            maxHealth = 2;
-        }
         ResetPlayerHealth();
         playerInput = GetComponent<PlayerInput>();
         model = transform.Find("Model");
         ladderScript = GetComponent<LadderScript>();
+        swimCheck = ladderCheck;
     }
 
     //-----------------------------------------//
@@ -222,36 +223,81 @@ public class PlayerController : MonoBehaviour
 
         isNotNearEdge = CheckIfPlayerNotNearEdge();
 
+        /* player counts as grounded when on the ladder but they have to be moving as well which stops them
+        from jumping straight up the ladder faster than they are supposed to */
         if (ladderScript.onLadder && inputVector.x != 0)
         {
             isGrounded = true;
+        }
+
+        swimming = inWater;
+
+        // adjusts movement values depending on if you are in water
+        if (inWater)
+        {
+            acceleration = 12;
+            deceleration = 12;
+            speed = 6;
+            frictionAmount = 0.1f;
+            jumpMultiplier = 8;
+        }
+        else
+        {
+            acceleration = 17;
+            deceleration = 25;
+            speed = 12;
+            frictionAmount = 0.45f;
+            jumpMultiplier = 14;
+        }
+
+        // makes it so if you are near a ledge you pop up higher in the water so you can get out
+        if (nearLedge)
+        {
+            swimCheck = groundCheck;
+            swimRadius = groundRadius;
+        }
+        else
+        {
+            swimCheck = ladderCheck;
+            swimRadius = 0f;
         }
     }
 
     // Check whether sphere is colliding with ground or stableground
     private void CheckIfGroundedorStableGrounded() 
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 7)) || Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (int)whatIsGround) || Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
         isStableGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
+        inWater = Physics.CheckSphere(swimCheck.position, swimRadius, (int)whatIsWater);
+        nearLedge = Physics.CheckSphere(swimCheck.position, groundRadius + 0.3f, (int)whatIsGround);
     }
 
-    // Set the direction of movement based on current camera used
-    private void SetMovementDirection(Vector2 inputVector) {
+    // Set the direction of movement based on current camera used and if the player is in water
+    private void SetMovementDirection (Vector2 inputVector)
+    {
+        if (inWater)
+        {
+            waterMov = inputVector.y;
+        }
+        else if (!inWater)
+        {
+            waterMov = 0.0f;
+        }
         if (currentCam == 0)
         {
-            movement = new Vector3(inputVector.x, 0.0f, 0.0f);
+            movement = new Vector3(inputVector.x, waterMov, 0.0f);
         }
         else if (currentCam == 1)
         {
-            movement = new Vector3(0f, 0.0f, inputVector.x);
+            movement = new Vector3(0f, waterMov, inputVector.x);
         }
         else if (currentCam == 2)
         {
-            movement = new Vector3(-inputVector.x, 0.0f, 0f);
+            movement = new Vector3(-inputVector.x, waterMov, 0f);
         }
         else if (currentCam == 3)
         {
-            movement = new Vector3(0f, 0.0f, -inputVector.x);
+            movement = new Vector3(0f, waterMov, -inputVector.x);
         }
     }
 
@@ -297,6 +343,22 @@ public class PlayerController : MonoBehaviour
             movement.x = move;
             movement.z = 0f;
         }
+
+        // allows for upward and downward movement while in water
+        if (swimming)
+        {
+            float targetSpeed = movement.y * speed;
+            float speedDif = targetSpeed - Rb.velocity.y;
+            float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : deceleration;
+            float move = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, velPower) * Mathf.Sign(speedDif);
+            // multiplier for upward movement to account for gravity
+            if (move > 0.01f)
+            {
+                move *= 3.5f;
+            }
+            movement.y = move;
+            StartCoroutine(SwimCooldown());
+        }
     }
 
     // Apply opposite force to player movement to imitate friction
@@ -334,13 +396,17 @@ public class PlayerController : MonoBehaviour
     // Modifies fall speed to become faster or slower
     private void ModifyFallSpeed() 
     {
-        if (Rb.velocity.y < 0 && Rb.useGravity == true)
+        if (Rb.velocity.y < 0 && Rb.useGravity == true && !inWater)
         {
             Rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
         }
-        if (Rb.useGravity == true)
+        if (Rb.useGravity == true && !inWater)
         {
             Rb.AddForce(Physics.gravity * 1.2f, ForceMode.Acceleration);
+        }
+        if (inWater)
+        {
+            Rb.AddForce(Physics.gravity * 0.5f, ForceMode.Acceleration);
         }
     }
 
@@ -431,7 +497,15 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "HurtTag1" && !isHurt) 
         {
-            Hurt();
+            currentHealth -= 1;
+            StartCoroutine(HurtCooldown());
+            if (currentHealth <= 0) {
+            Respawn();
+            }
+            else
+            {
+                Rb.AddForce(Vector3.up * 12f, ForceMode.Impulse);
+            }
         }
         else if (collision.gameObject.name == "KillPlane")
         {
@@ -446,97 +520,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider collision)
-    {
-        if (collision.gameObject.tag == "Checkpoint")
-        {
-            setCheckpoint(collision);
-        }
-    }
-
     // Reset Player health to maxHealth
     private void ResetPlayerHealth()
     {
-        if (GameObject.Find("GlobalGameState").GetComponent<GameState>().IsEasy())
-        {
-            maxHealth = 2;
-        }
         currentHealth = maxHealth;
-    }
-
-    public void MenuIncreaseHealth()
-    {
-        int setHealth;
-        if (GameObject.Find("GlobalGameState").GetComponent<GameState>().IsEasy())
-        {
-            setHealth = 2;
-        }
-        else
-        {
-            setHealth = 1;
-        }
-        bool hpFlag = false;
-        if (maxHealth == currentHealth)
-        {
-            hpFlag = true;
-        }
-        maxHealth = setHealth;
-        if (hpFlag)
-        {
-            currentHealth = maxHealth;
-        }
     }
 
     // Set player to lastGroundedPosition and reset their health
     private void Respawn()
     {
         ResetPlayerHealth();
-        if (GameObject.Find("GlobalGameState").GetComponent<GameState>().isNormal())
-        {
-            GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
-            transform.position = lastGroundedPosition;
-        }
-        else
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-
+        transform.position = lastGroundedPosition;
     }
-
-    private void setCheckpoint(Collider other)
-    {
-        checkpoint = other.transform.position;
-    }
-
-    private void RespawnAtCheckpoint()
-    {
-        ResetPlayerHealth();
-        GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
-        transform.position = checkpoint;
-    }
-
-    public void Hurt()
-    {
-
-        currentHealth -= 1;       
-        StartCoroutine(HurtCooldown());
-        if (currentHealth <= 0) {
-            if (GameObject.Find("GlobalGameState").GetComponent<GameState>().isNormal())
-            {
-                RespawnAtCheckpoint();
-            }
-            else
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
-           
-        }
-        else
-        {
-            Rb.AddForce(Vector3.up * 12f, ForceMode.Impulse);
-        }
-    }
-
 
     //-----------------------------------------//
     // Cooldowns (Coroutines)
@@ -552,10 +547,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator HurtCooldown()
     {
         isHurt = true;
-
         yield return new WaitForSeconds(0.4f);
-        
-        
         isHurt = false;
     }
 
@@ -571,5 +563,13 @@ public class PlayerController : MonoBehaviour
         updateRespawnPosition = false;
         yield return new WaitForSeconds(0.5f);
         updateRespawnPosition = true;
+    }
+
+    // doesn't really work
+    private IEnumerator SwimCooldown()
+    {
+        swimming = true;
+        yield return new WaitForSeconds(0.3f);
+        swimming = inWater;
     }
 }
