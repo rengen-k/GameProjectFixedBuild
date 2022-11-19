@@ -120,6 +120,10 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         lastGroundedPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.3f, gameObject.transform.position.z);
+        if (GameObject.Find("GlobalGameState").GetComponent<GameState>().IsEasy())
+        {
+            maxHealth = 2;
+        }
         ResetPlayerHealth();
         playerInput = GetComponent<PlayerInput>();
         model = transform.Find("Model");
@@ -453,7 +457,34 @@ public class PlayerController : MonoBehaviour
     // Reset Player health to maxHealth
     private void ResetPlayerHealth()
     {
+        if (GameObject.Find("GlobalGameState").GetComponent<GameState>().IsEasy())
+        {
+            maxHealth = 2;
+        }
         currentHealth = maxHealth;
+    }
+
+    public void MenuIncreaseHealth()
+    {
+        int setHealth;
+        if (GameObject.Find("GlobalGameState").GetComponent<GameState>().IsEasy())
+        {
+            setHealth = 2;
+        }
+        else
+        {
+            setHealth = 1;
+        }
+        bool hpFlag = false;
+        if (maxHealth == currentHealth)
+        {
+            hpFlag = true;
+        }
+        maxHealth = setHealth;
+        if (hpFlag)
+        {
+            currentHealth = maxHealth;
+        }
     }
 
     // Set player to lastGroundedPosition and reset their health
@@ -462,6 +493,7 @@ public class PlayerController : MonoBehaviour
         ResetPlayerHealth();
         if (GameObject.Find("GlobalGameState").GetComponent<GameState>().IsNormal())
         {
+            GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
             transform.position = lastGroundedPosition;
         }
         else
@@ -479,6 +511,7 @@ public class PlayerController : MonoBehaviour
     private void RespawnAtCheckpoint()
     {
         ResetPlayerHealth();
+        GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
         transform.position = checkpoint;
     }
 
@@ -519,7 +552,10 @@ public class PlayerController : MonoBehaviour
     private IEnumerator HurtCooldown()
     {
         isHurt = true;
+
         yield return new WaitForSeconds(0.4f);
+        
+        
         isHurt = false;
     }
 

@@ -111,6 +111,7 @@ public class PauseMenu : MonoBehaviour
         PauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GamePaused = false;
+        GameObject.Find("Player").GetComponent<PlayerController>().MenuIncreaseHealth();
     }
 
     public void ResetLevel()
@@ -153,10 +154,14 @@ public class PauseMenu : MonoBehaviour
         int diff = GameObject.Find("GlobalGameState").GetComponent<GameState>().IncrementDifficulty();
         GameObject diffText = GameObject.Find("Diff Text");
         TMP_Text texty = diffText.GetComponent<TextMeshProUGUI>();
-        if (diff == 0){
+        if (diff == 0)
+        {
+            texty.text = "Diff: Easy";
+        }
+        else if (diff == 1){
             texty.text = "Diff: Normal";
         }
-        else if (diff == 1)
+        else if (diff == 2)
         {
             texty.text = "Diff: Hard";
         }

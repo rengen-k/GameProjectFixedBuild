@@ -18,6 +18,7 @@ public class GameState : MonoBehaviour
 
     public enum Difficulty
     {
+        easy,
         normal,
         hard
     }
@@ -152,7 +153,12 @@ public class GameState : MonoBehaviour
 
     public bool IsNormal()
     {
-        return diff == Difficulty.normal;
+        return diff == Difficulty.normal || diff == Difficulty.easy;
+    }
+
+    public bool IsEasy()
+    {
+        return diff == Difficulty.easy;
     }
 
     public int IncrementDifficulty()
