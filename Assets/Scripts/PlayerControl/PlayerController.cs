@@ -37,10 +37,10 @@ public class PlayerController : MonoBehaviour
     // Movement
     private Vector3 movement;
     private float velPower = 1.5f;
-    private float speed = 12;
-    private float frictionAmount = 0.45f;
-    private float acceleration = 17;
-    private float deceleration = 25;
+    [SerializeField] private float speed = 12;
+    [SerializeField] private float frictionAmount = 0.45f;
+    [SerializeField] private float acceleration = 17;
+    [SerializeField] private float deceleration = 25;
     
     //-------------------------//
     // Jump
@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
     private float lastGrounded;
     private float jumpCutMultiplier = 0.5f;
     private float fallMultiplier = 2f;
-    private float jumpMultiplier = 10.5f;
+    [SerializeField] private float jumpMultiplier = 10.5f;
 
     private float jumpTrampolineHeight = 19.0f;
 
