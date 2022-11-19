@@ -29,7 +29,7 @@ public class GameState : MonoBehaviour
 
     //Level completion management
     // Set range to (0, X+1) where X is the number of levels
-    private static int [] levelList = Enumerable.Range(0, 11).ToArray();
+    private static int [] levelList = Enumerable.Range(0, 22).ToArray();
     private bool [] levelDones;
     // Reference Array to each LevelLine Object, automatically generated.
 
