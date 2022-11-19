@@ -347,7 +347,6 @@ public class PlayerController : MonoBehaviour
         // allows for upward and downward movement while in water
         if (swimming)
         {
-            StartCoroutine(SwimCooldown());
             float targetSpeed = movement.y * speed;
             float speedDif = targetSpeed - Rb.velocity.y;
             float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : deceleration;
@@ -358,7 +357,7 @@ public class PlayerController : MonoBehaviour
                 move *= 3.5f;
             }
             movement.y = move;
-            //StartCoroutine(SwimCooldown());
+            StartCoroutine(SwimCooldown());
         }
     }
 

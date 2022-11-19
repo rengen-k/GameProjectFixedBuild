@@ -26,6 +26,9 @@ public class PickupItem : MonoBehaviour
     private Rigidbody rb;
     private bool reset;
     public bool hasBeenThrown = false;
+    private bool inWater = false;
+    [SerializeField] private LayerMask whatIsWater;
+    private float waterRadius;
 
     private Vector3 respawnPos;
 
@@ -36,6 +39,7 @@ public class PickupItem : MonoBehaviour
         pickupPoint = GameObject.Find("pickupPoint").transform;
         ableToPickup = true;
         respawnPos = transform.position;
+        waterRadius = transform.localScale.x / 3;
     }
 
     private void OnEnable()
@@ -65,6 +69,7 @@ public class PickupItem : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Debug.Log("inWater: " + inWater);
         if (itemPickedUp)
         {
             transform.position = pickupPoint.position + (transform.localScale.x * -GameObject.Find("Model").transform.forward);
@@ -72,7 +77,18 @@ public class PickupItem : MonoBehaviour
 
         velocity = GameObject.Find("Player").GetComponent<Rigidbody>().velocity;
 
-        rb.AddForce(Physics.gravity * 1.2f, ForceMode.Acceleration);
+        inWater = Physics.CheckSphere(transform.position, waterRadius, (int)whatIsWater);
+
+        // falls slower in water
+        if (inWater)
+        {
+            rb.drag = 3;
+        }
+        else
+        {
+            rb.drag = 0;
+            rb.AddForce(Physics.gravity * 1.2f, ForceMode.Acceleration);
+        }
     }
 
     public void Interact(InputAction.CallbackContext context)
@@ -120,7 +136,31 @@ public class PickupItem : MonoBehaviour
         {
             Respawn();
         }
+        //Debug.Log("collision");
+        //if (other.gameObject.layer == 1 << 4)
+        //{
+        //    Debug.Log("in water");
+        //    inWater = true;
+        //}
     }
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
+    //    {
+    //        Debug.Log("in water");
+    //        inWater = true;
+    //    }
+    //}
+
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
+    //    {
+    //        Debug.Log("out of water");
+    //        inWater = false;
+    //    }
+    //}
 
     private void Respawn()
     {
