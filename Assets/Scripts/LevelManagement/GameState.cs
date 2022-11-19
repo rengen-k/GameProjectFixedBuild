@@ -151,7 +151,7 @@ public class GameState : MonoBehaviour
 
     // Difficulty
 
-    public bool IsNormal()
+    public bool isNormal()
     {
         return diff == Difficulty.normal || diff == Difficulty.easy;
     }

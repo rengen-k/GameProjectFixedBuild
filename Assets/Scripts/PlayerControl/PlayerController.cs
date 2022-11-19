@@ -491,7 +491,7 @@ public class PlayerController : MonoBehaviour
     private void Respawn()
     {
         ResetPlayerHealth();
-        if (GameObject.Find("GlobalGameState").GetComponent<GameState>().IsNormal())
+        if (GameObject.Find("GlobalGameState").GetComponent<GameState>().isNormal())
         {
             GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
             transform.position = lastGroundedPosition;
@@ -521,7 +521,7 @@ public class PlayerController : MonoBehaviour
         currentHealth -= 1;       
         StartCoroutine(HurtCooldown());
         if (currentHealth <= 0) {
-            if (GameObject.Find("GlobalGameState").GetComponent<GameState>().IsNormal())
+            if (GameObject.Find("GlobalGameState").GetComponent<GameState>().isNormal())
             {
                 RespawnAtCheckpoint();
             }
