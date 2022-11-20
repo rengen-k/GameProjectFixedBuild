@@ -12,33 +12,43 @@ using UnityEngine.UI;
 //-----------------------------------------//
 // Singleton that keeps track of which levels are completed, and which levels should be asseccible. 
 
-// TODO 
-// Organise
 public class GameState : MonoBehaviour
 {
     public static GameState instance;
 
+    public enum Difficulty
+    {
+        easy,
+        normal,
+        hard
+    }
+
+    // Data that needs to be saved
+
+    [SerializeField] private Difficulty diff;
+
     //Level completion management
     // Set range to (0, X+1) where X is the number of levels
-    private static int [] levelList = Enumerable.Range(0, 11).ToArray();
+    private static int [] levelList = Enumerable.Range(0, 22).ToArray();
     private bool [] levelDones;
-    private GameObject levelPanel;
-    private LevelLine [] lines;
+    // Reference Array to each LevelLine Object, automatically generated.
 
-    private string [] levelLineNames = {"TutorialLine", "SimpleLine", "BlockLine", "MetaLine"};
+    // Data that is generated as needed.
+    private LevelLine [] lines;
 
     // Collectible Management
     private bool [] levelsCollected;
     private GameObject msg;
-    private int thisLevelCollectibles;
+    //Global counter, updates on end level
+    [Tooltip("The total collectibles collected this game session, updates at the end of a level, assuming all has been retrieved.")]
+    public int totalCollectibles = 0;
+    private int thisLevelTotalCollectibles;
+    private int thisLevelCollectibles = 0;
     
-
-    
-
     // Start is called before the first frame update
     void Awake()
     {
-        
+
     }
 
     //Setting up.
@@ -47,8 +57,8 @@ public class GameState : MonoBehaviour
     {
         if (instance != null && instance != this)
         {
-            instance.setMsg();
-            instance.updateLevelLines();
+            instance.ResetSingleton();
+            instance.UpdateLevelLines();
             Destroy(this.gameObject);
         }
         else
@@ -56,6 +66,8 @@ public class GameState : MonoBehaviour
             DontDestroyOnLoad(transform.gameObject);
             instance = this;
             SetUp();
+            ResetSingleton();
+            UpdateLevelLines();
         }
         //lines[0].debugShout();
 
@@ -63,51 +75,56 @@ public class GameState : MonoBehaviour
 
 
     private void SetUp()
-    {
-        // Set up level object structure.
-        // TODO, make more automatic
-        //FindWithTag("LevelLine") 
+    {      
         levelDones = new bool[levelList.Length];
         levelsCollected = new bool[levelList.Length];
-        lines = new LevelLine[levelLineNames.Length];
-        msg = GameObject.Find("CollectibleNotify");
-        updateLevelLines();
+    }
+
+    private void ResetSingleton()
+    {
+        //Sets references to loaded scene, resets counter.
+        GameObject [] linesObj = GameObject.FindGameObjectsWithTag("LevelLine");
+        lines = linesObj.Select( line => line.GetComponent<LevelLine>()).ToArray();
         
+        msg = GameObject.Find("CollectibleNotify");
+        thisLevelCollectibles = 0;
 
 
     }
 
-    // Passing data down, updating panal.
+        
+    //Level Logic
 
-    private void updateLevelLines()
+    private void UpdateLevelLines()
     {
-        // Updates GameState references to refer to the current scenes objects. And then passes down data to those objects
+        // Updates GameState references to refer to the current scenes objects. And then passes down data from this to those objects
         
         msg.SetActive(false);
 
         //Gives level lines the correct panel ref, sets each level line to value from varaibles levelDones
         int startIndex = 0;
-        for (int i = 0; i < levelLineNames.Length; i++)
+        for (int i = 0; i < lines.Length; i++)
         {
-            lines[i] = GameObject.Find(levelLineNames[i]).GetComponent<LevelLine>();
             lines[i].setCompletion(levelDones, levelsCollected, startIndex);
             startIndex += lines[i].levelCount;
         }
 
-        thisLevelCollectibles =
+        thisLevelTotalCollectibles =
             GameObject.FindGameObjectsWithTag("Collectible").Length;
     }
 
-    // Updating attributes
 
     public void EndLevel()
     {
+        // When a level ends, time to update singleton to match.
         int levelNum =
             Int32.Parse(SceneManager.GetActiveScene().name.Split(" ")[1]);
-        if (thisLevelCollectibles == 0)
+        if (thisLevelCollectibles == thisLevelTotalCollectibles)
         {            
             levelsCollected[levelNum] = true;
+            totalCollectibles += thisLevelCollectibles;
         }
+        thisLevelCollectibles = 0;
         levelDones[levelNum] = true;
         int startIndex = 0;
         foreach (LevelLine l in lines)
@@ -120,8 +137,8 @@ public class GameState : MonoBehaviour
 
     public void Collected()
     {
-        thisLevelCollectibles--;
-        if (thisLevelCollectibles == 0)
+        thisLevelCollectibles++;
+        if (thisLevelCollectibles == thisLevelTotalCollectibles)
         {
             msg.SetActive(true);
         }
@@ -132,18 +149,32 @@ public class GameState : MonoBehaviour
         return levelList.Length;
     }
 
+    // Difficulty
 
-
-    // Update is called once per frame
-    void Update()
+    public bool isNormal()
     {
-        
+        return diff == Difficulty.normal || diff == Difficulty.easy;
     }
 
-    private void setMsg()
+    public bool IsEasy()
     {
-        msg = GameObject.Find("CollectibleNotify");
+        return diff == Difficulty.easy;
     }
+
+    public int IncrementDifficulty()
+    {
+        int length = Enum.GetNames(typeof(Difficulty)).Length;
+        int index = ((int) ++diff) % (length);
+        diff = (Difficulty) index;
+        return index;
+
+    }
+
+    public int GetDifficulty()
+    {
+        return (int) diff;
+    }
+
 
     
 }

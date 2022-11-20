@@ -31,6 +31,37 @@ Transform:
   m_Father: {fileID: 9173282484261340009}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2023358512
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2023358513}
+  m_Layer: 0
+  m_Name: ladderCheck
+  m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2023358513
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2023358512}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9173282484261340009}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9173282484261340008
 GameObject:
   m_ObjectHideFlags: 0
@@ -64,6 +95,7 @@ Transform:
   - {fileID: 9173282484391698524}
   - {fileID: 9173282484750590619}
   - {fileID: 1421464828}
+  - {fileID: 2023358513}
   m_Father: {fileID: 9173282485034384683}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -349,6 +381,7 @@ GameObject:
   - component: {fileID: 9173282485034384677}
   - component: {fileID: 9173282485034384676}
   - component: {fileID: 8363808424005067768}
+  - component: {fileID: 1067078591}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -386,7 +419,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 120
+  m_Constraints: 112
   m_CollisionDetection: 1
 --- !u!114 &1945931489979321512
 MonoBehaviour:
@@ -509,19 +542,21 @@ MonoBehaviour:
   camScript: {fileID: 0}
   currentHealth: 0
   maxHealth: 2
-  coyoteTimeCounter: 0
-  jumpBufferCounter: 0
-  lastGrounded: 0
-  jumpCutMultiplier: 0.5
   speed: 12
-  jumpMultiplier: 10.5
-  frictionAmount: 0.45
-  groundCheck: {fileID: 9173282484750590619}
+  frictionAmount: 0.3
+  acceleration: 17
+  deceleration: 25
+  isJumping: 0
+  jumpMultiplier: 14
   whatIsGround:
     serializedVersion: 2
     m_Bits: 128
-  acceleration: 17
-  deceleration: 25
+  groundCheck: {fileID: 9173282484750590619}
+  ladderCheck: {fileID: 2023358513}
+  whatIsWater:
+    serializedVersion: 2
+    m_Bits: 16
+  ladderScript: {fileID: 0}
 --- !u!136 &8363808424005067768
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -536,3 +571,20 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1067078591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9173282485034384679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd1b129fa236b49f0a8bccbcca5e8196, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onLadder: 0
+  ladderCheck: {fileID: 2023358513}
+  whatIsLadder:
+    serializedVersion: 2
+    m_Bits: 1024

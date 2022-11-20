@@ -37,7 +37,7 @@ public class Bomb : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        timer.transform.parent.gameObject.GetComponent<Canvas>().worldCamera = GameObject.Find("UICamera").GetComponent<Camera>();
+        timer.transform.parent.GetComponent<Canvas>().worldCamera = GameObject.Find("UICamera").GetComponent<Camera>();
     }
 
     private void OnEnable()
@@ -50,7 +50,7 @@ public class Bomb : MonoBehaviour
     private void Update()
     {
         // To make UI timer look towards camera
-        Camera camera = Camera.main ;
+        Camera camera = Camera.main;
         timer.transform.LookAt(transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation * Vector3.up);
 
         if (pickupScript.hasBeenThrown)
@@ -82,6 +82,12 @@ public class Bomb : MonoBehaviour
             if (dest != null)
             {
                 dest.Destroy();
+            }
+
+            PlayerController player = nearbyObject.GetComponent<PlayerController>();
+            if (player != null)
+            {
+                player.Hurt();
             }
         }
 
