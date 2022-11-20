@@ -5098,19 +5098,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8183061161519230016, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.70426977
+      value: 0.7042697
       objectReference: {fileID: 0}
     - target: {fileID: 8183061161519230016, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.009901539
+      value: 0.009901533
       objectReference: {fileID: 0}
     - target: {fileID: 8183061161519230016, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7097933
+      value: 0.7097934
       objectReference: {fileID: 0}
     - target: {fileID: 8183061161519230016, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.009979197
+      value: -0.009979191
       objectReference: {fileID: 0}
     - target: {fileID: 8183061161519230017, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_Follow
@@ -5452,8 +5452,8 @@ GameObject:
   - component: {fileID: 106702435}
   - component: {fileID: 106702434}
   - component: {fileID: 106702433}
-  - component: {fileID: 106702432}
   - component: {fileID: 106702437}
+  - component: {fileID: 106702438}
   m_Layer: 0
   m_Name: Door 4
   m_TagString: Untagged
@@ -5461,18 +5461,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &106702432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 106702431}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 249420e86de56e042864302ea08f1777, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &106702433
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5564,6 +5552,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   faded: 0
+--- !u!114 &106702438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106702431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2a6784de4210904c804e3980e53582c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &152463395
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7430,12 +7430,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6862813458647580367, guid: 23089e59884ff224ca7e0bf0f557f896, type: 3}
       propertyPath: isStuck
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6862813458647580367, guid: 23089e59884ff224ca7e0bf0f557f896, type: 3}
       propertyPath: trigger.Array.data[0]
       value: 
-      objectReference: {fileID: 106702432}
+      objectReference: {fileID: 106702438}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 23089e59884ff224ca7e0bf0f557f896, type: 3}
