@@ -5,13 +5,16 @@ using UnityEngine.AI;
 
 public class MeteorManager : MonoBehaviour
 {
-    //TODO, make drop background meteors on torus
+    //TODO, make drop background meteors 
     [Tooltip("The meteor target this manager spawns")]
     [SerializeField] private GameObject target;
     private bool allow = false;
     [SerializeField] private int maxMeteors;
     private int meteorCount = 0;
     private Transform player;
+    int i = 0;
+
+
 
     void Start()
     {
@@ -23,13 +26,22 @@ public class MeteorManager : MonoBehaviour
     {
         if (allow && Random.Range(0,100) < 2)
         {   
-            Debug.Log("Dropping");
             StartCoroutine(Drop());
         }
         if (meteorCount >= maxMeteors)
         {
             allow = false;
         }
+        if ((i++ % 25 == 0))
+        {
+            BackgroundDrop();
+        }
+
+    }
+
+    void BackgroundDrop()
+    {
+        
 
     }
 

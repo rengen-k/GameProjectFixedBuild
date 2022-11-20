@@ -8,10 +8,10 @@ public class MeteorTarget : MonoBehaviour
 {
     // Start is called before the first frame update
     [Tooltip("Time until the meteor lands")]
-    private float delay = 5f;
+    [SerializeField] private float delay = 5f;
     [Tooltip("References prefab that will spawn to simulate meteor")]
     [SerializeField] private GameObject meteor;
-    [SerializeField] private float countdown;
+    private float countdown;
     private Transform timer;
     private Vector3 startScaleSize;
     void Awake()
@@ -56,7 +56,7 @@ public class MeteorTarget : MonoBehaviour
 
     {
         Vector3 pos = transform.position;
-        pos += new Vector3(Random.Range(-10, 10), 30, Random.Range(-10, 11));
+        pos += new Vector3(Random.Range(-10, 10), 60, Random.Range(-10, 11));
 
         Instantiate(meteor, pos, transform.rotation).GetComponent<Meteor>().SetUp( GetComponent<Transform>().localScale.x, transform.position);
         enabled = false;
