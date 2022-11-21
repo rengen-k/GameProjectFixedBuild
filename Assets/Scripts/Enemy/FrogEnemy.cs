@@ -20,7 +20,10 @@ public class FrogEnemy : MonoBehaviour
     private Vector3 target;
     private float originalSpeed;
     private Rigidbody rb;
-    public bool grounded = true;
+    private bool grounded = true;
+    private bool canJump = true;
+    [SerializeField] private float jumpHeight;
+    [SerializeField] private float jumpDist;
 
     [Tooltip("Indicates whether the enemy will follow the player when they are close enough.")]
     [SerializeField] private bool followsPlayer;
@@ -38,12 +41,16 @@ public class FrogEnemy : MonoBehaviour
 
     private void Update()
     {
+        if (grounded && canJump)
+        {
+            Jump();
+        }
         if (followsPlayer && Vector3.Distance(transform.position, player.position) < followPlayerDist)
         {
             agent.SetDestination(player.position);
             agent.speed = followSpeed;
         }
-        else if (followsPlayer)
+        else
         {
             agent.speed = originalSpeed;
             UpdateDestination();
@@ -53,11 +60,6 @@ public class FrogEnemy : MonoBehaviour
             IterateWaypointIndex();
             UpdateDestination();
         }
-        if (grounded)
-        {
-            Jump();
-        }
-        //Debug.Log("Grounded: " + grounded);
     }
 
     private void UpdateDestination()
@@ -96,17 +98,16 @@ public class FrogEnemy : MonoBehaviour
             agent.isStopped = true;
         }
         // make the jump
-        rb.isKinematic = false;
+        //rb.isKinematic = false;
         rb.useGravity = true;
-        rb.AddForce(Vector3.up * 5f, ForceMode.Impulse);
-        //StartCoroutine(JumpCooldown());
+        rb.AddForce((Vector3.up * jumpHeight) + (agent.velocity.normalized * jumpDist), ForceMode.Impulse);
+        StartCoroutine(JumpCooldown());
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ground") || collision.gameObject.layer == LayerMask.NameToLayer("StableGround"))
         {
-            Debug.Log("collision: " + collision.gameObject.layer);
             if (!grounded)
             {
                 grounded = true;
@@ -116,7 +117,7 @@ public class FrogEnemy : MonoBehaviour
                     agent.updateRotation = true;
                     agent.isStopped = false;
                 }
-                rb.isKinematic = true;
+                //rb.isKinematic = true;
                 rb.useGravity = false;
             }
         }
@@ -124,6 +125,8 @@ public class FrogEnemy : MonoBehaviour
 
     private IEnumerator JumpCooldown()
     {
-        yield return new WaitForSeconds(1f);
+        canJump = false;
+        yield return new WaitForSeconds(1.5f);
+        canJump = true;
     }
 }
