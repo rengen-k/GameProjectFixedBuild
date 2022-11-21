@@ -24,6 +24,7 @@ public class FrogEnemy : MonoBehaviour
     private bool canJump = true;
     [SerializeField] private float jumpHeight;
     [SerializeField] private float jumpDist;
+    private Vector3 currentPos;
 
     [Tooltip("Indicates whether the enemy will follow the player when they are close enough.")]
     [SerializeField] private bool followsPlayer;
@@ -91,7 +92,7 @@ public class FrogEnemy : MonoBehaviour
             // this stops her before she jumps. Alternatively, you could
             // cache this value, and set it again once the jump is complete
             // to continue the original move
-            //agent.SetDestination(transform.position);
+            UpdateDestination();
             // disable the agent
             agent.updatePosition = false;
             agent.updateRotation = false;
@@ -128,5 +129,6 @@ public class FrogEnemy : MonoBehaviour
         canJump = false;
         yield return new WaitForSeconds(1.5f);
         canJump = true;
+        UpdateDestination();
     }
 }
