@@ -24,6 +24,7 @@ public class FrogEnemy : MonoBehaviour
     private bool canJump = true;
     [SerializeField] private float jumpHeight;
     [SerializeField] private float jumpDist;
+    [SerializeField] private float jumpTime;
     private Vector3 currentPos;
 
     [Tooltip("Indicates whether the enemy will follow the player when they are close enough.")]
@@ -42,6 +43,10 @@ public class FrogEnemy : MonoBehaviour
 
     private void Update()
     {
+        if (agent.updatePosition == false)
+        {
+            agent.nextPosition = transform.position;
+        }
         if (grounded && canJump)
         {
             Jump();
@@ -60,6 +65,14 @@ public class FrogEnemy : MonoBehaviour
         {
             IterateWaypointIndex();
             UpdateDestination();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (rb.useGravity == true)
+        {
+            rb.AddForce(Physics.gravity * 1.2f, ForceMode.Acceleration);
         }
     }
 
@@ -88,18 +101,10 @@ public class FrogEnemy : MonoBehaviour
         grounded = false;
         if (agent.enabled)
         {
-            // set the agents target to where you are before the jump
-            // this stops her before she jumps. Alternatively, you could
-            // cache this value, and set it again once the jump is complete
-            // to continue the original move
-            UpdateDestination();
-            // disable the agent
             agent.updatePosition = false;
             agent.updateRotation = false;
             agent.isStopped = true;
         }
-        // make the jump
-        //rb.isKinematic = false;
         rb.useGravity = true;
         rb.AddForce((Vector3.up * jumpHeight) + (agent.velocity.normalized * jumpDist), ForceMode.Impulse);
         StartCoroutine(JumpCooldown());
@@ -118,7 +123,6 @@ public class FrogEnemy : MonoBehaviour
                     agent.updateRotation = true;
                     agent.isStopped = false;
                 }
-                //rb.isKinematic = true;
                 rb.useGravity = false;
             }
         }
@@ -127,7 +131,7 @@ public class FrogEnemy : MonoBehaviour
     private IEnumerator JumpCooldown()
     {
         canJump = false;
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(jumpTime);
         canJump = true;
         UpdateDestination();
     }
