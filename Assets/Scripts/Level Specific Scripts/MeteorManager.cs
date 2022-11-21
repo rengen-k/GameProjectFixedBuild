@@ -12,7 +12,6 @@ public class MeteorManager : MonoBehaviour
     [SerializeField] private int maxMeteors;
     private int meteorCount = 0;
     private Transform player;
-    int i = 0;
 
 
 
