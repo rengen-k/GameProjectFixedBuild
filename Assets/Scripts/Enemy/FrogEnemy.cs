@@ -10,6 +10,7 @@ public class FrogEnemy : MonoBehaviour
     public Transform respawnPoint;
     private NavMeshAgent agent;
     private Rigidbody rb;
+    private LayerMask layerMask;
 
     //The list of waypoints - gameobjects, it will try to travel to.
     public Transform[] waypoints;
@@ -56,6 +57,7 @@ public class FrogEnemy : MonoBehaviour
         {
             agent.SetDestination(player.position);
             agent.speed = followSpeed;
+            Attack();
         }
         else
         {
@@ -106,7 +108,7 @@ public class FrogEnemy : MonoBehaviour
         {
             // deactivates NavMeshAgent to allow it to jump
             agent.updatePosition = false;
-            agent.updateRotation = false;
+            //agent.updateRotation = false;
             agent.isStopped = true;
         }
         rb.useGravity = true;
@@ -114,6 +116,14 @@ public class FrogEnemy : MonoBehaviour
         // jumps up and in the direction the agent was moving prior to being deactivated
         rb.AddForce((Vector3.up * jumpHeight) + (agent.velocity.normalized * jumpDist), ForceMode.Impulse);
         StartCoroutine(JumpCooldown());
+    }
+
+    private void Attack()
+    {
+        agent.updatePosition = false;
+        agent.isStopped = true;
+        Physics.Raycast(transform.position, player.position, 10, );
+        //transform.GetChild(0).GetComponent<Rigidbody>().AddForce(rb.velocity);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -128,7 +138,7 @@ public class FrogEnemy : MonoBehaviour
                 {
                     // reactivates NavMeshAgent once on the ground
                     agent.updatePosition = true;
-                    agent.updateRotation = true;
+                    //agent.updateRotation = true;
                     agent.isStopped = false;
                 }
                 rb.useGravity = false;
