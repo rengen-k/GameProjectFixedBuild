@@ -12,9 +12,9 @@ public class FrogEnemy : MonoBehaviour
     private Rigidbody rb;
     private Ray ray;
     private RaycastHit hit;
-    private Vector3 hitPoint;
-    private float rayDist = 10;
-    public bool attacking = false;
+    private Vector3 endPoint;
+    private float attackRange = 10;
+    public bool finishedAttack = true;
     private Vector3 startingPos;
     public bool canAttack = false;
 
@@ -54,17 +54,16 @@ public class FrogEnemy : MonoBehaviour
         {
             agent.nextPosition = transform.position;
         }
-        //if (!attacking)
-        //{
-        //    agent.updatePosition = true;
-        //    agent.updateRotation = true;
-        //    agent.isStopped = false;
-        //}
-        if (grounded && canJump && !canAttack)
+        {
+            agent.updatePosition = false;
+            agent.updateRotation = false;
+            agent.isStopped = true;
+        }
+        if (grounded && canJump && finishedAttack)
         {
             Jump();
         }
-        if (canAttack && !attacking)
+        if (canAttack && finishedAttack)
         {
             Attack();
         }
@@ -130,36 +129,20 @@ public class FrogEnemy : MonoBehaviour
         rb.useGravity = true;
 
         // jumps up and in the direction the agent was moving prior to being deactivated
+        endPoint = transform.position + (agent.velocity.normalized * attackRange);
         rb.AddForce((Vector3.up * jumpHeight) + (agent.velocity.normalized * jumpDist), ForceMode.Impulse);
         StartCoroutine(JumpCooldown());
     }
 
     private void Attack()
     {
-        attacking = true;
+        finishedAttack = false;
         agent.updatePosition = false;
         agent.updateRotation = false;
         agent.isStopped = true;
-        ray = new Ray(transform.position, agent.velocity.normalized);
         startingPos = transform.GetChild(0).transform.position;
-        if (Physics.Raycast(ray, out hit, rayDist))
-        {
-            hitPoint = hit.point;
-            //transform.GetChild(0).GetComponent<Rigidbody>().AddForce(rb.velocity);
-            //transform.GetChild(0).transform.position = Vector3.MoveTowards(transform.GetChild(0).transform.position, hit.transform.position, 5);
-        }
-        else
-        {
-            hitPoint = ray.origin + ray.direction * rayDist;
-        }
-        //StartCoroutine(TongueExtension());
-        while (Vector3.Distance(transform.GetChild(0).transform.position, hitPoint) > 0.5f)
-        {
-            transform.GetChild(0).transform.position = Vector3.MoveTowards(startingPos, hitPoint, 0.1f);
-        }
-        //transform.GetChild(0).transform.position = Vector3.MoveTowards(startingPos, hitPoint, 0.1f);
-        StartCoroutine(AttackCooldown());
-        attacking = false;
+        //endPoint = transform.position + (agent.velocity.normalized * attackRange);
+        StartCoroutine(TongueExtension());
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -196,18 +179,20 @@ public class FrogEnemy : MonoBehaviour
 
     private IEnumerator AttackCooldown()
     {
-        attacking = false;
-        //StartCoroutine(TongueExtension());
+        canAttack = false;
         yield return new WaitForSeconds(4);
-        attacking = true;
+        canAttack = true;
     }
 
     private IEnumerator TongueExtension()
     {
-        while (transform.GetChild(0).transform.position != hitPoint)
+        //endPoint = transform.position + (agent.velocity.normalized * attackRange);
+        while (Vector3.Distance(transform.GetChild(0).transform.position, endPoint) > 0.5)
         {
-            transform.GetChild(0).transform.position = Vector3.MoveTowards(startingPos, hitPoint, 0.01f);
+            Debug.Log("Endpoint in coroutine: " + endPoint);
+            transform.GetChild(0).transform.position = Vector3.MoveTowards(transform.GetChild(0).transform.position, endPoint, 0.02f);
             yield return null;
         }
+        transform.GetChild(0).transform.position = endPoint;
     }
 }
