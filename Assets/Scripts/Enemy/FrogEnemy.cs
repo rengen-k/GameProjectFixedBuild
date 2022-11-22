@@ -15,6 +15,7 @@ public class FrogEnemy : MonoBehaviour
     private Vector3 hitPoint;
     private float rayDist = 10;
     private bool attacking = false;
+    private Vector3 startingPos;
 
     //The list of waypoints - gameobjects, it will try to travel to.
     public Transform[] waypoints;
@@ -135,6 +136,7 @@ public class FrogEnemy : MonoBehaviour
         agent.updateRotation = false;
         agent.isStopped = true;
         ray = new Ray(transform.position, agent.velocity.normalized);
+        startingPos = transform.GetChild(0).transform.position;
         if (Physics.Raycast(ray, out hit, rayDist))
         {
             hitPoint = hit.point;
@@ -145,7 +147,11 @@ public class FrogEnemy : MonoBehaviour
         {
             hitPoint = ray.origin + ray.direction * rayDist;
         }
-        transform.GetChild(0).transform.position = Vector3.MoveTowards(transform.GetChild(0).transform.position, hit.transform.position, 10);
+        //StartCoroutine(TongueExtension());
+        while (transform.GetChild(0).transform.position != hitPoint)
+        {
+            transform.GetChild(0).transform.position = Vector3.MoveTowards(startingPos, hitPoint, 0.1f);
+        }
         attacking = false;
     }
 
@@ -179,5 +185,14 @@ public class FrogEnemy : MonoBehaviour
         canJump = false;
         yield return new WaitForSeconds(jumpTime);
         canJump = true;
+    }
+
+    private IEnumerator TongueExtension()
+    {
+        while (transform.GetChild(0).transform.position != hitPoint)
+        {
+            transform.GetChild(0).transform.position = Vector3.MoveTowards(startingPos, hitPoint, 0.01f);
+            yield return null;
+        }
     }
 }
