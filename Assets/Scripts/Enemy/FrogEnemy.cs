@@ -14,8 +14,9 @@ public class FrogEnemy : MonoBehaviour
     private RaycastHit hit;
     private Vector3 hitPoint;
     private float rayDist = 10;
-    private bool attacking = false;
+    public bool attacking = false;
     private Vector3 startingPos;
+    public bool canAttack = false;
 
     //The list of waypoints - gameobjects, it will try to travel to.
     public Transform[] waypoints;
@@ -59,16 +60,20 @@ public class FrogEnemy : MonoBehaviour
         //    agent.updateRotation = true;
         //    agent.isStopped = false;
         //}
-        if (grounded && canJump && !attacking)
+        if (grounded && canJump && !canAttack)
         {
             Jump();
+        }
+        if (canAttack && !attacking)
+        {
+            Attack();
         }
         // increases speed when following player
         if (followsPlayer && Vector3.Distance(transform.position, player.position) < followPlayerDist)
         {
             agent.SetDestination(player.position);
             agent.speed = followSpeed;
-            Attack();
+            canAttack = true;
         }
         else if (followsPlayer)
         {
@@ -148,10 +153,12 @@ public class FrogEnemy : MonoBehaviour
             hitPoint = ray.origin + ray.direction * rayDist;
         }
         //StartCoroutine(TongueExtension());
-        while (transform.GetChild(0).transform.position != hitPoint)
+        while (Vector3.Distance(transform.GetChild(0).transform.position, hitPoint) > 0.5f)
         {
             transform.GetChild(0).transform.position = Vector3.MoveTowards(startingPos, hitPoint, 0.1f);
         }
+        //transform.GetChild(0).transform.position = Vector3.MoveTowards(startingPos, hitPoint, 0.1f);
+        StartCoroutine(AttackCooldown());
         attacking = false;
     }
 
@@ -185,6 +192,14 @@ public class FrogEnemy : MonoBehaviour
         canJump = false;
         yield return new WaitForSeconds(jumpTime);
         canJump = true;
+    }
+
+    private IEnumerator AttackCooldown()
+    {
+        attacking = false;
+        //StartCoroutine(TongueExtension());
+        yield return new WaitForSeconds(4);
+        attacking = true;
     }
 
     private IEnumerator TongueExtension()
