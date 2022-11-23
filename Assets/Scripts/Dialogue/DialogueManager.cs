@@ -13,7 +13,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueText;
 
     private Story currentStory;
-    private bool dialogueIsPlaying;
+    public bool dialogueIsPlaying;
+
     private bool interactPressed;
     private PlayerActionsScript playerActionsScript;
 
@@ -33,11 +34,11 @@ public class DialogueManager : MonoBehaviour
     private void ConfigPlayerInput() 
     {
         playerActionsScript.Player.Interact.performed += Interact;
-        playerActionsScript.Player.Interact.canceled += Interact;
     }
 
     private void Awake()
     {
+        interactPressed = false;
         if (instance != null)
         {
             Debug.LogWarning("More than one DialogueManager found");
@@ -57,14 +58,14 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void EnterDialogueMode(TextAsset inkJSON) {
+        Debug.Log("callEnter");
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
-        ContinueStory();
-        
     }
 
-    private void ExitDialogueMode() {
+    public void ExitDialogueMode() {
+        Debug.Log("callexit");
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
@@ -78,12 +79,14 @@ public class DialogueManager : MonoBehaviour
         }
 
         if (interactPressed) {
+            interactPressed = false;
             ContinueStory();
         }
     }
 
     private void ContinueStory() 
     {
+        Debug.Log(currentStory.canContinue);
         if (currentStory.canContinue)
         {
             dialogueText.text = currentStory.Continue();
@@ -96,10 +99,7 @@ public class DialogueManager : MonoBehaviour
 
     public void Interact(InputAction.CallbackContext context)
     {
+        Debug.Log("pressed");
         interactPressed = true;
-        if (context.canceled)
-        {
-            interactPressed = false;
-        }
     }
 }
