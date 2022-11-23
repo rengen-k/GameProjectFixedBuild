@@ -12,6 +12,7 @@ public class FrogEnemy : MonoBehaviour
     private Rigidbody rb;
     private Ray ray;
     private RaycastHit hit;
+    private float rayDist = 10;
     private Vector3 endPoint;
     private float attackRange = 10;
     public bool finishedAttack = true;
@@ -54,10 +55,17 @@ public class FrogEnemy : MonoBehaviour
         {
             agent.nextPosition = transform.position;
         }
+        if (canAttack)
         {
             agent.updatePosition = false;
             agent.updateRotation = false;
             agent.isStopped = true;
+        }
+        else if (!canAttack && grounded)
+        {
+            agent.updatePosition = true;
+            agent.updateRotation = true;
+            agent.isStopped = false;
         }
         if (grounded && canJump && finishedAttack)
         {
@@ -72,10 +80,19 @@ public class FrogEnemy : MonoBehaviour
         {
             agent.SetDestination(player.position);
             agent.speed = followSpeed;
-            canAttack = true;
+            if (agent.velocity != Vector3.zero)
+            {
+                endPoint = transform.position + (agent.velocity.normalized * attackRange);
+                ray = new Ray(transform.position, agent.velocity.normalized);
+            }
+            if (Physics.Raycast(ray, out hit, rayDist) && hit.transform.gameObject.tag == "Player")
+            {
+                canAttack = true;
+            }
         }
         else if (followsPlayer)
         {
+            canAttack = false;
             agent.speed = originalSpeed;
             UpdateDestination();
         }
@@ -129,7 +146,10 @@ public class FrogEnemy : MonoBehaviour
         rb.useGravity = true;
 
         // jumps up and in the direction the agent was moving prior to being deactivated
-        endPoint = transform.position + (agent.velocity.normalized * attackRange);
+        //if (agent.velocity != Vector3.zero)
+        //{
+        //    endPoint = transform.position + (agent.velocity.normalized * attackRange);
+        //}
         rb.AddForce((Vector3.up * jumpHeight) + (agent.velocity.normalized * jumpDist), ForceMode.Impulse);
         StartCoroutine(JumpCooldown());
     }
@@ -142,7 +162,8 @@ public class FrogEnemy : MonoBehaviour
         agent.isStopped = true;
         startingPos = transform.GetChild(0).transform.position;
         //endPoint = transform.position + (agent.velocity.normalized * attackRange);
-        StartCoroutine(TongueExtension());
+        //Debug.Log("Endpoint in attack(): " + endPoint);
+        StartCoroutine(TongueMovement());
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -184,15 +205,20 @@ public class FrogEnemy : MonoBehaviour
         canAttack = true;
     }
 
-    private IEnumerator TongueExtension()
+    private IEnumerator TongueMovement()
     {
+        finishedAttack = false;
         //endPoint = transform.position + (agent.velocity.normalized * attackRange);
-        while (Vector3.Distance(transform.GetChild(0).transform.position, endPoint) > 0.5)
+        while (Vector3.Distance(transform.GetChild(0).transform.position, endPoint) > 0.7)
         {
-            Debug.Log("Endpoint in coroutine: " + endPoint);
             transform.GetChild(0).transform.position = Vector3.MoveTowards(transform.GetChild(0).transform.position, endPoint, 0.02f);
             yield return null;
         }
-        transform.GetChild(0).transform.position = endPoint;
+        while (Vector3.Distance(transform.GetChild(0).transform.position, transform.position) > 0.7)
+        {
+            transform.GetChild(0).transform.position = Vector3.MoveTowards(transform.GetChild(0).transform.position, transform.position, 0.02f);
+            yield return null;
+        }
+        finishedAttack = true;
     }
 }
