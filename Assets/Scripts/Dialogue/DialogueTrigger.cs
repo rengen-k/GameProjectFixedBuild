@@ -60,6 +60,8 @@ public class DialogueTrigger : MonoBehaviour
         else
         {
             visualCue.SetActive(false);
+            DialogueManager.GetInstance().ExitDialogueMode();
+
         }
 
         if (!DialogueManager.GetInstance().dialogueIsPlaying) {

@@ -1,5 +1,8 @@
+Ver 0.1
+
 Dialogue Manager script is a Singleton that is on the DialogueManager Object.
 To talk to an NPC, drag and drop an InkJSON file into InkJSON Serialized Field in the DialogueTrigger Object.
+
 Current NPC Behaviour:
 1) Ability to talk to NPC and read out dialogue from a JSON file generated from an Ink File.
 
