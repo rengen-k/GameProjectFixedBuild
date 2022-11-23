@@ -58,16 +58,8 @@ public class FrogEnemy : MonoBehaviour
 
     private void Update()
     {
-        //tongueRay = new Ray(transform.GetChild(0).transform.position, endPoint);
-        //if (Physics.Raycast(tongueRay, out tongueHit, tongueDist) && tongueHit.transform.gameObject.tag == "Player")
-        //{
-        //    player.position = transform.GetChild(0).transform.position;
-        //    endPoint = tongueHit.transform.position;
-        //    stuckToPlayer = true;
-        //}
         if (stuckToObject)
         {
-            //player.position = transform.GetChild(0).transform.position;
             stuckObject.position = transform.GetChild(0).transform.position;
         }
         // stops the agent teleporting backwards after jumping
