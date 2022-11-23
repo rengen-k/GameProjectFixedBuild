@@ -15,7 +15,7 @@ public class DialogueManager : MonoBehaviour
     private Story currentStory;
     public bool dialogueIsPlaying;
 
-    private bool interactPressed;
+    private bool talkPressed;
     private PlayerActionsScript playerActionsScript;
 
 
@@ -33,12 +33,12 @@ public class DialogueManager : MonoBehaviour
 
     private void ConfigPlayerInput() 
     {
-        playerActionsScript.Player.Interact.performed += Interact;
+        playerActionsScript.Player.Talk.performed += Talk;
     }
 
     private void Awake()
     {
-        interactPressed = false;
+        talkPressed = false;
         if (instance != null)
         {
             Debug.LogWarning("More than one DialogueManager found");
@@ -78,8 +78,8 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        if (interactPressed) {
-            interactPressed = false;
+        if (talkPressed) {
+            talkPressed = false;
             ContinueStory();
         }
     }
@@ -97,9 +97,9 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void Interact(InputAction.CallbackContext context)
+    public void Talk(InputAction.CallbackContext context)
     {
         Debug.Log("pressed");
-        interactPressed = true;
+        talkPressed = true;
     }
 }

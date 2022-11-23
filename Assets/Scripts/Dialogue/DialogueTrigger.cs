@@ -8,7 +8,7 @@ public class DialogueTrigger : MonoBehaviour
     [Header("Visual Cue")]
     [SerializeField] private GameObject visualCue;
     private PlayerActionsScript playerActionsScript;
-    private bool interactPressed;
+    private bool talkPressed;
     [SerializeField] private TextAsset inkJSON;
 
     private bool playerInRange;
@@ -27,7 +27,7 @@ public class DialogueTrigger : MonoBehaviour
 
     private void ConfigPlayerInput() 
     {
-        playerActionsScript.Player.Interact.performed += Interact;
+        playerActionsScript.Player.Talk.performed += Talk;
         // playerActionsScript.Player.Interact.canceled += Interact;
 
     }
@@ -35,7 +35,7 @@ public class DialogueTrigger : MonoBehaviour
     private void Awake()
     {
         playerInRange = false;
-        interactPressed = false;
+        talkPressed = false;
         visualCue.SetActive(false);
     }
 
@@ -48,9 +48,9 @@ public class DialogueTrigger : MonoBehaviour
         if (playerInRange)
         {
             visualCue.SetActive(true);
-            if (interactPressed)
+            if (talkPressed)
             {
-                interactPressed = false;
+                talkPressed = false;
                 if (!DialogueManager.GetInstance().dialogueIsPlaying)
                 {
                     DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
@@ -65,16 +65,16 @@ public class DialogueTrigger : MonoBehaviour
         }
 
         if (!DialogueManager.GetInstance().dialogueIsPlaying) {
-            interactPressed = false;
+            talkPressed = false;
             StartCoroutine(DialogueCooldown());
         }
     }
 
-    public void Interact(InputAction.CallbackContext context)
+    public void Talk(InputAction.CallbackContext context)
     {
         if (playerInRange) {
             // Debug.Log("Boom");
-            interactPressed = true;
+            talkPressed = true;
         }
     }
 
@@ -97,7 +97,7 @@ public class DialogueTrigger : MonoBehaviour
     private IEnumerator DialogueCooldown()
     {
         playerActionsScript.Player.Disable();
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.3f);
         playerActionsScript.Player.Enable();
     }
 }
