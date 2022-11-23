@@ -13,3 +13,6 @@ hello
 hi
 
 Will give the NPC 2 lines of dialogue of hello and hi.
+
+Ink Tutorial:
+https://www.youtube.com/watch?v=KSRpcftVyKg

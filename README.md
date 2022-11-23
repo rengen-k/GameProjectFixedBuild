@@ -93,7 +93,8 @@ https://youtu.be/KbtcEVCM7bw
 https://www.youtube.com/watch?v=7KiK0Aqtmzc
 - Enemy AI
 https://www.youtube.com/watch?v=c8Nq19gkNfs
-
+- Dialogue System
+https://www.youtube.com/watch?v=vY0Sk93YUhA
 
 
 
