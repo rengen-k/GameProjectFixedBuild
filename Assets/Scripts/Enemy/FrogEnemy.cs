@@ -18,6 +18,7 @@ public class FrogEnemy : MonoBehaviour
     public bool finishedAttack = true;
     private Vector3 startingPos;
     public bool canAttack = false;
+    private bool attackCooldown = false;
 
     //The list of waypoints - gameobjects, it will try to travel to.
     public Transform[] waypoints;
@@ -55,13 +56,13 @@ public class FrogEnemy : MonoBehaviour
         {
             agent.nextPosition = transform.position;
         }
-        if (canAttack)
+        if (canAttack && !attackCooldown)
         {
             agent.updatePosition = false;
             agent.updateRotation = false;
             agent.isStopped = true;
         }
-        else if (!canAttack && grounded)
+        else if (finishedAttack && grounded)
         {
             agent.updatePosition = true;
             agent.updateRotation = true;
@@ -71,7 +72,7 @@ public class FrogEnemy : MonoBehaviour
         {
             Jump();
         }
-        if (canAttack && finishedAttack)
+        if (canAttack && finishedAttack && !attackCooldown)
         {
             Attack();
         }
@@ -146,10 +147,6 @@ public class FrogEnemy : MonoBehaviour
         rb.useGravity = true;
 
         // jumps up and in the direction the agent was moving prior to being deactivated
-        //if (agent.velocity != Vector3.zero)
-        //{
-        //    endPoint = transform.position + (agent.velocity.normalized * attackRange);
-        //}
         rb.AddForce((Vector3.up * jumpHeight) + (agent.velocity.normalized * jumpDist), ForceMode.Impulse);
         StartCoroutine(JumpCooldown());
     }
@@ -161,9 +158,8 @@ public class FrogEnemy : MonoBehaviour
         agent.updateRotation = false;
         agent.isStopped = true;
         startingPos = transform.GetChild(0).transform.position;
-        //endPoint = transform.position + (agent.velocity.normalized * attackRange);
-        //Debug.Log("Endpoint in attack(): " + endPoint);
         StartCoroutine(TongueMovement());
+        StartCoroutine(AttackCooldown());
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -200,23 +196,22 @@ public class FrogEnemy : MonoBehaviour
 
     private IEnumerator AttackCooldown()
     {
-        canAttack = false;
-        yield return new WaitForSeconds(4);
-        canAttack = true;
+        attackCooldown = true;
+        yield return new WaitForSeconds(5);
+        attackCooldown = false;
     }
 
     private IEnumerator TongueMovement()
     {
         finishedAttack = false;
-        //endPoint = transform.position + (agent.velocity.normalized * attackRange);
         while (Vector3.Distance(transform.GetChild(0).transform.position, endPoint) > 0.7)
         {
-            transform.GetChild(0).transform.position = Vector3.MoveTowards(transform.GetChild(0).transform.position, endPoint, 0.02f);
+            transform.GetChild(0).transform.position = Vector3.MoveTowards(transform.GetChild(0).transform.position, endPoint, 0.03f);
             yield return null;
         }
         while (Vector3.Distance(transform.GetChild(0).transform.position, transform.position) > 0.7)
         {
-            transform.GetChild(0).transform.position = Vector3.MoveTowards(transform.GetChild(0).transform.position, transform.position, 0.02f);
+            transform.GetChild(0).transform.position = Vector3.MoveTowards(transform.GetChild(0).transform.position, transform.position, 0.03f);
             yield return null;
         }
         finishedAttack = true;
