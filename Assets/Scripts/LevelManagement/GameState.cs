@@ -85,6 +85,13 @@ public class GameState : MonoBehaviour
         //Sets references to loaded scene, resets counter.
         GameObject [] linesObj = GameObject.FindGameObjectsWithTag("LevelLine");
         lines = linesObj.Select( line => line.GetComponent<LevelLine>()).ToArray();
+        int i = 0;
+        string [] names = {"TutorialLine", "SimpleLine", "BlockLine", "MetaLine"};
+        foreach (string s in names)
+        {
+            lines[i] = GameObject.Find(s).GetComponent<LevelLine>();
+            i++;
+        }
         
         msg = GameObject.Find("CollectibleNotify");
         thisLevelCollectibles = 0;
