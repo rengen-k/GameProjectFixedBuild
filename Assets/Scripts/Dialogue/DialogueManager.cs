@@ -58,14 +58,12 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void EnterDialogueMode(TextAsset inkJSON) {
-        Debug.Log("callEnter");
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
     }
 
     public void ExitDialogueMode() {
-        Debug.Log("callexit");
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
@@ -86,7 +84,6 @@ public class DialogueManager : MonoBehaviour
 
     private void ContinueStory() 
     {
-        Debug.Log(currentStory.canContinue);
         if (currentStory.canContinue)
         {
             dialogueText.text = currentStory.Continue();
@@ -99,7 +96,6 @@ public class DialogueManager : MonoBehaviour
 
     public void Talk(InputAction.CallbackContext context)
     {
-        Debug.Log("pressed");
         talkPressed = true;
     }
 }
