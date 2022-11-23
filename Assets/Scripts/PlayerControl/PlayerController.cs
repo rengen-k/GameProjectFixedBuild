@@ -512,6 +512,10 @@ public class PlayerController : MonoBehaviour
             Rb.velocity = Vector3.zero;
             Rb.AddForce(Vector3.up * jumpTrampolineHeight, ForceMode.Impulse);
         }
+        else if (collision.gameObject.tag == "EnemyHead")
+        {
+            Destroy(collision.transform.parent.gameObject);
+        }
     }
 
     private void OnTriggerEnter(Collider collision)
