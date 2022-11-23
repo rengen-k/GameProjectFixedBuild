@@ -77,6 +77,11 @@ It is possible for the menu screen button text to become invisible during full s
 
 ### References:
 
+#### Assets
+
+- Unity Particle Pack
+https://assetstore.unity.com/packages/essentials/tutorial-projects/unity-particle-pack-127325
+
 #### Scripts
 
 - Unity Object Fade by jhuthins
