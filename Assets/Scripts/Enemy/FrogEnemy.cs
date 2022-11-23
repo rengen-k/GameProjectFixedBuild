@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class FrogEnemy : MonoBehaviour
 {
     // game objects and components
     private Transform player;
+    private Transform stuckObject;
     public Transform respawnPoint;
     private NavMeshAgent agent;
     private Rigidbody rb;
+    [SerializeField] private LayerMask layerMask;
     private Ray ray;
     private RaycastHit hit;
     private float rayDist = 10;
@@ -22,7 +25,7 @@ public class FrogEnemy : MonoBehaviour
     private Vector3 startingPos;
     public bool canAttack = false;
     private bool attackCooldown = false;
-    private bool stuckToPlayer = false;
+    private bool stuckToObject = false;
 
     //The list of waypoints - gameobjects, it will try to travel to.
     public Transform[] waypoints;
@@ -55,18 +58,17 @@ public class FrogEnemy : MonoBehaviour
 
     private void Update()
     {
-        tongueRay = new Ray(transform.GetChild(0).transform.position, endPoint);
-        if (Physics.Raycast(tongueRay, out tongueHit, tongueDist) && tongueHit.transform.gameObject.tag == "Player")
+        //tongueRay = new Ray(transform.GetChild(0).transform.position, endPoint);
+        //if (Physics.Raycast(tongueRay, out tongueHit, tongueDist) && tongueHit.transform.gameObject.tag == "Player")
+        //{
+        //    player.position = transform.GetChild(0).transform.position;
+        //    endPoint = tongueHit.transform.position;
+        //    stuckToPlayer = true;
+        //}
+        if (stuckToObject)
         {
-            Debug.Log("ray hit player");
-            player.position = transform.GetChild(0).transform.position;
-            Debug.Log(tongueHit.transform.position + "" + transform.GetChild(0).transform.position);
-            endPoint = tongueHit.transform.position;
-            stuckToPlayer = true;
-        }
-        if (stuckToPlayer)
-        {
-            player.position = transform.GetChild(0).transform.position;
+            //player.position = transform.GetChild(0).transform.position;
+            stuckObject.position = transform.GetChild(0).transform.position;
         }
         // stops the agent teleporting backwards after jumping
         if (agent.updatePosition == false)
@@ -89,7 +91,7 @@ public class FrogEnemy : MonoBehaviour
         {
             Jump();
         }
-        if (canAttack && finishedAttack && !attackCooldown)
+        if (canAttack && finishedAttack && !attackCooldown && grounded)
         {
             Attack();
         }
@@ -98,13 +100,14 @@ public class FrogEnemy : MonoBehaviour
         {
             agent.SetDestination(player.position);
             agent.speed = followSpeed;
-            if (agent.velocity != Vector3.zero && !stuckToPlayer)
+            if (agent.velocity != Vector3.zero && !stuckToObject)
             {
                 endPoint = transform.position + (agent.velocity.normalized * attackRange);
                 ray = new Ray(transform.position, agent.velocity.normalized);
             }
-            if (Physics.Raycast(ray, out hit, rayDist) && hit.transform.gameObject.tag == "Player")
+            if (Physics.Raycast(ray: ray, hitInfo: out hit, maxDistance: rayDist, layerMask: ~layerMask) && hit.transform.gameObject.tag == "Player")
             {
+                Debug.Log("ray hit player");
                 canAttack = true;
             }
         }
@@ -201,6 +204,10 @@ public class FrogEnemy : MonoBehaviour
         {
             Respawn();
         }
+        if (collision.gameObject.tag == "PickupObject")
+        {
+            Physics.IgnoreCollision(collision.collider, GetComponent<Collider>(), true);
+        }
     }
 
     // controls how often the enemy jumps
@@ -223,13 +230,14 @@ public class FrogEnemy : MonoBehaviour
         finishedAttack = false;
         while (Vector3.Distance(transform.GetChild(0).transform.position, endPoint) > 0.7)
         {
-            //tongueRay = new Ray(transform.GetChild(0).transform.position, endPoint);
-            //if (Physics.Raycast(tongueRay, out tongueHit, tongueDist) && tongueHit.transform.gameObject.tag == "Player")
-            //{
-            //    Debug.Log("ray hit player");
-            //    tongueHit.transform.position = transform.GetChild(0).transform.position;
-            //    endPoint = tongueHit.transform.position;
-            //}
+            tongueRay = new Ray(transform.GetChild(0).transform.position, endPoint);
+            if (Physics.Raycast(tongueRay, out tongueHit, tongueDist) && (tongueHit.transform.gameObject.tag == "Player" || tongueHit.transform.gameObject.tag == "PickupObject"))
+            {
+                //player.position = transform.GetChild(0).transform.position;
+                stuckObject = tongueHit.transform;
+                endPoint = tongueHit.transform.position;
+                stuckToObject = true;
+            }
             transform.GetChild(0).transform.position = Vector3.MoveTowards(transform.GetChild(0).transform.position, endPoint, 0.03f);
             yield return null;
         }
@@ -238,7 +246,7 @@ public class FrogEnemy : MonoBehaviour
             transform.GetChild(0).transform.position = Vector3.MoveTowards(transform.GetChild(0).transform.position, transform.position, 0.03f);
             yield return null;
         }
-        stuckToPlayer = false;
+        stuckToObject = false;
         finishedAttack = true;
     }
 }
