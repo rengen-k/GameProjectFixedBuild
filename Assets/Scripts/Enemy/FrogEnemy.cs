@@ -2,17 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-//using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class FrogEnemy : MonoBehaviour
 {
     // game objects and components
     private Transform player;
     private Transform stuckObject;
-    public Transform respawnPoint;
+    private Transform respawnPoint;
     private NavMeshAgent agent;
     private Rigidbody rb;
-    [SerializeField] private LayerMask layerMask;
+
+    // general enemy variables
+    private int waypointIndex;
+    private Vector3 target;
+    private float originalSpeed;
+    public Transform[] waypoints;
+
+    // following player variables
+    private bool followsPlayer;
+    private float followSpeed;
+    [SerializeField] private float followPlayerDist;
+
+    // frog jumping variables
+    private bool grounded = true;
+    private bool canJump = true;
+    [SerializeField] private float jumpHeight;
+    [SerializeField] private float jumpDist;
+    [SerializeField] private float jumpTime;
+
+    // frog attacking variables
     private Ray ray;
     private RaycastHit hit;
     private float rayDist = 10;
@@ -20,31 +38,12 @@ public class FrogEnemy : MonoBehaviour
     private RaycastHit tongueHit;
     private float tongueDist = 1;
     private Vector3 endPoint;
+    private int layerMask = 1 << 7;
     private float attackRange = 10;
-    public bool finishedAttack = true;
-    public bool canAttack = false;
-    public bool attackCooldown = false;
-    public bool stuckToObject = false;
-
-    //The list of waypoints - gameobjects, it will try to travel to.
-    public Transform[] waypoints;
-
-    // general enemy variables
-    private int waypointIndex;
-    private Vector3 target;
-    private float originalSpeed;
-
-    // frog related variables
-    private bool grounded = true;
-    private bool canJump = true;
-    [SerializeField] private float jumpHeight;
-    [SerializeField] private float jumpDist;
-    [SerializeField] private float jumpTime;
-
-    [Tooltip("Indicates whether the enemy will follow the player when they are close enough.")]
-    [SerializeField] private bool followsPlayer;
-    [SerializeField] private float followSpeed;
-    [SerializeField] private float followPlayerDist;
+    private bool finishedAttack = true;
+    private bool canAttack = false;
+    private bool attackCooldown = false;
+    private bool stuckToObject = false;
 
     private void Start()
     {
@@ -62,52 +61,64 @@ public class FrogEnemy : MonoBehaviour
         {
             agent.nextPosition = transform.position;
         }
+
+        // if the tongue is stuck to the player or a pickup item then they will move with the tongue
         if (stuckToObject)
         {
             stuckObject.position = transform.GetChild(0).transform.position;
         }
+
+        // pauses the NavMeshAgent when the frog when is able to attack the player
         if (canAttack && !attackCooldown)
         {
             agent.updatePosition = false;
             agent.updateRotation = false;
             agent.isStopped = true;
         }
+        // resumes the NavMeshAgent when conditions are met
         else if (finishedAttack && grounded)
         {
             agent.updatePosition = true;
             agent.updateRotation = true;
             agent.isStopped = false;
         }
+
         if (grounded && canJump && finishedAttack)
         {
             Jump();
         }
+
         if (canAttack && finishedAttack && !attackCooldown && grounded)
         {
             Attack();
         }
-        // increases speed when following player
+
         if (followsPlayer && Vector3.Distance(transform.position, player.position) < followPlayerDist)
         {
+            // follows player and can change the speed if desired
             agent.SetDestination(player.position);
             agent.speed = followSpeed;
+            // gets the endpoint for the raycast in TongueMovement() and initializes the ray passed into the next raycast
             if (agent.velocity != Vector3.zero && !stuckToObject)
             {
                 endPoint = transform.position + (agent.velocity.normalized * attackRange);
                 ray = new Ray(transform.position, agent.velocity.normalized);
             }
+            // frog is able to attack when a raycast of a capped distance hits the player
             if (Physics.Raycast(ray: ray, hitInfo: out hit, maxDistance: rayDist, layerMask: ~layerMask) && hit.transform.gameObject.tag == "Player")
             {
-                Debug.Log("ray hit player");
                 canAttack = true;
             }
         }
+        // when not in range of the player, frog returns to its patrol
         else if (followsPlayer)
         {
             canAttack = false;
             agent.speed = originalSpeed;
             UpdateDestination();
         }
+
+        // when enemy reaches a waypoint, iterates to the next one
         if (Vector3.Distance(transform.position, target) < 2)
         {
             IterateWaypointIndex();
@@ -207,7 +218,7 @@ public class FrogEnemy : MonoBehaviour
     }
 
     /* from https://forum.unity.com/threads/how-do-i-update-the-rotation-of-a-navmeshagent.707579/ makes the enemy look 
-    the direction it is moving in which is required because the NavMeshAgent is frequently "disabled" throughout the code
+    the direction it is moving in which is required because the NavMeshAgent is frequently "paused" throughout the code
     so its rotation has to be handled manually */
     private void FaceTarget()
     {
