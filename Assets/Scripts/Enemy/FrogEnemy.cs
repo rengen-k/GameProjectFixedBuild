@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEditor.Experimental.GraphView.GraphView;
+//using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class FrogEnemy : MonoBehaviour
 {
@@ -22,10 +22,9 @@ public class FrogEnemy : MonoBehaviour
     private Vector3 endPoint;
     private float attackRange = 10;
     public bool finishedAttack = true;
-    private Vector3 startingPos;
     public bool canAttack = false;
-    private bool attackCooldown = false;
-    private bool stuckToObject = false;
+    public bool attackCooldown = false;
+    public bool stuckToObject = false;
 
     //The list of waypoints - gameobjects, it will try to travel to.
     public Transform[] waypoints;
@@ -58,14 +57,14 @@ public class FrogEnemy : MonoBehaviour
 
     private void Update()
     {
-        if (stuckToObject)
-        {
-            stuckObject.position = transform.GetChild(0).transform.position;
-        }
         // stops the agent teleporting backwards after jumping
         if (agent.updatePosition == false)
         {
             agent.nextPosition = transform.position;
+        }
+        if (stuckToObject)
+        {
+            stuckObject.position = transform.GetChild(0).transform.position;
         }
         if (canAttack && !attackCooldown)
         {
@@ -114,6 +113,8 @@ public class FrogEnemy : MonoBehaviour
             IterateWaypointIndex();
             UpdateDestination();
         }
+
+        FaceTarget();
     }
 
     private void FixedUpdate()
@@ -125,6 +126,7 @@ public class FrogEnemy : MonoBehaviour
         }
     }
 
+    // allows enemy to patrol a set path of waypoints
     private void UpdateDestination()
     {
         target = waypoints[waypointIndex].position;
@@ -163,13 +165,14 @@ public class FrogEnemy : MonoBehaviour
         StartCoroutine(JumpCooldown());
     }
 
+    // frog uses it's tongue to try and stick to the player
     private void Attack()
     {
         finishedAttack = false;
+        // pauses the NavMeshAgent while attacking
         agent.updatePosition = false;
         agent.updateRotation = false;
         agent.isStopped = true;
-        startingPos = transform.GetChild(0).transform.position;
         StartCoroutine(TongueMovement());
         StartCoroutine(AttackCooldown());
     }
@@ -196,10 +199,22 @@ public class FrogEnemy : MonoBehaviour
         {
             Respawn();
         }
+        // allows the enemy to phase through pickup items so it isn't always stuck
         if (collision.gameObject.tag == "PickupObject")
         {
             Physics.IgnoreCollision(collision.collider, GetComponent<Collider>(), true);
         }
+    }
+
+    /* from https://forum.unity.com/threads/how-do-i-update-the-rotation-of-a-navmeshagent.707579/ makes the enemy look 
+    the direction it is moving in which is required because the NavMeshAgent is frequently "disabled" throughout the code
+    so its rotation has to be handled manually */
+    private void FaceTarget()
+    {
+        Vector3 turnTowardNavSteeringTarget = agent.steeringTarget;
+        Vector3 direction = (turnTowardNavSteeringTarget - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5);
     }
 
     // controls how often the enemy jumps
@@ -210,6 +225,7 @@ public class FrogEnemy : MonoBehaviour
         canJump = true;
     }
 
+    // controls how often the enemy can attack
     private IEnumerator AttackCooldown()
     {
         attackCooldown = true;
@@ -217,15 +233,17 @@ public class FrogEnemy : MonoBehaviour
         attackCooldown = false;
     }
 
+    /* coroutine that extends and retracts the frog's tongue and also uses raycasts to determine whether it has run into
+    the player or a pickup item along the way so it can "grab" them */
     private IEnumerator TongueMovement()
     {
         finishedAttack = false;
+        // tongue extension
         while (Vector3.Distance(transform.GetChild(0).transform.position, endPoint) > 0.7)
         {
             tongueRay = new Ray(transform.GetChild(0).transform.position, endPoint);
             if (Physics.Raycast(tongueRay, out tongueHit, tongueDist) && (tongueHit.transform.gameObject.tag == "Player" || tongueHit.transform.gameObject.tag == "PickupObject"))
             {
-                //player.position = transform.GetChild(0).transform.position;
                 stuckObject = tongueHit.transform;
                 endPoint = tongueHit.transform.position;
                 stuckToObject = true;
@@ -233,6 +251,7 @@ public class FrogEnemy : MonoBehaviour
             transform.GetChild(0).transform.position = Vector3.MoveTowards(transform.GetChild(0).transform.position, endPoint, 0.03f);
             yield return null;
         }
+        // tongue retraction
         while (Vector3.Distance(transform.GetChild(0).transform.position, transform.position) > 0.7)
         {
             transform.GetChild(0).transform.position = Vector3.MoveTowards(transform.GetChild(0).transform.position, transform.position, 0.03f);
