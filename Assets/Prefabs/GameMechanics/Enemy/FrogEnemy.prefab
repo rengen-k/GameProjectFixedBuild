@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3655318757262368485}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.8}
+  m_LocalPosition: {x: 0, y: 0, z: -0.8}
   m_LocalScale: {x: 0.5, y: 0.2, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -110,6 +110,7 @@ GameObject:
   - component: {fileID: 4036306179454983526}
   - component: {fileID: 4036306179454983545}
   - component: {fileID: 4036306179454983544}
+  - component: {fileID: 4036306179454983547}
   - component: {fileID: 4036306179454983546}
   - component: {fileID: 3655318758706731404}
   m_Layer: 0
@@ -133,7 +134,7 @@ Transform:
   m_Children:
   - {fileID: 3655318757262368482}
   m_Father: {fileID: 0}
-  m_RootOrder: 28
+  m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4036306179454983527
 MeshFilter:
@@ -209,7 +210,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 0.01
+  m_Speed: 0.1
   m_Acceleration: 28
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -221,6 +222,27 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &4036306179454983547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4036306179454983549}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea119d47335e342a1aeec875a6f5fc99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  respawnPoint: {fileID: 0}
+  waypoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  followsPlayer: 1
+  followSpeed: 17
+  followPlayerDist: 8
 --- !u!54 &4036306179454983546
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -249,12 +271,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a76efb82559824768980f3772492f732, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  respawnPoint: {fileID: 0}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  finishedAttack: 1
+  canAttack: 0
   waypoints:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  followPlayerDist: 10
   jumpHeight: 7
   jumpDist: 4
   jumpTime: 0.9
+  followsPlayer: 1
+  followSpeed: 0.1
+  followPlayerDist: 10
