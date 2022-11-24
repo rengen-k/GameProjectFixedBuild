@@ -12,19 +12,6 @@ public class FrogEnemy : MonoBehaviour
     public Transform respawnPoint;
     private NavMeshAgent agent;
     private Rigidbody rb;
-    [SerializeField] private LayerMask layerMask;
-    private Ray ray;
-    private RaycastHit hit;
-    private float rayDist = 10;
-    private Ray tongueRay;
-    private RaycastHit tongueHit;
-    private float tongueDist = 1;
-    private Vector3 endPoint;
-    private float attackRange = 10;
-    public bool finishedAttack = true;
-    public bool canAttack = false;
-    public bool attackCooldown = false;
-    public bool stuckToObject = false;
 
     //The list of waypoints - gameobjects, it will try to travel to.
     public Transform[] waypoints;
@@ -40,6 +27,19 @@ public class FrogEnemy : MonoBehaviour
     [SerializeField] private float jumpHeight;
     [SerializeField] private float jumpDist;
     [SerializeField] private float jumpTime;
+    [SerializeField] private LayerMask layerMask;
+    private Ray ray;
+    private RaycastHit hit;
+    private float rayDist = 10;
+    private Ray tongueRay;
+    private RaycastHit tongueHit;
+    private float tongueDist = 1;
+    private Vector3 endPoint;
+    private float attackRange = 10;
+    public bool finishedAttack = true;
+    public bool canAttack = false;
+    public bool attackCooldown = false;
+    public bool stuckToObject = false;
 
     [Tooltip("Indicates whether the enemy will follow the player when they are close enough.")]
     [SerializeField] private bool followsPlayer;
@@ -62,10 +62,12 @@ public class FrogEnemy : MonoBehaviour
         {
             agent.nextPosition = transform.position;
         }
+
         if (stuckToObject)
         {
             stuckObject.position = transform.GetChild(0).transform.position;
         }
+
         if (canAttack && !attackCooldown)
         {
             agent.updatePosition = false;
@@ -78,36 +80,44 @@ public class FrogEnemy : MonoBehaviour
             agent.updateRotation = true;
             agent.isStopped = false;
         }
+
         if (grounded && canJump && finishedAttack)
         {
             Jump();
         }
+
         if (canAttack && finishedAttack && !attackCooldown && grounded)
         {
             Attack();
         }
-        // increases speed when following player
+
         if (followsPlayer && Vector3.Distance(transform.position, player.position) < followPlayerDist)
         {
+            // follows player and can change the speed if desired
             agent.SetDestination(player.position);
             agent.speed = followSpeed;
+            // gets the endpoint for the raycast in TongueMovement() and initializes the ray passed into the next raycast
             if (agent.velocity != Vector3.zero && !stuckToObject)
             {
                 endPoint = transform.position + (agent.velocity.normalized * attackRange);
                 ray = new Ray(transform.position, agent.velocity.normalized);
             }
+            // frog is able to attack when a raycast of a capped distance hits the player
             if (Physics.Raycast(ray: ray, hitInfo: out hit, maxDistance: rayDist, layerMask: ~layerMask) && hit.transform.gameObject.tag == "Player")
             {
                 Debug.Log("ray hit player");
                 canAttack = true;
             }
         }
+        // when not in range of player, frog returns to its patrol
         else if (followsPlayer)
         {
             canAttack = false;
             agent.speed = originalSpeed;
             UpdateDestination();
         }
+
+        // when enemy reaches a waypoint, iterates to the next one
         if (Vector3.Distance(transform.position, target) < 2)
         {
             IterateWaypointIndex();
@@ -207,7 +217,7 @@ public class FrogEnemy : MonoBehaviour
     }
 
     /* from https://forum.unity.com/threads/how-do-i-update-the-rotation-of-a-navmeshagent.707579/ makes the enemy look 
-    the direction it is moving in which is required because the NavMeshAgent is frequently "disabled" throughout the code
+    the direction it is moving in which is required because the NavMeshAgent is frequently "paused" throughout the code
     so its rotation has to be handled manually */
     private void FaceTarget()
     {
