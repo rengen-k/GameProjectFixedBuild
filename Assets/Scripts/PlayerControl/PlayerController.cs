@@ -240,7 +240,7 @@ public class PlayerController : MonoBehaviour
         // adjusts movement values depending on if you are in water
         if (inWater)
         {
-            modifySeaMovementValues();
+            modifyWaterMovementValues();
         }
         else
         {
@@ -260,7 +260,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void modifySeaMovementValues()
+    private void modifyWaterMovementValues()
     {
         acceleration = 12;
         deceleration = 12;
