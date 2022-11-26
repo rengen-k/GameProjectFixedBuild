@@ -38,6 +38,9 @@ public class DialogueManager : MonoBehaviour
 
     private void Awake()
     {
+        dialoguePanel = GameObject.Find("DialoguePanel");
+        dialogueText = GameObject.Find("DialogueText").GetComponent<TextMeshProUGUI>();
+
         talkPressed = false;
         if (instance != null)
         {

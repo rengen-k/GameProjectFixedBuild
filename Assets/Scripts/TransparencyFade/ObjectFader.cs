@@ -47,14 +47,17 @@ public class ObjectFader : MonoBehaviour
 
             foreach (RaycastHit hit in hitList.hits)
             {
+
+                if (i > max){
+                    break;
+                }
+                
                 if (transform == hit.transform)
                 {
                     stayFaded = true;
                 }
                 
-                if (i > max){
-                    break;
-                }
+                
                 if (hit.collider != null){
                     i++;
                 }

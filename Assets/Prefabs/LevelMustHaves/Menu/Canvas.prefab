@@ -1511,7 +1511,7 @@ RectTransform:
   - {fileID: 8445320399079416290}
   - {fileID: 3956108865239491977}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2852,6 +2852,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 3832419764440752827}
     m_Modifications:
+    - target: {fileID: 1020142153989835613, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
+      propertyPath: m_text
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1508729052998846448, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_Name
       value: LevelButton (8)
@@ -3154,6 +3158,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 158547880109694331}
     m_Modifications:
+    - target: {fileID: 1020142153989835613, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
+      propertyPath: m_text
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 1508729052998846448, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_Name
       value: LevelButton
@@ -3384,6 +3392,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 158547880109694331}
     m_Modifications:
+    - target: {fileID: 1020142153989835613, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
+      propertyPath: m_text
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 1508729052998846448, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_Name
       value: LevelButton (1)
@@ -3496,6 +3508,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 2278356330745439329}
     m_Modifications:
+    - target: {fileID: 1020142153989835613, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
+      propertyPath: m_text
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 1508729052998846448, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_Name
       value: LevelButton (9)
@@ -3624,6 +3640,10 @@ PrefabInstance:
       propertyPath: open
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2965290793544453745, guid: 1d86176ef8dd5bc4994b5e316c23cf38, type: 3}
+      propertyPath: m_Color.a
+      value: 0.24313726
+      objectReference: {fileID: 0}
     - target: {fileID: 6464939570237174321, guid: 1d86176ef8dd5bc4994b5e316c23cf38, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3654,11 +3674,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6464939570237174321, guid: 1d86176ef8dd5bc4994b5e316c23cf38, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -78.339
+      value: 0.0030518
       objectReference: {fileID: 0}
     - target: {fileID: 6464939570237174321, guid: 1d86176ef8dd5bc4994b5e316c23cf38, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -176.796
+      value: -129.59
       objectReference: {fileID: 0}
     - target: {fileID: 6464939570237174321, guid: 1d86176ef8dd5bc4994b5e316c23cf38, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3690,11 +3710,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6464939570237174321, guid: 1d86176ef8dd5bc4994b5e316c23cf38, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 14.163
+      value: 0.0013427734
       objectReference: {fileID: 0}
     - target: {fileID: 6464939570237174321, guid: 1d86176ef8dd5bc4994b5e316c23cf38, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -41.169
+      value: -64.79498
       objectReference: {fileID: 0}
     - target: {fileID: 6464939570237174321, guid: 1d86176ef8dd5bc4994b5e316c23cf38, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3723,9 +3743,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6464939570237174321, guid: 1d86176ef8dd5bc4994b5e316c23cf38, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3242967315345964243}
-    - targetCorrespondingSourceObject: {fileID: 6464939570237174321, guid: 1d86176ef8dd5bc4994b5e316c23cf38, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6348306729866509814}
   m_SourcePrefab: {fileID: 100100000, guid: 1d86176ef8dd5bc4994b5e316c23cf38, type: 3}
 --- !u!114 &2069702094213491643 stripped
 MonoBehaviour:
@@ -3789,11 +3806,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2964070464538395783, guid: bf17dd0f9c5826c44b3e00dbab57704a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -2624.796
+      value: -3080.5723
       objectReference: {fileID: 0}
     - target: {fileID: 2964070464538395783, guid: bf17dd0f9c5826c44b3e00dbab57704a, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -1309.387
+      value: -941.333
       objectReference: {fileID: 0}
     - target: {fileID: 2964070464538395783, guid: bf17dd0f9c5826c44b3e00dbab57704a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3825,11 +3842,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2964070464538395783, guid: bf17dd0f9c5826c44b3e00dbab57704a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1041.595
+      value: 849
       objectReference: {fileID: 0}
     - target: {fileID: 2964070464538395783, guid: bf17dd0f9c5826c44b3e00dbab57704a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 504.144
+      value: 312.8165
       objectReference: {fileID: 0}
     - target: {fileID: 2964070464538395783, guid: bf17dd0f9c5826c44b3e00dbab57704a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3845,35 +3862,55 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3782900510018913635, guid: bf17dd0f9c5826c44b3e00dbab57704a, type: 3}
       propertyPath: levelCount
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3782900510018913635, guid: bf17dd0f9c5826c44b3e00dbab57704a, type: 3}
       propertyPath: sets.Array.data[0]
       value: 
       objectReference: {fileID: 2069702094213491643}
     - target: {fileID: 4451976887606114580, guid: bf17dd0f9c5826c44b3e00dbab57704a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 543.89
+      objectReference: {fileID: 0}
+    - target: {fileID: 4451976887606114580, guid: bf17dd0f9c5826c44b3e00dbab57704a, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 129.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4451976887606114580, guid: bf17dd0f9c5826c44b3e00dbab57704a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 128
+      value: -0.00026321
+      objectReference: {fileID: 0}
+    - target: {fileID: 4451976887606114580, guid: bf17dd0f9c5826c44b3e00dbab57704a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.00023842
       objectReference: {fileID: 0}
     - target: {fileID: 4497910347259437447, guid: bf17dd0f9c5826c44b3e00dbab57704a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -496.708
+      value: 0.0054626
       objectReference: {fileID: 0}
     - target: {fileID: 4497910347259437447, guid: bf17dd0f9c5826c44b3e00dbab57704a, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -704.45
+      value: -1072.5
       objectReference: {fileID: 0}
     - target: {fileID: 4497910347259437447, guid: bf17dd0f9c5826c44b3e00dbab57704a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -248.354
+      value: -0.0001373291
       objectReference: {fileID: 0}
     - target: {fileID: 4497910347259437447, guid: bf17dd0f9c5826c44b3e00dbab57704a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 352.22
+      value: 536.24
       objectReference: {fileID: 0}
     - target: {fileID: 8319709193933030989, guid: bf17dd0f9c5826c44b3e00dbab57704a, type: 3}
       propertyPath: m_text
       value: Bonus
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319709193933030989, guid: bf17dd0f9c5826c44b3e00dbab57704a, type: 3}
+      propertyPath: m_margin.x
+      value: 4.332076
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319709193933030989, guid: bf17dd0f9c5826c44b3e00dbab57704a, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects:
@@ -4413,6 +4450,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 5327811122917683147}
     m_Modifications:
+    - target: {fileID: 1020142153989835613, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
+      propertyPath: m_text
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 1508729052998846448, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_Name
       value: LevelButton
@@ -4686,6 +4727,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 2153339627569268801}
     m_Modifications:
+    - target: {fileID: 1020142153989835613, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
+      propertyPath: m_text
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 1508729052998846448, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_Name
       value: LevelButton (4)
@@ -4798,6 +4843,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 3590765106020362007}
     m_Modifications:
+    - target: {fileID: 1020142153989835613, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
+      propertyPath: m_text
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1508729052998846448, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_Name
       value: LevelButton (2)
@@ -4954,6 +5003,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 2153339627569268801}
     m_Modifications:
+    - target: {fileID: 1020142153989835613, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
+      propertyPath: m_text
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1508729052998846448, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_Name
       value: LevelButton (5)
@@ -5122,6 +5175,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 2339324465727253993}
     m_Modifications:
+    - target: {fileID: 1020142153989835613, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
+      propertyPath: m_text
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1508729052998846448, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_Name
       value: LevelButton (6)
@@ -5290,6 +5347,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 7605236071040766401}
     m_Modifications:
+    - target: {fileID: 1020142153989835613, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
+      propertyPath: m_text
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 1508729052998846448, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_Name
       value: LevelButton
@@ -5394,114 +5455,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
   m_PrefabInstance: {fileID: 3892746492522292960}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &4400466182327213350
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 2
-    m_TransformParent: {fileID: 5015938520417787909}
-    m_Modifications:
-    - target: {fileID: 1508729052998846448, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
-      propertyPath: m_Name
-      value: LevelButton (3)
-      objectReference: {fileID: 0}
-    - target: {fileID: 5111480032097307186, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
-      propertyPath: num
-      value: 21
-      objectReference: {fileID: 0}
-    - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
-      propertyPath: m_Pivot.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
-      propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
-      propertyPath: m_RootOrder
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 208.00037
-      objectReference: {fileID: 0}
-    - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -165
-      objectReference: {fileID: 0}
-    - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_AddedGameObjects: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
---- !u!224 &6348306729866509814 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
-  m_PrefabInstance: {fileID: 4400466182327213350}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4860351571807404384
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5510,6 +5463,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 4590230550822064850}
     m_Modifications:
+    - target: {fileID: 1020142153989835613, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
+      propertyPath: m_text
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1508729052998846448, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_Name
       value: LevelButton (1)
@@ -5743,6 +5700,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 5015938520417787909}
     m_Modifications:
+    - target: {fileID: 1020142153989835613, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
+      propertyPath: m_text
+      value: 19
+      objectReference: {fileID: 0}
     - target: {fileID: 1508729052998846448, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_Name
       value: LevelButton (1)
@@ -5817,11 +5778,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 208
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 159
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -5969,6 +5930,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 5015938520417787909}
     m_Modifications:
+    - target: {fileID: 1020142153989835613, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
+      propertyPath: m_text
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 1508729052998846448, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_Name
       value: LevelButton (2)
@@ -6043,11 +6008,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -234
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -165
+      value: -335
       objectReference: {fileID: 0}
     - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -6313,6 +6278,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 4206163027268193837}
     m_Modifications:
+    - target: {fileID: 1020142153989835613, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
+      propertyPath: m_text
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 1508729052998846448, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_Name
       value: LevelButton
@@ -7018,6 +6987,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 1186105266720416212}
     m_Modifications:
+    - target: {fileID: 1020142153989835613, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
+      propertyPath: m_text
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1508729052998846448, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_Name
       value: LevelButton
@@ -7130,6 +7103,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 1264997491881314191}
     m_Modifications:
+    - target: {fileID: 1020142153989835613, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
+      propertyPath: m_text
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1508729052998846448, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_Name
       value: LevelButton
@@ -7253,6 +7230,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 3832419764440752827}
     m_Modifications:
+    - target: {fileID: 1020142153989835613, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
+      propertyPath: m_text
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1508729052998846448, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_Name
       value: LevelButton (7)
@@ -7539,6 +7520,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 50732194392523396}
     m_Modifications:
+    - target: {fileID: 1020142153989835613, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
+      propertyPath: m_text
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1508729052998846448, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_Name
       value: LevelButton (3)
@@ -7651,6 +7636,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 158547880109694331}
     m_Modifications:
+    - target: {fileID: 1020142153989835613, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
+      propertyPath: m_text
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 1508729052998846448, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_Name
       value: LevelButton (3)
@@ -7763,6 +7752,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 158547880109694331}
     m_Modifications:
+    - target: {fileID: 1020142153989835613, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
+      propertyPath: m_text
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 1508729052998846448, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_Name
       value: LevelButton (2)
@@ -8143,6 +8136,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 5015938520417787909}
     m_Modifications:
+    - target: {fileID: 1020142153989835613, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
+      propertyPath: m_text
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 1508729052998846448, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_Name
       value: LevelButton
@@ -8221,11 +8218,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -234
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 159
+      value: 307
       objectReference: {fileID: 0}
     - target: {fileID: 7280121555367076048, guid: 4687be6904da2c2489806e5eab9adcee, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
