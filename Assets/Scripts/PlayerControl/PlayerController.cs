@@ -51,8 +51,11 @@ public class PlayerController : MonoBehaviour
     private float lastGrounded;
     private float jumpCutMultiplier = 0.5f;
     private float fallMultiplier = 2f;
-    [SerializeField] private float jumpMultiplier = 14f;
+    [SerializeField] private float jumpMultiplier = 12f;
 
+    // Fixed Jump Values
+    private float landJumpMultiplier = 12f;
+    private float seaJumpMultiplier = 8f;
     private float jumpTrampolineHeight = 19.0f;
 
     //-------------------------//
@@ -237,19 +240,11 @@ public class PlayerController : MonoBehaviour
         // adjusts movement values depending on if you are in water
         if (inWater)
         {
-            acceleration = 12;
-            deceleration = 12;
-            speed = 6;
-            frictionAmount = 0.1f;
-            jumpMultiplier = 8;
+            modifySeaMovementValues();
         }
         else
         {
-            acceleration = 17;
-            deceleration = 25;
-            speed = 12;
-            frictionAmount = 0.45f;
-            jumpMultiplier = 14;
+            modifyLandMovementValues();
         }
 
         // makes it so if you are near a ledge you pop up higher in the water so you can get out
@@ -263,6 +258,24 @@ public class PlayerController : MonoBehaviour
             swimCheck = ladderCheck;
             swimRadius = 0f;
         }
+    }
+
+    private void modifySeaMovementValues()
+    {
+        acceleration = 12;
+        deceleration = 12;
+        speed = 6;
+        frictionAmount = 0.1f;
+        jumpMultiplier = seaJumpMultiplier;
+    }
+
+    private void modifyLandMovementValues()
+    {
+        acceleration = 17;
+        deceleration = 25;
+        speed = 12;
+        frictionAmount = 0.45f;
+        jumpMultiplier = landJumpMultiplier;
     }
 
     // Check whether sphere is colliding with ground or stableground
