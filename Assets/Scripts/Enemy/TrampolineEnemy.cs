@@ -9,6 +9,7 @@ public class TrampolineEnemy : MonoBehaviour
     public Transform respawnPoint;
     private Vector3 squashedScale = new Vector3(1f, 0.5f, 1f);
     private Vector3 normalScale = new Vector3(1f, 1f, 1f);
+    private Vector3 scale;
     private bool squashed = false;
 
     private void Start()
@@ -16,12 +17,13 @@ public class TrampolineEnemy : MonoBehaviour
         agent = GetComponentInParent<NavMeshAgent>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         // pause the NavMeshAgent when squashed
         if (squashed)
         {
-            StartCoroutine(smoothScaling());
+            //StartCoroutine(smoothScaling());
+            scale = normalScale;
             agent.updatePosition = false;
             agent.updateRotation = false;
             agent.isStopped = true;
@@ -29,6 +31,7 @@ public class TrampolineEnemy : MonoBehaviour
         // resume the NavMeshAgent and reset the scale and tag
         else
         {
+            scale = squashedScale;
             squashed = false;
             transform.parent.transform.localScale = normalScale;
             gameObject.tag = "Ground";
@@ -45,8 +48,9 @@ public class TrampolineEnemy : MonoBehaviour
             // if the player jumps on the trampoline enemy it gets squashed and its head becomes a trampoline
             if (!squashed)
             {
-                squashed = true;
                 //transform.parent.transform.localScale = squashedScale;
+                StartCoroutine(smoothScaling());
+                squashed = true;
                 gameObject.tag = "JumpTag";
                 StartCoroutine(SquashCooldown());
             }
@@ -64,9 +68,9 @@ public class TrampolineEnemy : MonoBehaviour
 
     private IEnumerator smoothScaling()
     {
-        while (transform.parent.transform.localScale != squashedScale)
+        while (Vector3.Distance(transform.parent.transform.localScale, scale) > 0.05f)
         {
-            yield return transform.parent.transform.localScale = Vector3.Lerp(transform.parent.transform.localScale, squashedScale, 10f * Time.deltaTime);
+            yield return transform.parent.transform.localScale = Vector3.Lerp(transform.parent.transform.localScale, scale, 10f * Time.fixedDeltaTime);
         }
     }
 
