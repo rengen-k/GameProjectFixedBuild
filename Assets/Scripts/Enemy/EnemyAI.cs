@@ -11,16 +11,18 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
+    // game objects
     private Transform player;
     public Transform respawnPoint;
     private NavMeshAgent agent;
-    //The list of waypoints- gameobjects, it will try to travel to.
+
+    // waypoint navigation variables
     public Transform[] waypoints;
     private int waypointIndex;
     private Vector3 target;
     private float originalSpeed;
 
-    [Tooltip("Indicates whether the enemy will follow the player when they are close enough.")]
+    // variables for following player
     [SerializeField] private bool followsPlayer;
     [SerializeField] private float followSpeed;
     [SerializeField] private float followPlayerDist;
@@ -35,16 +37,19 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
+        // if the enemy is set to follow the player and it is within range it will begin following at followSpeed
         if (followsPlayer && Vector3.Distance(transform.position, player.position) < followPlayerDist)
         {
             agent.SetDestination(player.position);
             agent.speed = followSpeed;
         }
+        // if player moves out of range then return to patrol and original speed
         else if (followsPlayer)
         {
             agent.speed = originalSpeed;
             UpdateDestination();
         }
+        // when enemy reaches a waypoint, iterates to the next one
         if (Vector3.Distance(transform.position, target) < 2)
         {
             IterateWaypointIndex();
@@ -52,12 +57,14 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    // allows enemy to patrol a set path of waypoints
     private void UpdateDestination()
     {
         target = waypoints[waypointIndex].position;
         agent.SetDestination(target);
     }
 
+    // called when enemy approaches a waypoint so it can continue to the next one
     private void IterateWaypointIndex()
     {
         waypointIndex++;
@@ -70,5 +77,13 @@ public class EnemyAI : MonoBehaviour
     public void Respawn()
     {
         transform.position = respawnPoint.position;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name == "KillPlane")
+        {
+            Respawn();
+        }
     }
 }
