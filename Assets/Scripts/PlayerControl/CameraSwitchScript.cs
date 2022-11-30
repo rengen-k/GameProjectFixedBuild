@@ -38,4 +38,11 @@ public class CameraSwitchScript : MonoBehaviour
         animator.Play(views[cameraPos]);
         return cameraPos;
     }
+
+    public void returnToPos()
+    {
+        // After blending to a cutscene camera, call this to return to the camera before the cutscene occured.
+        string[] views = {"0Angle","270Angle","180Angle","90Angle"};
+        animator.Play(views[cameraPos]);
+    }
 }

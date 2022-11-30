@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float frictionAmount = 0.45f;
     [SerializeField] private float acceleration = 17;
     [SerializeField] private float deceleration = 25;
-    
+    private RigidbodyConstraints disableConstraints;
     //-------------------------//
     // Jump
     private float jumpBufferTime = 0.4f;
@@ -161,6 +161,18 @@ public class PlayerController : MonoBehaviour
     private void OnDisable()
     {
         playerActionsScript.Player.Disable();
+    }
+
+    public void Enable()
+    {
+        playerActionsScript.Player.Enable();
+        Rb.constraints = disableConstraints;
+    }
+    public void Disable()
+    {
+        playerActionsScript.Player.Disable();
+        disableConstraints = Rb.constraints;
+        Rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
     }
 
     //-----------------------------------------//
