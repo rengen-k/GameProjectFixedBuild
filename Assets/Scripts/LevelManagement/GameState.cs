@@ -110,11 +110,26 @@ public class GameState : MonoBehaviour
 
         //Gives level lines the correct panel ref, sets each level line to value from varaibles levelDones
         int startIndex = 0;
+        lines[0].sets[0].ForceOpen();
+        lines[1].sets[0].ForceOpen();
+        //handles the bonus levels opening.
+        if (totalCollectibles >= 5)
+        {
+            lines[3].sets[0].ForceOpen();
+        }
         for (int i = 0; i < lines.Length; i++)
         {
             lines[i].setCompletion(levelDones, levelsCollected, startIndex);
             startIndex += lines[i].levelCount;
+            //README, Set this if statement such that it only iterates through the lines that if done, open next set.
+            if (lines[i].isDone() && i <= 1)
+            {
+                lines[i+1].openFirstSet();
+            }
         }
+
+
+        
 
         thisLevelTotalCollectibles =
             GameObject.FindGameObjectsWithTag("Collectible").Length;
@@ -139,6 +154,7 @@ public class GameState : MonoBehaviour
             l.setCompletion(levelDones, levelsCollected, startIndex);
             startIndex += l.levelCount;
         }
+
 
     }
 

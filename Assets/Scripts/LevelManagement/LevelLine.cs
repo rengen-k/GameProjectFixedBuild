@@ -16,7 +16,7 @@ public class LevelLine : MonoBehaviour
     {
         // Say first set first level is open
 
-        sets[0].ForceOpen();
+        //sets[0].ForceOpen();
 
 
         
@@ -32,6 +32,11 @@ public class LevelLine : MonoBehaviour
     public void SetRef(string panelRef)
     {
         this.panalRef = GameObject.Find(panelRef);
+    }
+
+    public void openFirstSet()
+    {
+        sets[0].ForceOpen();
     }
 
     public void setCompletion(bool[] levelDones, bool[] levelCollectibles, int startIndex){
@@ -59,10 +64,11 @@ public class LevelLine : MonoBehaviour
             setLevelIndex++;
 
         }
+    }
 
-
-        
-
+    public bool isDone()
+    {
+        return sets[sets.GetUpperBound(0)].isDone();
     }
 }
 
