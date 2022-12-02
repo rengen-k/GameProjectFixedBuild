@@ -2,20 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VerticalRotation : AlternateTriggerable
+public class HorizontalRotation : AlternateTriggerable
 {
-    private Quaternion halfRotation = Quaternion.Euler(180, 0 , 0);
+    private bool horizontalRotation;
+    private Quaternion halfRotation = Quaternion.Euler(180, 0, 0);
     private Quaternion newRotation;
 
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void FixedUpdate()
