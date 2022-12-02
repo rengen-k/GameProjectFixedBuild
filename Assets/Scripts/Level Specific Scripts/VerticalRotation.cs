@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VerticalRotation : MonoBehaviour
+public class VerticalRotation : AlternateTriggerable
 {
-    // Start is called before the first frame update
+    private bool verticalRotation;
+    private Quaternion halfRotation = Quaternion.Euler(180, 0 , 0);
+    private Quaternion newRotation;
+
     void Start()
     {
         
@@ -14,5 +17,18 @@ public class VerticalRotation : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void FixedUpdate()
+    {
+        transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * 5);
+    }
+
+    public override void triggerAct(int function)
+    {
+        if (function == 1)
+        {
+            newRotation = transform.rotation * halfRotation;
+        }
     }
 }
