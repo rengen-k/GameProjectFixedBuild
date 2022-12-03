@@ -4,30 +4,33 @@ using UnityEngine;
 
 public class VerticalRotation : AlternateTriggerable
 {
+    private Transform horizontal;
     private Quaternion halfRotation = Quaternion.Euler(180, 0 , 0);
-    private Quaternion newRotation;
+    public Quaternion newRotation;
 
-    void Start()
+    private void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        horizontal = GameObject.Find("Horizontal").transform;
+        newRotation = Quaternion.Euler(0, 0, 0);
     }
 
     private void FixedUpdate()
     {
-        transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * 5);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, newRotation, Time.deltaTime * 220);
     }
 
     public override void triggerAct(int function)
     {
-        if (function == 1)
+        if (function == 1 && (horizontal.rotation == Quaternion.Euler(0, 0, 0) || horizontal.rotation == Quaternion.Euler(0, 180, 0) || horizontal.rotation == Quaternion.Euler(0, -180, 0)))
         {
-            newRotation = transform.rotation * halfRotation;
+            if (newRotation == halfRotation)
+            {
+                newRotation = Quaternion.Euler(0, 0, 0);
+            }
+            else
+            {
+                newRotation = halfRotation;
+            }
         }
     }
 }

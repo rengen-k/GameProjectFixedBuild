@@ -20,7 +20,7 @@ public class RubiksPieces : AlternateTriggerable
 
     private void Update()
     {
-        if (Vector3.Distance(transform.position, floatingPiece.position) < 1)
+        if (Vector3.Distance(transform.position, floatingPiece.position) < 0.1)
         {
             topRight = true;
         }
