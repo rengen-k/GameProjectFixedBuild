@@ -71,8 +71,6 @@ public class Level : MonoBehaviour
             pauseMenu.Resume();
             SceneManager.LoadScene("Level " + num.ToString());
         }
-        Debug.Log("Set not open!");
-        
     }
 
     public void SetValues(bool d, bool c)

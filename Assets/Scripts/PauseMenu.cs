@@ -40,16 +40,10 @@ public class PauseMenu : MonoBehaviour
         playerActionsScript = new PlayerActionsScript();
         playerActionsScript.Player.Enable();
         playerActionsScript.Player.Menu.performed += TriggerPause;
-        
-        //Code meant to make the panals slide in from off screen, TODO, figure out how to translate points 
-        helpPosOn = helpPanel.transform.TransformPoint(new Vector2(0f, 1950f)); //Off: local y = -2900  On, local y = -950
-        helpPosOff = helpPanel.transform.TransformPoint(new Vector2(0f, 0f));
-        levelsPosOn = levelPanel.transform.TransformPoint(new Vector2(0f, -2000f));
-        levelsPosOff = levelPanel.transform.TransformPoint(new Vector2(0f, 0f));
-
 
         int diff = GameObject.Find("GlobalGameState").GetComponent<GameState>().GetDifficulty();
         GameObject diffText = GameObject.Find("Diff Text");
+
         TMP_Text texty = diffText.GetComponent<TextMeshProUGUI>();
         if (diff == 0)
         {
@@ -68,7 +62,6 @@ public class PauseMenu : MonoBehaviour
     void Start(){
         
         firstTime = true;
-
         GameObject title = GameObject.Find("Level Title");
         TMP_Text texty = title.GetComponent<TextMeshProUGUI>();
         texty.text = "Level " + Int32.Parse(SceneManager.GetActiveScene().name.Split(" ")[1]);
