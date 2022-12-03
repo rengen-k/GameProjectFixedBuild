@@ -237,6 +237,18 @@ public class GameState : MonoBehaviour
         else
             Debug.LogError("There is no save data!");
         }
+
+    public void DeleteSave()
+    {
+        if (File.Exists(Application.persistentDataPath + "/Save.dat"))
+        {
+            File.Delete(Application.persistentDataPath + "/Save.dat");
+        }
+        else
+        {
+            Debug.Log("No save detected");
+        }
+    }
     
 }
 
