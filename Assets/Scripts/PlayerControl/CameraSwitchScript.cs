@@ -44,6 +44,11 @@ public class CameraSwitchScript : MonoBehaviour
         return cameraPos;
     }
 
+    public void PlayCamera(string virtualCam)
+    {
+        animator.Play(virtualCam);
+    }
+
     public void returnToPos()
     {
         // After blending to a cutscene camera, call this to return to the camera before the cutscene occured.

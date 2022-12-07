@@ -30,7 +30,7 @@ public class MultiSwitchDoor : Triggerable
 
     private CinemachineBrain cam;
     private PlayerController pc;
-    private Animator animator;
+    private CameraSwitchScript animator;
 
 
     void Start()
@@ -40,7 +40,7 @@ public class MultiSwitchDoor : Triggerable
 
         cam = GameObject.Find("Main Camera").GetComponent<CinemachineBrain>();
         pc = GameObject.Find("Player").GetComponent<PlayerController>();
-        animator = GameObject.Find("StateDrivenCamera").GetComponent<Animator>();
+        animator = GameObject.Find("StateDrivenCamera").GetComponent<CameraSwitchScript>();
     }
 
     void Update()
@@ -71,7 +71,7 @@ public class MultiSwitchDoor : Triggerable
             {
                 pauseMovement = false;
                 pc.Enable();
-                GameObject.Find("StateDrivenCamera").GetComponent<CameraSwitchScript>().returnToPos();
+                animator.returnToPos();
             }
             if (setOpen && !pauseMovement)
             {
@@ -91,7 +91,7 @@ public class MultiSwitchDoor : Triggerable
             pauseMovement = true;
             blending = true;
 
-            animator.Play("DoorCam");
+            animator.PlayCamera("DoorCam");
 
         }
     }
@@ -104,7 +104,7 @@ public class MultiSwitchDoor : Triggerable
             setOpen = false;
             pauseMovement = true;
             blending = true;
-            animator.Play("DoorCam");
+            animator.PlayCamera("DoorCam");
         }
     }
 }
