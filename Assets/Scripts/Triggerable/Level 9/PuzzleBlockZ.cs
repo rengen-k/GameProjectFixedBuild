@@ -7,7 +7,7 @@ using UnityEngine;
 //-----------------------------------------//
 // The Second Puzzle piece to be manipulated by a button in level 9
 
-public class PuzzleBlock1 : Triggerable
+public class PuzzleBlockZ : Triggerable
 {
     private bool isTrigger = true;
     private bool rotate = false;
@@ -15,13 +15,13 @@ public class PuzzleBlock1 : Triggerable
     
     void Start()
     {
-        nextRotation = transform.rotation * Quaternion.Euler(0, 90, 0);
+        nextRotation = transform.rotation * Quaternion.Euler(0, 0, 90);
     }
 
     void Update()
     {
         if (rotate) {
-            transform.rotation = Quaternion.Slerp(transform.rotation, nextRotation, Time.deltaTime * 8);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, nextRotation, Time.deltaTime * 220);
             if (transform.rotation == nextRotation) {
                 rotate = false;
             }
@@ -34,9 +34,9 @@ public class PuzzleBlock1 : Triggerable
             isTrigger = false;
             Debug.Log("rotate");
             if (rotate) {
-                nextRotation = nextRotation * Quaternion.Euler(0, 90, 0);
+                nextRotation = nextRotation * Quaternion.Euler(0, 0, 90);
             } else {
-                nextRotation = transform.rotation * Quaternion.Euler(0, 90, 0);
+                nextRotation = transform.rotation * Quaternion.Euler(0, 0, 90);
             }
             rotate = true;
         }
