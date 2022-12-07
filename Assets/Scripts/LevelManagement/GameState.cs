@@ -1,10 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
 
 
 //-----------------------------------------//
@@ -23,16 +26,14 @@ public class GameState : MonoBehaviour
         hard
     }
 
-    // Data that needs to be saved
-
     [SerializeField] private Difficulty diff;
-
+    
     //Level completion management
     // Set range to (0, X+1) where X is the number of levels
     private static int [] levelList = Enumerable.Range(0, 21).ToArray();
     private bool [] levelDones;
+    
     // Reference Array to each LevelLine Object, automatically generated.
-
     // Data that is generated as needed.
     private LevelLine [] lines;
 
@@ -66,8 +67,12 @@ public class GameState : MonoBehaviour
             DontDestroyOnLoad(transform.gameObject);
             instance = this;
             SetUp();
-            ResetSingleton();
-            UpdateLevelLines();
+            if (SceneManager.GetActiveScene().name != "DemoStart")
+            {
+                ResetSingleton();
+                UpdateLevelLines();
+            }
+            
         }
         //lines[0].debugShout();
 
@@ -155,6 +160,8 @@ public class GameState : MonoBehaviour
             startIndex += l.levelCount;
         }
 
+        SaveGame();
+
 
     }
 
@@ -198,6 +205,58 @@ public class GameState : MonoBehaviour
         return (int) diff;
     }
 
+    public void SaveGame()
+    {
+        BinaryFormatter bf = new BinaryFormatter(); 
+        FileStream file = File.Create(Application.persistentDataPath 
+                    + "/Save.dat"); 
+        SaveData data = new SaveData();
+        data.levelDones = levelDones;
+        data.levelsCollected = levelsCollected;
+        data.totalCollectibles = totalCollectibles;
+        bf.Serialize(file, data);
+        file.Close();
+        Debug.Log("Game saved!");
+    }
 
+    public void LoadGame()
+    {
+        if (File.Exists(Application.persistentDataPath + "/Save.dat"))
+	    {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = 
+                    File.Open(Application.persistentDataPath 
+                    + "/Save.dat", FileMode.Open);
+            SaveData data = (SaveData)bf.Deserialize(file);
+            file.Close();
+            levelDones = data.levelDones;
+            levelsCollected = data.levelsCollected;
+            totalCollectibles = data.totalCollectibles;
+            Debug.Log("Game loaded!");
+        }
+        else
+            Debug.LogError("There is no save data!");
+        }
+
+    public void DeleteSave()
+    {
+        if (File.Exists(Application.persistentDataPath + "/Save.dat"))
+        {
+            File.Delete(Application.persistentDataPath + "/Save.dat");
+        }
+        else
+        {
+            Debug.Log("No save detected");
+        }
+    }
     
+}
+
+// Saved Data
+[Serializable]
+class SaveData
+{
+    public bool [] levelDones;
+    public bool [] levelsCollected;
+    public int totalCollectibles = 0;
 }

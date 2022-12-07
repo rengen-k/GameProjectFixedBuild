@@ -104,6 +104,7 @@ public class PlayerController : MonoBehaviour
     {
         Rb = GetComponent<Rigidbody>();
         checkpoint = transform.position;
+        camScript = GameObject.Find("StateDrivenCamera").GetComponent<CameraSwitchScript>();
         InitMovement();
         ConfigureGroundCheckAndRadius();
     }
