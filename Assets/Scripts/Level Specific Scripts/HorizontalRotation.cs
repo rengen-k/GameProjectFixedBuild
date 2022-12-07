@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HorizontalRotation : AlternateTriggerable
 {
+    // used in level 20 to rotate blocks "horizontally"
     private Transform vertical;
     private Quaternion halfRotation = Quaternion.Euler(0, 180, 0);
     public Quaternion newRotation;
@@ -19,6 +20,7 @@ public class HorizontalRotation : AlternateTriggerable
         transform.rotation = Quaternion.RotateTowards(transform.rotation, newRotation, Time.deltaTime * 220);
     }
 
+    // when button is pressed, newRotation is set to either 0 or 180 degrees which is then used above to rotate blocks
     public override void triggerAct(int function)
     {
         if (function == 2 && (vertical.gameObject.transform.rotation == Quaternion.Euler(0, 0, 0) || vertical.gameObject.transform.rotation == Quaternion.Euler(180, 0, 0) || vertical.gameObject.transform.rotation == Quaternion.Euler(-180, 0, 0)))

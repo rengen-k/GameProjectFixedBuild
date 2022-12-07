@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DisappearingPlatforms : Triggerable
 {
+    // platforms with this script are visible only when a button is pressed
+
     private MeshRenderer meshRenderer;
 
     void Start()

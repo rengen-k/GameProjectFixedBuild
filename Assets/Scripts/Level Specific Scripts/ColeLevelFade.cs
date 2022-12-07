@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class ColeLevelFade : MonoBehaviour
 {
+    /* this script is only used for level 20 because the normal object fader script only fades objects directly on the
+    path from the player to the camera which doesn't account for the large complicated blocks of level 20 that inhibit
+    vision on certain sides of other blocks */
+
     private Transform player;
     private CameraSwitchScript cameraSwitchScript;
     public bool faded;
@@ -17,6 +21,7 @@ public class ColeLevelFade : MonoBehaviour
 
     private void Update()
     {
+        // fades one entire block of the level depending on where the player is and what camera is active
         if (player.position.x < 34 && player.position.y > 8 && cameraSwitchScript.cameraPos == 1)
         {
             if (transform.position.x > 34 && transform.position.y > 8)
@@ -49,12 +54,9 @@ public class ColeLevelFade : MonoBehaviour
         {
             Unfade();
         }
-        //else
-        //{
-        //    Unfade();
-        //}
     }
 
+    // same as the method in ObjectFader.cs
     public void Fade()
     {
         faded = true;
@@ -71,6 +73,7 @@ public class ColeLevelFade : MonoBehaviour
         }
     }
 
+    // same as the method in ObjectFader.cs
     private void Unfade()
     {
         Renderer objectRenderer = GetComponent<Renderer>();

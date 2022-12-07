@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// same as Button.cs except triggers only AlternateTriggerable object
 public class AlternateButton : MonoBehaviour
 {
-    // Start is called before the first frame update
-
     //set this to true in unity editor to indicate button will not rise when nothing pushes it.
     [Tooltip("Boolean expessing if the button will not spring back when nothing holds it down.")]
     public bool isStuck = false;
@@ -19,6 +18,7 @@ public class AlternateButton : MonoBehaviour
     [Tooltip("Whether or not the player can push the button down with themselves, if true, have to use an object to press it down.")]
     [SerializeField] bool playnt;
 
+    // allows you pass in an int so triggerable objects know what button has triggered them
     [SerializeField] private int functionNumber;
 
     void Start()
@@ -30,7 +30,6 @@ public class AlternateButton : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -46,7 +45,6 @@ public class AlternateButton : MonoBehaviour
                 return;
             }
         }
-        //Debug.Log("Trigger triggered!" + other.name);
         foreach (AlternateTriggerable t in trigger)
         {
             t.triggerAct(functionNumber);
