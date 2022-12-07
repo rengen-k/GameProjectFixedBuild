@@ -7,7 +7,7 @@ using UnityEngine;
 //-----------------------------------------//
 // The Second Puzzle piece to be manipulated by a button in level 9
 
-public class PuzzleBlock1 : Triggerable
+public class PuzzleBlockY : Triggerable
 {
     private bool isTrigger = true;
     private bool rotate = false;

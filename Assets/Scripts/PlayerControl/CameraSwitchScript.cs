@@ -14,6 +14,7 @@ public class CameraSwitchScript : MonoBehaviour
     [SerializeField] private InputAction action;
 
     public int cameraPos = 0;
+    private bool canTurn = true;
 
     private Animator animator;
 
@@ -26,6 +27,10 @@ public class CameraSwitchScript : MonoBehaviour
     public int SwitchState(int direction)
     {
         //Change which virtual cam main camera will go.
+        if (!canTurn)
+        {
+            return cameraPos;
+        }
 
         //direction is either -1 or 1, indicating whether we are going left or right.
         string[] views = {"0Angle","270Angle","180Angle","90Angle"};
@@ -44,5 +49,17 @@ public class CameraSwitchScript : MonoBehaviour
         // After blending to a cutscene camera, call this to return to the camera before the cutscene occured.
         string[] views = {"0Angle","270Angle","180Angle","90Angle"};
         animator.Play(views[cameraPos]);
+    }
+
+    public void PauseTurn()
+    {
+        canTurn = false;
+        animator.Play("ViewCam");
+    }
+
+    public void UnpauseTurn()
+    {
+        canTurn = true;
+        returnToPos();
     }
 }

@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 public class Bomb : MonoBehaviour
 {
+    
     [Tooltip("Values that decide bombs explosion properties.")]
     public float delay;
     [Tooltip("Values that decide bombs explosion properties.")]
@@ -22,12 +23,15 @@ public class Bomb : MonoBehaviour
     public bool hasExploded = false;
     PickupItem pickupScript;
     public Transform respawnPoint;
+    private Vector3 originalPos;
 
     private Rigidbody rb;
 
     [Tooltip("References prefab that will spawn to simulate explosion")]
     [SerializeField] private GameObject explosion;
     private GameObject timer;
+
+
 
     private void Awake()
     {
@@ -38,6 +42,7 @@ public class Bomb : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         timer.transform.parent.GetComponent<Canvas>().worldCamera = GameObject.Find("UICamera").GetComponent<Camera>();
+        originalPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.1f, gameObject.transform.position.z);
     }
 
     private void OnEnable()
@@ -104,7 +109,8 @@ public class Bomb : MonoBehaviour
     private void ResetBomb()
     {
         gameObject.SetActive(false);
-        transform.position = respawnPoint.position;
+        // transform.position = respawnPoint.position;
+        transform.position = originalPos; // respawns at original position
         gameObject.SetActive(true);
         hasExploded = false;
         timer.GetComponent<Image>().fillAmount = 1;
@@ -117,5 +123,7 @@ public class Bomb : MonoBehaviour
             rb.velocity = new Vector3(0.0f, 0.0f, 0.0f);
             ResetBomb();
         }
+
     }
+
 }
