@@ -27,15 +27,11 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float followSpeed;
     [SerializeField] private float followPlayerDist;
 
-    // respawn point default
-    private Vector3 originalPos;
-
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.Find("Player").transform;
         originalSpeed = agent.speed;
-        originalPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.1f, gameObject.transform.position.z);
         UpdateDestination();
     }
 
@@ -80,11 +76,7 @@ public class EnemyAI : MonoBehaviour
 
     public void Respawn()
     {
-        if (respawnPoint == null) {
-            transform.position = originalPos;
-        } else {
-            transform.position = respawnPoint.position;
-        }
+        transform.position = respawnPoint.position;
     }
 
     private void OnCollisionEnter(Collision collision)
