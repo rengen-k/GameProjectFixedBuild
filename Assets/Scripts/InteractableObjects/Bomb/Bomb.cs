@@ -22,6 +22,7 @@ public class Bomb : MonoBehaviour
     public bool hasExploded = false;
     PickupItem pickupScript;
     public Transform respawnPoint;
+    private Vector3 respawnPos;
 
     private Rigidbody rb;
 
@@ -38,6 +39,7 @@ public class Bomb : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         timer.transform.parent.GetComponent<Canvas>().worldCamera = GameObject.Find("UICamera").GetComponent<Camera>();
+        respawnPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.1f, gameObject.transform.position.z);
     }
 
     private void OnEnable()
@@ -104,7 +106,8 @@ public class Bomb : MonoBehaviour
     private void ResetBomb()
     {
         gameObject.SetActive(false);
-        transform.position = respawnPoint.position;
+        // transform.position = respawnPoint.position;
+        transform.position = respawnPos;
         gameObject.SetActive(true);
         hasExploded = false;
         timer.GetComponent<Image>().fillAmount = 1;
