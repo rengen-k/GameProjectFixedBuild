@@ -40,18 +40,19 @@ public class PuzzleBlockZ : Triggerable
 
     void Update()
     {
-        if (rotate) {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, nextRotationQuaternion, Time.deltaTime * 40000.0f);
+
+    }
+
+    void FixedUpdate() {
+        // Quaternion deltaRotation = Quaternion.Euler(m_EulerAngleVelocity * Time.fixedDeltaTime);
+        // rb.MoveRotation(rb.rotation * deltaRotation);
+            if (rotate) {
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, nextRotationQuaternion, Time.deltaTime * 40000.0f);
             if (transform.rotation == nextRotationQuaternion) {
                 rotate = false;
             }
         }
     }
-
-    // void FixedUpdate() {
-    //     Quaternion deltaRotation = Quaternion.Euler(m_EulerAngleVelocity * Time.fixedDeltaTime);
-    //     rb.MoveRotation(rb.rotation * deltaRotation);
-    // }
 
     public override void triggerAct()
     {
