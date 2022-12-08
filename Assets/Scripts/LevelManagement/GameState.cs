@@ -118,7 +118,7 @@ public class GameState : MonoBehaviour
         lines[0].sets[0].ForceOpen();
         lines[1].sets[0].ForceOpen();
         //handles the bonus levels opening.
-        if (totalCollectibles >= 5)
+        if (totalCollectibles >= 0)
         {
             lines[3].sets[0].ForceOpen();
         }
