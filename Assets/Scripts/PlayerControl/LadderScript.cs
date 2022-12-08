@@ -76,22 +76,23 @@ public class LadderScript : MonoBehaviour
             // checks each ladder nearby and correctly snaps the player to it
             foreach (Collider ladder in ladders)
             {
-                if (ladder.transform.rotation == Quaternion.Euler(0, 0, 0) && transform.position.x < ladder.transform.position.x)
+                Debug.Log(ladder + " rotation: " + ladder.transform.rotation.eulerAngles.y);
+                if ((ladder.transform.rotation.eulerAngles.y > -0.01 && ladder.transform.rotation.eulerAngles.y < 0.01) && transform.position.x < ladder.transform.position.x)
                 {
                     tempPos.x = ladder.transform.position.x - offset;
                     transform.position = Vector3.SmoothDamp(transform.position, tempPos, ref velocity, smoothTime);
                 }
-                else if (ladder.transform.rotation == Quaternion.Euler(0, 90, 0) && transform.position.z < ladder.transform.position.z)
+                else if ((ladder.transform.rotation.eulerAngles.y > 89.99 && ladder.transform.rotation.eulerAngles.y < 90.01) && transform.position.z < ladder.transform.position.z)
                 {
                     tempPos.z = ladder.transform.position.z - offset;
                     transform.position = Vector3.SmoothDamp(transform.position, tempPos, ref velocity, smoothTime);
                 }
-                else if (ladder.transform.rotation == Quaternion.Euler(0, 180, 0) && transform.position.x > ladder.transform.position.x)
+                else if ((ladder.transform.rotation.eulerAngles.y > 179.99 && ladder.transform.rotation.eulerAngles.y < 180.01) && transform.position.x > ladder.transform.position.x)
                 {
                     tempPos.x = ladder.transform.position.x + offset;
                     transform.position = Vector3.SmoothDamp(transform.position, tempPos, ref velocity, smoothTime);
                 }
-                else if (ladder.transform.rotation == Quaternion.Euler(0, -90, 0) && transform.position.z > ladder.transform.position.z)
+                else if (((ladder.transform.rotation.eulerAngles.y > -90.01 && ladder.transform.rotation.eulerAngles.y < -89.99) || (ladder.transform.rotation.eulerAngles.y > 269.99 && ladder.transform.rotation.eulerAngles.y < 270.01)) && transform.position.z > ladder.transform.position.z)
                 {
                     tempPos.z = ladder.transform.position.z + offset;
                     transform.position = Vector3.SmoothDamp(transform.position, tempPos, ref velocity, smoothTime);
