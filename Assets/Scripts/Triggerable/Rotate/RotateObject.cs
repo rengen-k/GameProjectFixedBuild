@@ -13,25 +13,21 @@ public class PuzzleBlockZ : Triggerable
     private bool rotate = false;
     private Quaternion nextRotationQuaternion;
     private Vector3 nextRotationVector;
-    [SerializeField] private float nextRotationAmount;
+    [SerializeField] private float RotationAmount;
     [SerializeField] private string axis;
-    private Rigidbody rb;
-    private Vector3 m_EulerAngleVelocity;
     
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        m_EulerAngleVelocity = new Vector3(0, 0, 100);
         switch (axis)
         {
             case "x":
-                nextRotationVector = new Vector3(nextRotationAmount, 0, 0);
+                nextRotationVector = new Vector3(RotationAmount, 0, 0);
                 break;
             case "y":
-                nextRotationVector = new Vector3(0, nextRotationAmount, 0);
+                nextRotationVector = new Vector3(0, RotationAmount, 0);
                 break;
             case "z":
-                nextRotationVector = new Vector3(0, 0, nextRotationAmount);
+                nextRotationVector = new Vector3(0, 0, RotationAmount);
                 break;
         }
 
@@ -46,8 +42,8 @@ public class PuzzleBlockZ : Triggerable
     void FixedUpdate() {
         // Quaternion deltaRotation = Quaternion.Euler(m_EulerAngleVelocity * Time.fixedDeltaTime);
         // rb.MoveRotation(rb.rotation * deltaRotation);
-            if (rotate) {
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, nextRotationQuaternion, Time.deltaTime * 40000.0f);
+        if (rotate) {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, nextRotationQuaternion, Time.deltaTime * 40000.0f);
             if (transform.rotation == nextRotationQuaternion) {
                 rotate = false;
             }
