@@ -100,5 +100,8 @@ public class DialogueManager : MonoBehaviour
     public void Talk(InputAction.CallbackContext context)
     {
         talkPressed = true;
+        // if (!currentStory.canContinue) {
+        //     ExitDialogueMode();
+        // }
     }
 }

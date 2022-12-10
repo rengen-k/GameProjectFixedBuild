@@ -5,14 +5,14 @@ using UnityEngine.InputSystem;
 
 public class KeyDoorTrigger : MonoBehaviour
 {
-    [Header("Visual Cue")]
-    [SerializeField] private GameObject visualCue;
-    private PlayerActionsScript playerActionsScript;
-    private bool talkPressed;
-    [SerializeField] private TextAsset inkJSON;
+    // [Header("Visual Cue")]
+    // [SerializeField] private GameObject visualCue;
+    // private PlayerActionsScript playerActionsScript;
+    // private bool talkPressed;
+    // [SerializeField] private TextAsset inkJSON;
     [SerializeField] private Key.KeyType keyType;
     private GameObject parent;
-    private bool playerInRange;
+    // private bool playerInRange;
 
     public Key.KeyType GetKeyType()
     {

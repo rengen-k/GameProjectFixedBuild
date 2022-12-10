@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,12 +7,16 @@ using UnityEngine.InputSystem;
 
 public class KeyHolder : MonoBehaviour
 {
+    public event EventHandler OnKeysChanged;
     private List<Key.KeyType> keyList;
     private PlayerActionsScript playerActionsScript;
     private bool nearDoor = false;
     private KeyDoorTrigger keyDoor;
 
-    // Start is called before the first frame update
+    public List<Key.KeyType> GetKeyList()
+    {
+        return keyList;
+    }
 
     private void OnEnable()
     {
@@ -43,11 +48,14 @@ public class KeyHolder : MonoBehaviour
     public void AddKey(Key.KeyType keyType)
     {
         keyList.Add(keyType);
+        OnKeysChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public void RemoveKey(Key.KeyType keyType)
     {
         keyList.Remove(keyType);
+        OnKeysChanged?.Invoke(this, EventArgs.Empty);
+
     }
 
     public bool ContainsKey(Key.KeyType keyType)
@@ -67,6 +75,7 @@ public class KeyHolder : MonoBehaviour
         if (keyDoor != null)
         {
             nearDoor = true;
+            // uncomment this if you want the door to auto open when you touch the trigger
             // if (ContainsKey(keyDoor.GetKeyType()))
             // {
             //     RemoveKey(keyDoor.GetKeyType())
@@ -77,6 +86,7 @@ public class KeyHolder : MonoBehaviour
         }
     }
 
+    // comment this out if you want the door to auto open when you touch the trigger
     public void Interact(InputAction.CallbackContext context)
     {
         if (!nearDoor) {
