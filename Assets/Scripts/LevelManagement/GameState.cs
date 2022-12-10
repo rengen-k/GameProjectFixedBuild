@@ -118,10 +118,9 @@ public class GameState : MonoBehaviour
         lines[0].sets[0].ForceOpen();
         lines[1].sets[0].ForceOpen();
         //handles the bonus levels opening.
-        if (totalCollectibles >= 0)
-        {
-            lines[3].sets[0].ForceOpen();
-        }
+        
+        
+        
         for (int i = 0; i < lines.Length; i++)
         {
             lines[i].setCompletion(levelDones, levelsCollected, startIndex);
@@ -133,8 +132,19 @@ public class GameState : MonoBehaviour
             }
         }
 
-
-        
+        if (totalCollectibles >= 5 || lines[0].isDone())
+        {
+            lines[3].sets[0].ForceOpen();
+        }
+        if (totalCollectibles >= 10 || lines[1].isDone())
+        {
+            lines[3].sets[1].ForceOpen();
+        }
+        if (totalCollectibles >= 15 || lines[2].isDone())
+        {
+            lines[3].sets[2].ForceOpen();
+        }
+        lines[3].setCompletion(levelDones, levelsCollected, 18);
 
         thisLevelTotalCollectibles =
             GameObject.FindGameObjectsWithTag("Collectible").Length;
