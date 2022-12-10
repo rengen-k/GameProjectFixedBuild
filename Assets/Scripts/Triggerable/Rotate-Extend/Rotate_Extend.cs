@@ -32,7 +32,8 @@ public class Rotate_Extend : Triggerable
 
     private float faceExtendAmount = 4.0f;
 
-    private float retractAndExtendSpeed = 6.0f;
+    private float retractAndExtendSpeed = 7.0f;
+
 
 
     void Start()
@@ -65,7 +66,7 @@ public class Rotate_Extend : Triggerable
             Vector3 originalPos = new Vector3(face0.position.x, face0.position.y, 0.0f);
             face0.position = Vector3.MoveTowards(face0.position, originalPos, retractAndExtendSpeed * Time.deltaTime);
             face1.position = Vector3.MoveTowards(face1.position, originalPos, retractAndExtendSpeed * Time.deltaTime);
-            if (face0.position.z == 0.0f && face1.position.z == 0.0f) {
+            if (face0.position.z == 0.0f || face1.position.z == 0.0f) {
                 isRetract = false;
                 isRotate = true;
             }
@@ -84,8 +85,8 @@ public class Rotate_Extend : Triggerable
 
         if (isExtend) {
             Debug.Log("Extend");
-            Vector3 originalPos0 = new Vector3(face0.position.x, face0.position.y, -4.0f);
-            Vector3 originalPos1 = new Vector3(face1.position.x, face1.position.y, 4.0f);
+            Vector3 originalPos0 = new Vector3(face0.position.x, face0.position.y, -faceExtendAmount);
+            Vector3 originalPos1 = new Vector3(face1.position.x, face1.position.y, faceExtendAmount);
 
             face0.position = Vector3.MoveTowards(face0.position, originalPos0, retractAndExtendSpeed * Time.deltaTime);
             face1.position = Vector3.MoveTowards(face1.position, originalPos1, retractAndExtendSpeed * Time.deltaTime);
@@ -143,7 +144,7 @@ public class Rotate_Extend : Triggerable
         if (isExtend || isRetract || isRotate) {
             return;
         }
-        
+
         isTrigger = false;
         Debug.Log("rotate");
         nextRotationQuaternion = lensPiece.rotation * Quaternion.Euler(nextRotationVector);
