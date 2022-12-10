@@ -28,8 +28,6 @@ public class DialogueTrigger : MonoBehaviour
     private void ConfigPlayerInput() 
     {
         playerActionsScript.Player.Talk.performed += Talk;
-        // playerActionsScript.Player.Interact.canceled += Interact;
-
     }
 
     private void Awake()
@@ -100,4 +98,5 @@ public class DialogueTrigger : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         playerActionsScript.Player.Enable();
     }
+    
 }
