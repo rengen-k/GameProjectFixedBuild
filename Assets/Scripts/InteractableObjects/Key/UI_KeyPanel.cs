@@ -38,7 +38,7 @@ public class UI_KeyPanel : MonoBehaviour
         {
             Key.KeyType keyType = keyList[i];
             Transform keyTransform = Instantiate(keyTemplate, container);
-            keyTemplate.gameObject.SetActive(true);
+            keyTransform.gameObject.SetActive(true);
             keyTransform.GetComponent<RectTransform>().anchoredPosition = new Vector2(100 * i, 0);
             Image keyImage = keyTransform.Find("Image").GetComponent<Image>();
             switch (keyType) {

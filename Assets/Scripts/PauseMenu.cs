@@ -21,6 +21,8 @@ public class PauseMenu : MonoBehaviour
     private GameObject PauseMenuUI;
     private GameObject helpPanel;
     private GameObject levelPanel;
+    private GameObject KeyPanel;
+    private GameObject DialoguePanel;
 
     private Vector2 helpPosOn;
     private Vector2 helpPosOff;
@@ -36,6 +38,10 @@ public class PauseMenu : MonoBehaviour
         PauseMenuUI = transform.Find("PauseMenu").gameObject;
         helpPanel = transform.Find("PauseMenu/HelpScreen").gameObject;
         levelPanel = transform.Find("PauseMenu/LevelScreen").gameObject;
+        KeyPanel = transform.Find("KeyPanel").gameObject;
+        DialoguePanel = transform.Find("KeyPanel").gameObject;
+
+
 
         playerActionsScript = new PlayerActionsScript();
         playerActionsScript.Player.Enable();
@@ -117,6 +123,9 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         PauseMenuUI.SetActive(false);
+        KeyPanel.SetActive(true);
+        DialoguePanel.SetActive(true);
+
         Time.timeScale = 1f;
         GamePaused = false;
         GameObject.Find("Player").GetComponent<PlayerController>().MenuIncreaseHealth();
@@ -133,6 +142,9 @@ public class PauseMenu : MonoBehaviour
     void Pause()
     {
         PauseMenuUI.SetActive(true);
+        KeyPanel.SetActive(false);
+        DialoguePanel.SetActive(false);
+
         Time.timeScale = 0f;
         GamePaused = true;
         
