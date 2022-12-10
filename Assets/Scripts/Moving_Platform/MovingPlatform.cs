@@ -60,11 +60,15 @@ public class MovingPlatform : MonoBehaviour
     // Make an object a child whenever it is on the platform
     private void OnTriggerEnter(Collider other)
     {
-        other.transform.SetParent(transform);
+        if (other.gameObject.tag == "Player") {
+            other.transform.SetParent(transform);
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        other.transform.SetParent(null);
+        if (other.gameObject.tag == "Player") {
+            other.transform.SetParent(null);
+        }
     }
 }
