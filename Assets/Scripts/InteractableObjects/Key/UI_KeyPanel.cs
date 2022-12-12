@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class UI_KeyPanel : MonoBehaviour
 {
-    [SerializeField] private KeyHolder keyHolder;
+    // [SerializeField] private KeyHolder keyHolder;
+    private KeyHolder keyHolder;
+
     private Transform container;
     private Transform keyTemplate;
 
@@ -14,6 +16,7 @@ public class UI_KeyPanel : MonoBehaviour
         container = transform.Find("Container");
         keyTemplate = container.Find("KeyTemplate");
         keyTemplate.gameObject.SetActive(false);
+        keyHolder = GameObject.Find("Player").GetComponent<KeyHolder>();
     }
 
     private void Start() {
