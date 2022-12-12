@@ -68,7 +68,9 @@ public class Level : MonoBehaviour
     public void OpenScene()
     {   
         if (parentSet.isOpen()){
-            pauseMenu.Resume();
+            if (SceneManager.GetActiveScene().name != "LevelSelector"){
+                pauseMenu.Resume();
+            }
             SceneManager.LoadScene("Level " + num.ToString());
         }
     }
