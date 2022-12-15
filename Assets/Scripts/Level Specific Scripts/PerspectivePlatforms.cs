@@ -16,6 +16,7 @@ public class PerspectivePlatforms : MonoBehaviour
     [SerializeField] private float tower1;
     [SerializeField] private float tower2;
     [SerializeField] private float tower3;
+    private bool onBlock;
 
     private void Start()
     {
@@ -26,7 +27,7 @@ public class PerspectivePlatforms : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!tower)
+        if (!tower && !onBlock)
         {
             if (camScript.cameraPos == 0 || camScript.cameraPos == 2)
             {
@@ -70,6 +71,15 @@ public class PerspectivePlatforms : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             collision.gameObject.transform.SetParent(transform);
+            onBlock = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            onBlock = false;
         }
     }
 }
