@@ -56,6 +56,16 @@ public class PerspectivePlatformLocal : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             collision.gameObject.transform.SetParent(transform);
+            PerspectivePlatforms.onBlock = true;
         }
     }
+
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "Player")
+    //    {
+    //        collision.gameObject.transform.parent = null;
+    //        PerspectivePlatforms.onBlock = false;
+    //    }
+    //}
 }

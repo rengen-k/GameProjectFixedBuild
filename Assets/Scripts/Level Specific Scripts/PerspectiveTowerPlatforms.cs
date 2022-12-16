@@ -18,7 +18,6 @@ public class PerspectiveTowerPlatforms : MonoBehaviour
     private bool camChange;
     private float lastCamPos = 0;
     private Vector3 playerLocalPos;
-    private static bool onBlock;
 
     private void Start()
     {
@@ -56,6 +55,15 @@ public class PerspectiveTowerPlatforms : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             collision.gameObject.transform.SetParent(transform);
+            PerspectivePlatforms.onBlock = false;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.transform.parent = null;
         }
     }
 }

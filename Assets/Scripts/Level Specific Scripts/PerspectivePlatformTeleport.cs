@@ -76,6 +76,7 @@ public class PerspectivePlatformTeleport : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             collision.gameObject.transform.SetParent(transform);
+            PerspectivePlatforms.onBlock = false;
         }
     }
 
@@ -89,11 +90,12 @@ public class PerspectivePlatformTeleport : MonoBehaviour
 
     private IEnumerator moveToStart()
     {
+        //playerLocalPos = player.localPosition;
         while (Vector3.Distance(transform.localPosition, originalPos) > 0.01)
         {
             backToStart = false;
             transform.localPosition = Vector3.SmoothDamp(transform.localPosition, originalPos, ref velocity, smoothTime);
-            Debug.Log("Moving to start");
+            //player.localPosition = playerLocalPos;
             yield return null;
         }
         backToStart = true;
