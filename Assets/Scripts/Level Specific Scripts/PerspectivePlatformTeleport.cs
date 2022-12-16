@@ -8,7 +8,7 @@ public class PerspectivePlatformTeleport : MonoBehaviour
     private Transform player;
     private CameraSwitchScript camScript;
     private Vector3 target;
-    private float smoothTime = 0.2f;
+    private float smoothTime = 0.1f;
     private Vector3 velocity = Vector3.zero;
     private Vector3 originalPos;
     [SerializeField] private float tower0;
@@ -19,6 +19,7 @@ public class PerspectivePlatformTeleport : MonoBehaviour
     private float lastCamPos = 0;
     private Vector3 playerLocalPos;
     private static bool onBlock;
+    private bool backToStart = true;
 
     private void Start()
     {
@@ -47,22 +48,23 @@ public class PerspectivePlatformTeleport : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (camScript.cameraPos == 0)
+        if (camScript.cameraPos == 0 && backToStart)
         {
             target = new Vector3(originalPos.x, originalPos.y, tower0);
             transform.localPosition = Vector3.SmoothDamp(transform.localPosition, target, ref velocity, smoothTime);
         }
-        else if (camScript.cameraPos == 1)
+        else if (camScript.cameraPos == 1 && backToStart)
         {
             target = new Vector3(tower1, originalPos.y, originalPos.z);
             transform.localPosition = Vector3.SmoothDamp(transform.localPosition, target, ref velocity, smoothTime);
         }
-        else if (camScript.cameraPos == 2)
+        else if (camScript.cameraPos == 2 && backToStart)
         {
             target = new Vector3(originalPos.x, originalPos.y, tower2);
             transform.localPosition = Vector3.SmoothDamp(transform.localPosition, target, ref velocity, smoothTime);
+            //transform.localPosition = target;
         }
-        else if (camScript.cameraPos == 3)
+        else if (camScript.cameraPos == 3 && backToStart)
         {
             target = new Vector3(tower3, originalPos.y, originalPos.z);
             transform.localPosition = Vector3.SmoothDamp(transform.localPosition, target, ref velocity, smoothTime);
@@ -77,12 +79,23 @@ public class PerspectivePlatformTeleport : MonoBehaviour
         }
     }
 
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.transform.parent = null;
+        }
+    }
+
     private IEnumerator moveToStart()
     {
         while (Vector3.Distance(transform.localPosition, originalPos) > 0.01)
         {
+            backToStart = false;
             transform.localPosition = Vector3.SmoothDamp(transform.localPosition, originalPos, ref velocity, smoothTime);
+            Debug.Log("Moving to start");
             yield return null;
         }
+        backToStart = true;
     }
 }
