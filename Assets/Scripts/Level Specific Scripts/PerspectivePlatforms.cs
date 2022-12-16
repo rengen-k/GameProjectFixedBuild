@@ -38,6 +38,7 @@ public class PerspectivePlatforms : MonoBehaviour
         {
             camChange = false;
         }
+
         if (camChange)
         {
             StartCoroutine(moveBlocks());
