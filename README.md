@@ -81,6 +81,10 @@ It is possible for the menu screen button text to become invisible during full s
 
 - Unity Particle Pack
 https://assetstore.unity.com/packages/essentials/tutorial-projects/unity-particle-pack-127325
+- Pixel Art Key
+https://drxwat.itch.io/pixel-art-key
+- Pixel Art Coin
+https://opengameart.org/content/spinning-gold-coin
 
 #### Scripts
 

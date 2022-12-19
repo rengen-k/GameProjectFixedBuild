@@ -22,6 +22,8 @@ public class PauseMenu : MonoBehaviour
     private GameObject helpPanel;
     private GameObject levelPanel;
     private GameObject KeyPanel;
+    private GameObject CollectiblePanel;
+
     private GameObject DialoguePanel;
 
     private Vector2 helpPosOn;
@@ -39,6 +41,7 @@ public class PauseMenu : MonoBehaviour
         helpPanel = transform.Find("PauseMenu/HelpScreen").gameObject;
         levelPanel = transform.Find("PauseMenu/LevelScreen").gameObject;
         KeyPanel = transform.Find("KeyPanel").gameObject;
+        CollectiblePanel = transform.Find("CollectiblePanel").gameObject;
         DialoguePanel = transform.Find("KeyPanel").gameObject;
 
 
@@ -124,6 +127,7 @@ public class PauseMenu : MonoBehaviour
     {
         PauseMenuUI.SetActive(false);
         KeyPanel.SetActive(true);
+        CollectiblePanel.SetActive(true);
         DialoguePanel.SetActive(true);
 
         Time.timeScale = 1f;
@@ -143,6 +147,7 @@ public class PauseMenu : MonoBehaviour
     {
         PauseMenuUI.SetActive(true);
         KeyPanel.SetActive(false);
+        CollectiblePanel.SetActive(false);
         DialoguePanel.SetActive(false);
 
         Time.timeScale = 0f;
