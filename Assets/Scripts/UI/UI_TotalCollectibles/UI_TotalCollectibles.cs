@@ -1,17 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
-public class UI_Collectible : MonoBehaviour
+public class UI_TotalCollectibles : MonoBehaviour
 {
-    // [SerializeField] private KeyHolder keyHolder;
-    private int collectibleNum;
     private TextMeshProUGUI collectibleText;
     private GameObject globalGameState;
-    private Transform container;
-    private Transform collectibleTemplate;
 
     private void Awake()
     {
@@ -22,6 +17,6 @@ public class UI_Collectible : MonoBehaviour
 
     private void Update()
     {
-        collectibleText.text = "" + globalGameState.GetComponent<GameState>().thisLevelCollectibles;
+        collectibleText.text = "" + globalGameState.GetComponent<GameState>().totalCollectibles;
     }
 }

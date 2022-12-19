@@ -85,6 +85,8 @@ https://assetstore.unity.com/packages/essentials/tutorial-projects/unity-particl
 https://drxwat.itch.io/pixel-art-key
 - Pixel Art Coin
 https://opengameart.org/content/spinning-gold-coin
+- Pixel Art Pile of Coins
+https://www.newgrounds.com/art/view/flexviper/gold-coins-pixel-art
 
 #### Scripts
 
