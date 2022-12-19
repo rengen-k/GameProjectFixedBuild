@@ -17,6 +17,6 @@ public class UI_TotalCollectibles : MonoBehaviour
 
     private void Update()
     {
-        collectibleText.text = "" + globalGameState.GetComponent<GameState>().totalCollectibles;
+        collectibleText.text = globalGameState.GetComponent<GameState>().totalCollectibles.ToString();
     }
 }

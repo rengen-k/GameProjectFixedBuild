@@ -18,6 +18,6 @@ public class UI_Collectible : MonoBehaviour
 
     private void Update()
     {
-        collectibleText.text = "" + globalGameState.GetComponent<GameState>().thisLevelCollectibles;
+        collectibleText.text = globalGameState.GetComponent<GameState>().thisLevelCollectibles.ToString();
     }
 }
