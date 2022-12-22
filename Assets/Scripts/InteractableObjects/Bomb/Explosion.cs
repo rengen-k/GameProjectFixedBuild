@@ -7,7 +7,7 @@ using UnityEngine;
 //-----------------------------------------//
 // Attached to sphere to make sphere prefab simulate explosion.
 
-[RequireComponent(typeof(AudioSource))]
+
 public class Explosion : MonoBehaviour
 {
     public float bombRadious;
@@ -17,14 +17,10 @@ public class Explosion : MonoBehaviour
     [SerializeField] float timeToExpand;
     [Tooltip("How long explosion will stay are maximum radious.")]
     [SerializeField] float timeToStayFull;
-    [Tooltip("The explosion clip played")]
-    [SerializeField] private AudioClip clip;
-
     void Start()
     {
         StartCoroutine(scaleOverTime(transform, new Vector3(bombRadious, bombRadious, bombRadious), timeToExpand));
 
-        AudioSource.PlayClipAtPoint(clip, GameObject.Find("Main Camera").transform.position);
     }
 
     // Credit Programmer
