@@ -78,7 +78,7 @@ public class Bomb : MonoBehaviour
     private void Explode()
     {
         Instantiate(explosion, transform.position, transform.rotation).GetComponent<Explosion>().bombRadious = blastRadius;
-        AudioSource.PlayClipAtPoint(clip, GameObject.Find("Main Camera").transform.position);
+        AudioSource.PlayClipAtPoint(clip, GameObject.Find("Main Camera").transform.position, 0.3f);
         Collider[] collidersToDestroy = Physics.OverlapSphere(transform.position, blastRadius);
 
         foreach (Collider nearbyObject in collidersToDestroy)

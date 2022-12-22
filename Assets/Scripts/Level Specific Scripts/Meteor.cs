@@ -45,7 +45,7 @@ public class Meteor : MonoBehaviour
 
     void Impact()
     {
-        AudioSource.PlayClipAtPoint(clip, GameObject.Find("Main Camera").transform.position);
+        AudioSource.PlayClipAtPoint(clip, GameObject.Find("Main Camera").transform.position, 0.7f);
         Instantiate(explosion, transform.position, transform.rotation).GetComponent<Explosion>().bombRadious = radious+3;
     }
 
