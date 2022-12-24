@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class Meteor : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -12,7 +13,8 @@ public class Meteor : MonoBehaviour
     private float timeTaken = 0;
     private Vector3 target;
     private Vector3 start;
-
+    [Tooltip("The explosion clip played when the meteor impacts")]
+    [SerializeField] private AudioClip clip;
     public void SetUp(float rad, Vector3 goTo)
     {
         start = transform.position;
@@ -43,6 +45,7 @@ public class Meteor : MonoBehaviour
 
     void Impact()
     {
+        AudioSource.PlayClipAtPoint(clip, GameObject.Find("Main Camera").transform.position, 0.7f);
         Instantiate(explosion, transform.position, transform.rotation).GetComponent<Explosion>().bombRadious = radious+3;
     }
 

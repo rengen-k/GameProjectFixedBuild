@@ -7,6 +7,7 @@ using UnityEngine;
 //-----------------------------------------//
 // Attached to sphere to make sphere prefab simulate explosion.
 
+
 public class Explosion : MonoBehaviour
 {
     public float bombRadious;
@@ -16,10 +17,10 @@ public class Explosion : MonoBehaviour
     [SerializeField] float timeToExpand;
     [Tooltip("How long explosion will stay are maximum radious.")]
     [SerializeField] float timeToStayFull;
-
     void Start()
     {
         StartCoroutine(scaleOverTime(transform, new Vector3(bombRadious, bombRadious, bombRadious), timeToExpand));
+
     }
 
     // Credit Programmer
