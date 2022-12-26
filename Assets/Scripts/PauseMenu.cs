@@ -17,12 +17,15 @@ public class PauseMenu : MonoBehaviour
     public static bool helpToggle = false;
     [Tooltip("Fields representing status of pausemenu.")]
     public static bool levelsToggle = false;
+    [Tooltip("Fields representing status of pausemenu.")]
+    public static bool settingsToggle = false;
 
     private GameObject PauseMenuUI;
     private GameObject helpPanel;
     private GameObject levelPanel;
     private GameObject KeyPanel;
     private GameObject DialoguePanel;
+    private GameObject settingsPanel;
 
     private Vector2 helpPosOn;
     private Vector2 helpPosOff;
@@ -40,6 +43,7 @@ public class PauseMenu : MonoBehaviour
         levelPanel = transform.Find("PauseMenu/LevelScreen").gameObject;
         KeyPanel = transform.Find("KeyPanel").gameObject;
         DialoguePanel = transform.Find("KeyPanel").gameObject;
+        settingsPanel = transform.Find("PauseMenu/SettingsScreen").gameObject;
 
 
 
@@ -111,6 +115,13 @@ public class PauseMenu : MonoBehaviour
         else{
             levelPanel.SetActive(false);
         }
+
+        if(settingsToggle){
+            settingsPanel.SetActive(true);
+        }
+        else{
+            settingsPanel.SetActive(false);
+        }
         
 
     }
@@ -154,6 +165,7 @@ public class PauseMenu : MonoBehaviour
     public void LevelsToggle()
     {
         helpToggle = false;
+        settingsToggle = false;
         levelsToggle = !levelsToggle;
 
     }
@@ -161,6 +173,7 @@ public class PauseMenu : MonoBehaviour
     public void Help()
     {   
         levelsToggle = false;
+        settingsToggle = false;
         helpToggle = !helpToggle;
     }
 
@@ -186,5 +199,12 @@ public class PauseMenu : MonoBehaviour
             texty.text = "Diff: Hard";
         }
 
+    }
+
+    public void Settings()
+    {
+        levelsToggle = false;
+        helpToggle = false;
+        settingsToggle = true;
     }
 }

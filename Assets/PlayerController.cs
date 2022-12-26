@@ -12,12 +12,13 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+
     //-------------------------//
     // Init
     private Rigidbody Rb;
     private Transform model;
-    private PlayerInput playerInput;
-    private PlayerActionsScript playerActionsScript;
+    public PlayerInput playerInput;
+    public PlayerActionsScript playerActionsScript;
 
     //-------------------------//
     // Camera
@@ -106,6 +107,9 @@ public class PlayerController : MonoBehaviour
         checkpoint = transform.position;
         InitMovement();
         ConfigureGroundCheckAndRadius();
+
+
+
     }
 
     private void InitMovement() 
@@ -143,15 +147,16 @@ public class PlayerController : MonoBehaviour
     {
         InitPlayerInput();
         ConfigPlayerInput();
+
     }
 
-    private void InitPlayerInput() 
+    private void InitPlayerInput()
     {
         playerActionsScript = new PlayerActionsScript();
         playerActionsScript.Player.Enable();
     }
 
-    private void ConfigPlayerInput() 
+    private void ConfigPlayerInput()
     {
         playerActionsScript.Player.Jump.started += Jump;
         playerActionsScript.Player.Jump.canceled += Jump;
@@ -467,6 +472,7 @@ public class PlayerController : MonoBehaviour
     // Jump Input to be used when the player presses the Jump button in the input system
     public void Jump(InputAction.CallbackContext context)
     {
+
         jumpRequest = true;
         jumpBufferCounter = jumpBufferTime;
         if (context.canceled)
@@ -476,7 +482,8 @@ public class PlayerController : MonoBehaviour
             {
                 Rb.AddForce(Vector3.down * Rb.velocity.y * (1 - jumpCutMultiplier), ForceMode.Impulse);
             }
-        }
+       }
+        
     }
 
     //-----------------------------------------//
