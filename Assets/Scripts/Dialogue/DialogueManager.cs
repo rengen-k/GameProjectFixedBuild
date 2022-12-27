@@ -85,7 +85,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private void ContinueStory() 
+    public void ContinueStory() 
     {
         if (currentStory.canContinue)
         {

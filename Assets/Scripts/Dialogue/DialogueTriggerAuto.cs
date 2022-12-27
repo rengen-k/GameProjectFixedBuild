@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class DialogueTrigger : MonoBehaviour
+public class DialogueTriggerAuto : MonoBehaviour
 {
     private GameObject visualCue;
     private PlayerActionsScript playerActionsScript;
@@ -33,7 +33,6 @@ public class DialogueTrigger : MonoBehaviour
     {
         visualCue = GameObject.Find("NPC/Canvas/DialogueVisual");
         playerInRange = false;
-        talkPressed = false;
         visualCue.SetActive(false);
     }
 
@@ -46,13 +45,10 @@ public class DialogueTrigger : MonoBehaviour
         if (playerInRange)
         {
             visualCue.SetActive(true);
-            if (talkPressed)
+            if (!DialogueManager.GetInstance().dialogueIsPlaying)
             {
-                talkPressed = false;
-                if (!DialogueManager.GetInstance().dialogueIsPlaying)
-                {
-                    DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
-                }
+                DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
+                DialogueManager.GetInstance().ContinueStory();
             }
         }
         else
@@ -63,8 +59,9 @@ public class DialogueTrigger : MonoBehaviour
         }
 
         if (!DialogueManager.GetInstance().dialogueIsPlaying) {
-            talkPressed = false;
-            StartCoroutine(DialogueCooldown());
+            visualCue.SetActive(false);
+            DialogueManager.GetInstance().ExitDialogueMode();
+            // StartCoroutine(DialogueCooldown());
         }
     }
 
