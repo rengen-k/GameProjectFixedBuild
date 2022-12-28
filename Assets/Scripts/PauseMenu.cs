@@ -19,6 +19,8 @@ public class PauseMenu : MonoBehaviour
     public static bool levelsToggle = false;
     [Tooltip("Fields representing status of pausemenu.")]
     public static bool settingsToggle = false;
+    [Tooltip("Fields representing status of pausemenu.")]
+    public static bool graphicsToggle = false;
 
     private GameObject PauseMenuUI;
     private GameObject helpPanel;
@@ -26,6 +28,7 @@ public class PauseMenu : MonoBehaviour
     private GameObject KeyPanel;
     private GameObject DialoguePanel;
     private GameObject settingsPanel;
+    private GameObject graphicsPanel;
 
     private Vector2 helpPosOn;
     private Vector2 helpPosOff;
@@ -44,6 +47,7 @@ public class PauseMenu : MonoBehaviour
         KeyPanel = transform.Find("KeyPanel").gameObject;
         DialoguePanel = transform.Find("KeyPanel").gameObject;
         settingsPanel = transform.Find("PauseMenu/SettingsScreen").gameObject;
+        graphicsPanel = transform.Find("PauseMenu/GraphicsScreen").gameObject;
 
 
 
@@ -121,6 +125,13 @@ public class PauseMenu : MonoBehaviour
         }
         else{
             settingsPanel.SetActive(false);
+        }
+
+        if(graphicsToggle){
+            graphicsPanel.SetActive(true);
+        }
+        else{
+            graphicsPanel.SetActive(false);
         }
         
 
@@ -206,5 +217,12 @@ public class PauseMenu : MonoBehaviour
         levelsToggle = false;
         helpToggle = false;
         settingsToggle = true;
+    }
+
+    public void Graphics()
+    {
+        levelsToggle = false;
+        settingsToggle = false;
+        graphicsToggle = true;
     }
 }
