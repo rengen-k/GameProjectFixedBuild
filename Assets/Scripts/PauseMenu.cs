@@ -229,12 +229,14 @@ public class PauseMenu : MonoBehaviour
         levelsToggle = false;
         helpToggle = false;
         soundToggle = false;
+        graphicsToggle = false;
         settingsToggle = true;
     }
 
     public void Graphics()
     {
         levelsToggle = false;
+        helpToggle = false;
         settingsToggle = false;
         soundToggle = false;
         graphicsToggle = true;
@@ -243,6 +245,7 @@ public class PauseMenu : MonoBehaviour
     public void Sound()
     {
         levelsToggle = false;
+        helpToggle = false;
         settingsToggle = false;
         graphicsToggle = false;
         soundToggle = true;
