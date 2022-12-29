@@ -7,9 +7,10 @@ using UnityEngine.UI;
 // Bomb
 //-----------------------------------------//
 // Bomb, an object that can be picked up and thrown. When thrown, creates explosion that destroys objects with the destructible script.
-[RequireComponent(typeof(AudioSource))]
+//[RequireComponent(typeof(AudioSource))]
 public class Bomb : MonoBehaviour
 {
+    public AudioSource soundManager;
     [Tooltip("Values that decide bombs explosion properties.")]
     public float delay;
     [Tooltip("Values that decide bombs explosion properties.")]
@@ -43,6 +44,7 @@ public class Bomb : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         timer.transform.parent.GetComponent<Canvas>().worldCamera = GameObject.Find("UICamera").GetComponent<Camera>();
         respawnPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.1f, gameObject.transform.position.z);
+        soundManager = soundManager.GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -78,7 +80,7 @@ public class Bomb : MonoBehaviour
     private void Explode()
     {
         Instantiate(explosion, transform.position, transform.rotation).GetComponent<Explosion>().bombRadious = blastRadius;
-        AudioSource.PlayClipAtPoint(clip, GameObject.Find("Main Camera").transform.position, 0.3f);
+        soundManager.PlayOneShot(clip);
         Collider[] collidersToDestroy = Physics.OverlapSphere(transform.position, blastRadius);
 
         foreach (Collider nearbyObject in collidersToDestroy)

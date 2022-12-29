@@ -9,7 +9,7 @@ public class ChangeGraphics : MonoBehaviour
 {
     public PostProcessVolume Volume;
 
-    //Bloom variables
+    // Bloom variables
     private Bloom bloomEffect;
     public Camera cam;
     public Toggle bloomToggle;
@@ -21,14 +21,14 @@ public class ChangeGraphics : MonoBehaviour
     public Slider bloomAnamorphicRatioSlider;
     public GameObject bloomSettings;
 
-    //Ambient Occlusion Variables
+    // Ambient Occlusion Variables
     private AmbientOcclusion ambientOcclusionEffect;
     public Toggle ambientOcclusionToggle;
     public Slider ambientOcclusionIntensitySlider;
     public Slider ambientOcclusionThicknessSlider;
     public GameObject ambientOcclusionSettings;
 
-    //Auto Exposure Variables
+    // Auto Exposure Variables
     private AutoExposure autoExposureEffect;
     public Toggle autoExposureToggle;
     public Slider autoExposureFilteringSlider;
@@ -37,13 +37,13 @@ public class ChangeGraphics : MonoBehaviour
     public Slider autoExposureExposureCompensationSlider;
     public GameObject autoExposureSettings;
 
-    //Chromatic Aberration Variables
+    // Chromatic Aberration Variables
     private ChromaticAberration chromaticAberrationEffect;
     public Toggle chromaticAberrationToggle;
     public Slider chromaticAberrationIntesitySlider;
     public GameObject chromaticAberrationSettings;
 
-     //Grain Variables
+    // Grain Variables
     private Grain grainEffect;
     public Toggle grainToggle;
     public Slider grainIntesitySlider;
@@ -51,7 +51,7 @@ public class ChangeGraphics : MonoBehaviour
     public Slider grainLuminanceContributionSlider;
     public GameObject grainSettings;
 
-    //Vignette Variables
+    // Vignette Variables
     private Vignette vignetteEffect;
     public Toggle vignetteToggle;
     public Slider vignetteIntesitySlider;
@@ -59,14 +59,14 @@ public class ChangeGraphics : MonoBehaviour
     public Slider vignetteRoundnessSlider;
     public GameObject vignetteSettings;
 
-    //Motion Blur Variables
+    // Motion Blur Variables
     private MotionBlur motionBlurEffect;
     public Toggle motionBlurToggle;
     public Slider motionBlurShutterAngleSlider;
     public Slider motionBlurSampleCountSlider;
     public GameObject motionBlurSettings;
 
-    //Lens Distortion Variables
+    // Lens Distortion Variables
     private LensDistortion lensDistortionEffect;
     public Toggle lensDistortionToggle;
     public Slider lensDistortionIntensitySlider;
@@ -77,7 +77,7 @@ public class ChangeGraphics : MonoBehaviour
     public Slider lensDistortionScaleSlider;
     public GameObject lensDistortionSettings;
 
-    //Depth of Field Variables
+    // Depth of Field Variables
     private DepthOfField depthOfFieldEffect;
     public Toggle depthOfFieldToggle;
     public Slider depthOfFieldFocusDistanceSlider;
