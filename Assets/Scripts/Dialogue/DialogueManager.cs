@@ -41,12 +41,13 @@ public class DialogueManager : MonoBehaviour
         dialoguePanel = GameObject.Find("DialoguePanel");
         dialogueText = GameObject.Find("DialogueText").GetComponent<TextMeshProUGUI>();
 
-        talkPressed = false;
+        
         if (instance != null)
         {
             Debug.LogWarning("More than one DialogueManager found");
         }
         instance = this;
+        talkPressed = false;
         
     }
 
@@ -61,12 +62,15 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void EnterDialogueMode(TextAsset inkJSON) {
+        Debug.Log("enter Dialogue");
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
+        ContinueStory();
     }
 
     public void ExitDialogueMode() {
+        Debug.Log("exit Dialogue");
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";

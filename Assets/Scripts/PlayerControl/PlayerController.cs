@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
 
     // Fixed Jump Values
     private float landJumpMultiplier = 12f;
-    private float seaJumpMultiplier = 8f;
+    private float seaJumpMultiplier = 11f;
     private float jumpTrampolineHeight = 19.0f;
 
     //-------------------------//
@@ -276,7 +276,7 @@ public class PlayerController : MonoBehaviour
     {
         acceleration = 12;
         deceleration = 12;
-        speed = 6;
+        speed = 7;
         frictionAmount = 0.1f;
         jumpMultiplier = seaJumpMultiplier;
     }
@@ -381,7 +381,7 @@ public class PlayerController : MonoBehaviour
             // multiplier for upward movement to account for gravity
             if (move > 0.01f)
             {
-                move *= 3.5f;
+                move *= 4.5f;
             }
             movement.y = move;
             StartCoroutine(SwimCooldown());
@@ -433,7 +433,7 @@ public class PlayerController : MonoBehaviour
         }
         if (inWater)
         {
-            Rb.AddForce(Physics.gravity * 0.5f, ForceMode.Acceleration);
+            Rb.AddForce(Physics.gravity * 0.7f, ForceMode.Acceleration);
         }
     }
 

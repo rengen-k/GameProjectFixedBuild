@@ -31,9 +31,8 @@ public class DialogueTriggerAuto : MonoBehaviour
 
     private void Awake()
     {
-        visualCue = GameObject.Find("NPC/Canvas/DialogueVisual");
+        // visualCue = GameObject.Find("NPC/Canvas/DialogueVisual");
         playerInRange = false;
-        visualCue.SetActive(false);
     }
 
     private void Update()
@@ -44,7 +43,6 @@ public class DialogueTriggerAuto : MonoBehaviour
 
         if (playerInRange)
         {
-            visualCue.SetActive(true);
             if (!DialogueManager.GetInstance().dialogueIsPlaying)
             {
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
@@ -53,16 +51,14 @@ public class DialogueTriggerAuto : MonoBehaviour
         }
         else
         {
-            visualCue.SetActive(false);
             DialogueManager.GetInstance().ExitDialogueMode();
-
         }
 
-        if (!DialogueManager.GetInstance().dialogueIsPlaying) {
-            visualCue.SetActive(false);
-            DialogueManager.GetInstance().ExitDialogueMode();
-            // StartCoroutine(DialogueCooldown());
-        }
+        // if (!DialogueManager.GetInstance().dialogueIsPlaying) {
+
+        //     DialogueManager.GetInstance().ExitDialogueMode();
+        //     StartCoroutine(DialogueCooldown());
+        // }
     }
 
     public void Talk(InputAction.CallbackContext context)

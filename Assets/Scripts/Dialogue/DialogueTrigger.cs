@@ -5,10 +5,12 @@ using UnityEngine.InputSystem;
 
 public class DialogueTrigger : MonoBehaviour
 {
-    private GameObject visualCue;
+    [Header("Visual Cue")]
+    [SerializeField] private GameObject visualCue;
     private PlayerActionsScript playerActionsScript;
     private bool talkPressed;
     [SerializeField] private TextAsset inkJSON;
+    private int instanceID;
 
     private bool playerInRange;
 
@@ -31,7 +33,7 @@ public class DialogueTrigger : MonoBehaviour
 
     private void Awake()
     {
-        visualCue = GameObject.Find("NPC/Canvas/DialogueVisual");
+        instanceID = gameObject.GetInstanceID();
         playerInRange = false;
         talkPressed = false;
         visualCue.SetActive(false);
@@ -42,9 +44,9 @@ public class DialogueTrigger : MonoBehaviour
         if (DialogueManager.GetInstance().dialogueIsPlaying) {
             playerActionsScript.Player.Disable();
         }
-
-        if (playerInRange)
+        if (playerInRange && !DialogueManager.GetInstance().dialogueIsPlaying)
         {
+            
             visualCue.SetActive(true);
             if (talkPressed)
             {
@@ -58,8 +60,9 @@ public class DialogueTrigger : MonoBehaviour
         else
         {
             visualCue.SetActive(false);
-            DialogueManager.GetInstance().ExitDialogueMode();
-
+            // if (DialogueManager.GetInstance().dialogueIsPlaying) { 
+            //     DialogueManager.GetInstance().ExitDialogueMode();
+            // }
         }
 
         if (!DialogueManager.GetInstance().dialogueIsPlaying) {
@@ -77,6 +80,14 @@ public class DialogueTrigger : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "Player")
+        {
+            playerInRange = true;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.name == "Player")
         {
