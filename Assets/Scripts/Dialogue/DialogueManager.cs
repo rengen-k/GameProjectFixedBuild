@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using TMPro;
 using Ink.Runtime;
@@ -12,12 +13,14 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
 
+    private List<GameObject> triggeredNPCs = new List<GameObject>();
+    private DialogueTriggerAuto[] allNPCObjects;
+    private GameObject[] allNPCs;
     private Story currentStory;
     public bool dialogueIsPlaying;
 
     private bool talkPressed;
     private PlayerActionsScript playerActionsScript;
-
 
     private void OnEnable()
     {
@@ -38,6 +41,8 @@ public class DialogueManager : MonoBehaviour
 
     private void Awake()
     {
+        allNPCObjects = FindObjectsOfType<DialogueTriggerAuto>();
+        allNPCs = allNPCObjects.Select(s => s.gameObject).ToArray();
         dialoguePanel = GameObject.Find("DialoguePanel");
         dialogueText = GameObject.Find("DialogueText").GetComponent<TextMeshProUGUI>();
 
@@ -62,7 +67,7 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void EnterDialogueMode(TextAsset inkJSON) {
-        Debug.Log("enter Dialogue");
+        // Debug.Log("enter Dialogue");
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
@@ -70,7 +75,7 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void ExitDialogueMode() {
-        Debug.Log("exit Dialogue");
+        // Debug.Log("exit Dialogue");
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
@@ -107,5 +112,33 @@ public class DialogueManager : MonoBehaviour
         // if (!currentStory.canContinue) {
         //     ExitDialogueMode();
         // }
+    }
+
+    public bool IsTriggerCalled(GameObject npc)
+    {
+        
+        return triggeredNPCs.Contains(npc);
+    }
+
+    public void SetTriggerCalled(GameObject npc)
+    {
+        foreach (var n in allNPCs)
+        {
+            if (n != npc) {
+                n.SetActive(false);
+            }
+        }
+        Debug.Log(npc.name + "add");
+        triggeredNPCs.Add(npc);
+    }
+
+    public void RemoveTriggerCalled(GameObject npc)
+    {
+        foreach (var n in allNPCs)
+        {
+            n.SetActive(true);
+        }
+        Debug.Log(npc.name + "remove");
+        triggeredNPCs.Remove(npc);
     }
 }

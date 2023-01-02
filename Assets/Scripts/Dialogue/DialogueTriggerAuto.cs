@@ -9,6 +9,9 @@ public class DialogueTriggerAuto : MonoBehaviour
     private PlayerActionsScript playerActionsScript;
     private bool talkPressed;
     [SerializeField] private TextAsset inkJSON;
+    private bool triggerCalled = false;
+
+    // int instanceID = gameObject.GetInstanceID();
 
     private bool playerInRange;
 
@@ -43,11 +46,13 @@ public class DialogueTriggerAuto : MonoBehaviour
 
         if (playerInRange)
         {
-            if (!DialogueManager.GetInstance().dialogueIsPlaying)
-            {
+            if (DialogueManager.GetInstance().IsTriggerCalled(gameObject)) {
+                if (!DialogueManager.GetInstance().dialogueIsPlaying) {
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
                 DialogueManager.GetInstance().ContinueStory();
+                }
             }
+            
         }
         else
         {
@@ -59,6 +64,7 @@ public class DialogueTriggerAuto : MonoBehaviour
         //     DialogueManager.GetInstance().ExitDialogueMode();
         //     StartCoroutine(DialogueCooldown());
         // }
+        // Debug.Log(gameObject.name + " " + playerInRange);
     }
 
     public void Talk(InputAction.CallbackContext context)
@@ -71,14 +77,28 @@ public class DialogueTriggerAuto : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "Player")
+        // if (triggerCalled) {
+        //     return;
+        // }
+        // if (DialogueManager.GetInstance().IsTriggerCalled(gameObject)) {
+        //     return;
+        // }
+        if (DialogueManager.GetInstance().IsTriggerCalled(gameObject)) {
+            return;
+        }
+        DialogueManager.GetInstance().SetTriggerCalled(gameObject);
+        if (other.gameObject.name == "Player" && DialogueManager.GetInstance().IsTriggerCalled(gameObject))
         {
             playerInRange = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
-    {
+    {   
+        if (!DialogueManager.GetInstance().IsTriggerCalled(gameObject)) {
+            return;
+        }
+        DialogueManager.GetInstance().RemoveTriggerCalled(gameObject);
         if (other.gameObject.tag == "Player")
         {
             playerInRange = false;
