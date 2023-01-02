@@ -14,7 +14,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueText;
 
     private List<GameObject> triggeredNPCs = new List<GameObject>();
+    private DialogueTrigger[] allNPCObjectsInteract;
     private DialogueTriggerAuto[] allNPCObjects;
+    private DialogueTriggerAutoDestroy[] allNPCObjectsDestroy;
     private GameObject[] allNPCs;
     private Story currentStory;
     public bool dialogueIsPlaying;
@@ -41,8 +43,10 @@ public class DialogueManager : MonoBehaviour
 
     private void Awake()
     {
+        allNPCObjectsInteract = FindObjectsOfType<DialogueTrigger>();
         allNPCObjects = FindObjectsOfType<DialogueTriggerAuto>();
-        allNPCs = allNPCObjects.Select(s => s.gameObject).ToArray();
+        allNPCObjectsDestroy = FindObjectsOfType<DialogueTriggerAutoDestroy>();
+        allNPCs = allNPCObjects.Select(s => s.gameObject).ToArray().Concat(allNPCObjectsDestroy.Select(s => s.gameObject)).ToArray().Concat(allNPCObjectsInteract.Select(s => s.gameObject)).ToArray();
         dialoguePanel = GameObject.Find("DialoguePanel");
         dialogueText = GameObject.Find("DialogueText").GetComponent<TextMeshProUGUI>();
 
@@ -124,7 +128,7 @@ public class DialogueManager : MonoBehaviour
     {
         foreach (var n in allNPCs)
         {
-            if (n != npc) {
+            if (n != npc && n != null) {
                 n.SetActive(false);
             }
         }
@@ -136,7 +140,12 @@ public class DialogueManager : MonoBehaviour
     {
         foreach (var n in allNPCs)
         {
-            n.SetActive(true);
+            if (n != null) {
+                n.SetActive(true);
+            }
+        }
+        if (npc.GetComponent<DialogueTriggerAutoDestroy>() != null) {
+            Destroy(npc);
         }
         Debug.Log(npc.name + "remove");
         triggeredNPCs.Remove(npc);

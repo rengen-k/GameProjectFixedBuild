@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class DialogueTriggerAuto : MonoBehaviour
+public class DialogueTriggerAutoDestroy : MonoBehaviour
 {
     private GameObject visualCue;
     private PlayerActionsScript playerActionsScript;
     private bool talkPressed;
     [SerializeField] private TextAsset inkJSON;
     private bool triggerCalled = false;
-
-    // int instanceID = gameObject.GetInstanceID();
 
     private bool playerInRange;
 

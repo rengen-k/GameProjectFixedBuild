@@ -44,9 +44,8 @@ public class DialogueTrigger : MonoBehaviour
         if (DialogueManager.GetInstance().dialogueIsPlaying) {
             playerActionsScript.Player.Disable();
         }
-        if (playerInRange && !DialogueManager.GetInstance().dialogueIsPlaying)
+        if (playerInRange && !DialogueManager.GetInstance().dialogueIsPlaying && DialogueManager.GetInstance().IsTriggerCalled(gameObject))
         {
-            
             visualCue.SetActive(true);
             if (talkPressed)
             {
@@ -81,14 +80,10 @@ public class DialogueTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "Player")
-        {
-            playerInRange = true;
+        if (DialogueManager.GetInstance().IsTriggerCalled(gameObject)) {
+            return;
         }
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
+        DialogueManager.GetInstance().SetTriggerCalled(gameObject);
         if (other.gameObject.name == "Player")
         {
             playerInRange = true;
@@ -97,6 +92,10 @@ public class DialogueTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (!DialogueManager.GetInstance().IsTriggerCalled(gameObject)) {
+            return;
+        }
+        DialogueManager.GetInstance().RemoveTriggerCalled(gameObject);
         if (other.gameObject.tag == "Player")
         {
             playerInRange = false;
