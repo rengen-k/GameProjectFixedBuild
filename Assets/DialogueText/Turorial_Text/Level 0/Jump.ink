@@ -1,1 +1,3 @@
-Press Spacebar to Jump.
+VAR jump = "Space"
+
+Press {jump} to Jump.

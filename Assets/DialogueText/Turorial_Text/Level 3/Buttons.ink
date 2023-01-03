@@ -1,0 +1,1 @@
+Objects in this world are manipulated with buttons. Step on one to try it out.

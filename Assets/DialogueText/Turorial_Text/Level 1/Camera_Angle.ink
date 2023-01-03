@@ -1,0 +1,1 @@
+The Camera angle determines which direction you can move in.
