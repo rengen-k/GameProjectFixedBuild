@@ -81,7 +81,7 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void ExitDialogueMode() {
-        Debug.Log("exit Dialogue");
+        // Debug.Log("exit Dialogue");
         // if (currentNPC != null) {
         //     currentNPC.SetActive(false);
         // }
@@ -154,5 +154,10 @@ public class DialogueManager : MonoBehaviour
         }
         Debug.Log(npc.name + "remove");
         triggeredNPCs.Remove(npc);
+    }
+
+    public bool isDialoguePlaying()
+    {
+        return dialogueIsPlaying;
     }
 }

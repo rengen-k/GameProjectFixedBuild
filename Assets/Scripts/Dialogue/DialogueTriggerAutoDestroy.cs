@@ -79,7 +79,6 @@ public class DialogueTriggerAutoDestroy : MonoBehaviour
         {
             playerInRange = true;
         }
-        // gameObject.SetActive(false);
     }
 
     private void OnTriggerExit(Collider other)
@@ -92,7 +91,6 @@ public class DialogueTriggerAutoDestroy : MonoBehaviour
         {
             playerInRange = false;
         }
-        // gameObject.SetActive(true);
     }
     
     private IEnumerator DialogueCooldown()
