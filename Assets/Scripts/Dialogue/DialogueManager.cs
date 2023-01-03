@@ -18,7 +18,6 @@ public class DialogueManager : MonoBehaviour
     private DialogueTriggerAuto[] allNPCObjects;
     private DialogueTriggerAutoDestroy[] allNPCObjectsDestroy;
     private GameObject[] allNPCs;
-    private GameObject currentNPC;
     private Story currentStory;
     public bool dialogueIsPlaying;
 
@@ -73,7 +72,6 @@ public class DialogueManager : MonoBehaviour
 
     public void EnterDialogueMode(TextAsset inkJSON, GameObject npc) {
         Debug.Log("enter Dialogue");
-        // currentNPC = npc;
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
@@ -81,10 +79,6 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void ExitDialogueMode() {
-        // Debug.Log("exit Dialogue");
-        // if (currentNPC != null) {
-        //     currentNPC.SetActive(false);
-        // }
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
@@ -118,9 +112,6 @@ public class DialogueManager : MonoBehaviour
     public void Talk(InputAction.CallbackContext context)
     {
         talkPressed = true;
-        // if (!currentStory.canContinue) {
-        //     ExitDialogueMode();
-        // }
     }
 
     public bool IsTriggerCalled(GameObject npc)

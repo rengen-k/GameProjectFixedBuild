@@ -32,7 +32,6 @@ public class DialogueTriggerAutoDestroy : MonoBehaviour
 
     private void Awake()
     {
-        // visualCue = GameObject.Find("NPC/Canvas/DialogueVisual");
         playerInRange = false;
     }
 
@@ -71,24 +70,26 @@ public class DialogueTriggerAutoDestroy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (DialogueManager.GetInstance().IsTriggerCalled(gameObject)) {
-            return;
-        }
-        DialogueManager.GetInstance().SetTriggerCalled(gameObject);
-        if (other.gameObject.name == "Player" && DialogueManager.GetInstance().IsTriggerCalled(gameObject))
-        {
-            playerInRange = true;
+        if (other.gameObject.name == "Player" && !DialogueManager.GetInstance().isDialoguePlaying()) {
+            // Debug.Log("Enter trigger");
+            if (!DialogueManager.GetInstance().IsTriggerCalled(gameObject)) {
+                 DialogueManager.GetInstance().SetTriggerCalled(gameObject);
+            }
+            if (DialogueManager.GetInstance().IsTriggerCalled(gameObject))
+            {
+                playerInRange = true;
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {   
-        if (!DialogueManager.GetInstance().IsTriggerCalled(gameObject)) {
-            return;
-        }
-        DialogueManager.GetInstance().RemoveTriggerCalled(gameObject);
-        if (other.gameObject.tag == "Player")
-        {
+        if (other.gameObject.tag == "Player" && DialogueManager.GetInstance().isDialoguePlaying()) {
+            // Debug.Log("Exit trigger");
+
+            if (DialogueManager.GetInstance().IsTriggerCalled(gameObject)) {
+                DialogueManager.GetInstance().RemoveTriggerCalled(gameObject);
+            }
             playerInRange = false;
         }
     }
