@@ -48,7 +48,7 @@ public class DialogueTriggerAuto : MonoBehaviour
         {
             if (DialogueManager.GetInstance().IsTriggerCalled(gameObject)) {
                 if (!DialogueManager.GetInstance().dialogueIsPlaying) {
-                DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
+                DialogueManager.GetInstance().EnterDialogueMode(inkJSON, gameObject);
                 }
             }
         }
@@ -74,12 +74,6 @@ public class DialogueTriggerAuto : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // if (triggerCalled) {
-        //     return;
-        // }
-        // if (DialogueManager.GetInstance().IsTriggerCalled(gameObject)) {
-        //     return;
-        // }
         if (DialogueManager.GetInstance().IsTriggerCalled(gameObject)) {
             return;
         }
@@ -88,6 +82,7 @@ public class DialogueTriggerAuto : MonoBehaviour
         {
             playerInRange = true;
         }
+        // gameObject.SetActive(false);
     }
 
     private void OnTriggerExit(Collider other)
@@ -100,6 +95,8 @@ public class DialogueTriggerAuto : MonoBehaviour
         {
             playerInRange = false;
         }
+        // gameObject.SetActive(true);
+
     }
     
     private IEnumerator DialogueCooldown()

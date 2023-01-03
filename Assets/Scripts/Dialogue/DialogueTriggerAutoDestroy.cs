@@ -46,7 +46,7 @@ public class DialogueTriggerAutoDestroy : MonoBehaviour
         {
             if (DialogueManager.GetInstance().IsTriggerCalled(gameObject)) {
                 if (!DialogueManager.GetInstance().dialogueIsPlaying) {
-                DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
+                DialogueManager.GetInstance().EnterDialogueMode(inkJSON, gameObject);
                 }
             }
         }
@@ -65,19 +65,12 @@ public class DialogueTriggerAutoDestroy : MonoBehaviour
     public void Talk(InputAction.CallbackContext context)
     {
         if (playerInRange) {
-            // Debug.Log("Boom");
             talkPressed = true;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // if (triggerCalled) {
-        //     return;
-        // }
-        // if (DialogueManager.GetInstance().IsTriggerCalled(gameObject)) {
-        //     return;
-        // }
         if (DialogueManager.GetInstance().IsTriggerCalled(gameObject)) {
             return;
         }
@@ -86,6 +79,7 @@ public class DialogueTriggerAutoDestroy : MonoBehaviour
         {
             playerInRange = true;
         }
+        // gameObject.SetActive(false);
     }
 
     private void OnTriggerExit(Collider other)
@@ -98,6 +92,7 @@ public class DialogueTriggerAutoDestroy : MonoBehaviour
         {
             playerInRange = false;
         }
+        // gameObject.SetActive(true);
     }
     
     private IEnumerator DialogueCooldown()

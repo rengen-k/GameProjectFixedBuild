@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class DialogueTrigger : MonoBehaviour
+public class DialogueTrigger1 : MonoBehaviour
 {
     [Header("Visual Cue")]
     [SerializeField] private GameObject visualCue;
     private PlayerActionsScript playerActionsScript;
     private bool talkPressed;
     [SerializeField] private TextAsset inkJSON;
-    private int instanceID;
 
     private bool playerInRange;
 
@@ -33,7 +32,6 @@ public class DialogueTrigger : MonoBehaviour
 
     private void Awake()
     {
-        instanceID = gameObject.GetInstanceID();
         playerInRange = false;
         talkPressed = false;
         visualCue.SetActive(false);
@@ -42,10 +40,10 @@ public class DialogueTrigger : MonoBehaviour
     private void Update()
     {
         if (DialogueManager.GetInstance().dialogueIsPlaying) {
-            playerActionsScript.Player.Talk.Disable();
+            playerActionsScript.Player.Disable();
         }
 
-        if (playerInRange && DialogueManager.GetInstance().IsTriggerCalled(gameObject))
+        if (playerInRange)
         {
             visualCue.SetActive(true);
             if (talkPressed)
@@ -60,10 +58,8 @@ public class DialogueTrigger : MonoBehaviour
         else
         {
             visualCue.SetActive(false);
-            // DialogueManager.GetInstance().ExitDialogueMode();
-            // if (DialogueManager.GetInstance().dialogueIsPlaying) { 
-            //     DialogueManager.GetInstance().ExitDialogueMode();
-            // }
+            DialogueManager.GetInstance().ExitDialogueMode();
+
         }
 
         if (!DialogueManager.GetInstance().dialogueIsPlaying) {
@@ -75,42 +71,32 @@ public class DialogueTrigger : MonoBehaviour
     public void Talk(InputAction.CallbackContext context)
     {
         if (playerInRange) {
+            // Debug.Log("Boom");
             talkPressed = true;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (DialogueManager.GetInstance().IsTriggerCalled(gameObject)) {
-            return;
-        }
-        DialogueManager.GetInstance().SetTriggerCalled(gameObject);
         if (other.gameObject.name == "Player")
         {
             playerInRange = true;
         }
-        // gameObject.SetActive(false);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (!DialogueManager.GetInstance().IsTriggerCalled(gameObject)) {
-            return;
-        }
-        DialogueManager.GetInstance().RemoveTriggerCalled(gameObject);
         if (other.gameObject.tag == "Player")
         {
             playerInRange = false;
         }
-        // gameObject.SetActive(true);
-
     }
     
     private IEnumerator DialogueCooldown()
     {
-        playerActionsScript.Player.Talk.Disable();
+        playerActionsScript.Player.Disable();
         yield return new WaitForSeconds(0.1f);
-        playerActionsScript.Player.Talk.Enable();
+        playerActionsScript.Player.Enable();
     }
     
 }
