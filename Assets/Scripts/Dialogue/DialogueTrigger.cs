@@ -89,7 +89,6 @@ public class DialogueTrigger : MonoBehaviour
         {
             playerInRange = true;
         }
-        // gameObject.SetActive(false);
     }
 
     private void OnTriggerExit(Collider other)
@@ -102,7 +101,6 @@ public class DialogueTrigger : MonoBehaviour
         {
             playerInRange = false;
         }
-        // gameObject.SetActive(true);
 
     }
     

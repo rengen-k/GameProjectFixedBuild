@@ -131,14 +131,14 @@ public class DialogueManager : MonoBehaviour
 
     public void SetTriggerCalled(GameObject npc)
     {
+        triggeredNPCs.Add(npc);
         foreach (var n in allNPCs)
         {
-            if (n != npc && n != null) {
+            if (n != npc && n != null && n.GetComponent<DialogueTrigger>() == null) {
                 n.SetActive(false);
             }
         }
         Debug.Log(npc.name + "add");
-        triggeredNPCs.Add(npc);
     }
 
     public void RemoveTriggerCalled(GameObject npc)
