@@ -526,6 +526,12 @@ public class PlayerController : MonoBehaviour
         {
             Hurt(collision.transform.position);
         }
+
+        if (collision.gameObject.tag == "HurtTag2" && !isHurt)
+        {
+            Hurt(collision.transform.position);
+        }
+
         else if (collision.gameObject.name == "KillPlane")
         {
             Respawn();
@@ -550,6 +556,9 @@ public class PlayerController : MonoBehaviour
             setCheckpoint(collision);
         }
         else if (collision.gameObject.tag == "HurtTag1" && !isHurt)
+        {
+            Hurt(collision.transform.position);
+        } else if (collision.gameObject.tag == "HurtTag2" && !isHurt)
         {
             Hurt(collision.transform.position);
         }

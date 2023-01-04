@@ -58,8 +58,8 @@ public class BossEnemy : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(10f);
-            speed = 8f;
+            yield return new WaitForSeconds(15f);
+            speed = 10;
             yield return new WaitForSeconds(8f);
             speed = 4f;
         }
