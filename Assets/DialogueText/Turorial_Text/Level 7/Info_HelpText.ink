@@ -1,0 +1,1 @@
+Along your journey to the top of the tower, you may encounter helpful scribbles left behind by previous explorers. If you are stuck on a puzzle, press F to read what it says.
