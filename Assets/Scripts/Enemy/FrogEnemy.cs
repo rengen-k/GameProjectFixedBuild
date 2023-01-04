@@ -156,6 +156,11 @@ public class FrogEnemy : MonoBehaviour
     public void Respawn()
     {
         transform.position = respawnPoint.position;
+        agent.updatePosition = true;
+        agent.updateRotation = true;
+        agent.isStopped = false;
+        waypointIndex = 0;
+        FaceTarget();
     }
 
     private void Jump()
