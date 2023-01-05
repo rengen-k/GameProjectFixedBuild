@@ -2,17 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveRingPuzzle : Triggerable
+public class MoveRingPuzzle : MonoBehaviour
 {
-    public GameObject enemy;
+    public bool roll;
+    public Transform target;
+    //public Transform centerPeiceTarget;
+    public float smoothTime = 0.3F;
+    private Vector3 velocity = Vector3.zero;
 
-    public override void triggerAct()
+    //[SerializeField] private GameObject centerPeice;
+
+    void Update()
     {
-        transform.position = new Vector3(-40, 1.86f, 40.44f);
-        enemy.SetActive(true);
+        if(roll)
+        {
+            Vector3 targetPosition = target.TransformPoint(new Vector3(0, 0, 0));
+            //Vector3 targetPosition2 = centerPeiceTarget.TransformPoint(new Vector3(0, 0, 0));
+            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+            //centerPeice.transform.position = Vector3.SmoothDamp(centerPeice.transform.position, targetPosition2, ref velocity, smoothTime);
+        }
     }
 
-    public override void triggerUnAct()
-    {
-    }
 }

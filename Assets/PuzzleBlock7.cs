@@ -51,7 +51,7 @@ public class PuzzleBlock7 : Triggerable
             cube.SetActive(true);
             cube.GetComponent<Rigidbody>().AddForce(Vector3.back * magnitude, ForceMode.Impulse);
             StartCoroutine(Wait());
-            puzzle.GetComponent<Animator>().enabled = true;
+            //puzzle.GetComponent<Animator>().enabled = true;
             foreach (GameObject i in oldButtons)
             {
                 i.SetActive(false);
