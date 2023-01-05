@@ -1,0 +1,1 @@
+Before you lies the entrance to the next stage of the tower. Be warned. What you have experienced so far is just the beginning. After you step through those gates, you are on your own.

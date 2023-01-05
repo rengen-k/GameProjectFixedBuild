@@ -1,0 +1,1 @@
+These levitating platforms move in set patterns. To successfully jump onto them, keep in mind the correct camera perspective and the right timing.
