@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
 
     //-------------------------//
     // Respawn
-    private Vector3 lastGroundedPosition;
+    public Vector3 lastGroundedPosition;
     private bool updateRespawnPosition = true;
     private bool isNotNearEdge;
     private Vector3 originalPos;
@@ -530,6 +530,12 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "HurtTag2" && !isHurt)
         {
             Hurt(collision.transform.position);
+        }
+
+        if (collision.gameObject.tag == "HurtTag3")
+        {
+            ResetPlayerHealth();
+            transform.position = new Vector3(-15.52f, -1.07f, 14.66f);
         }
 
         else if (collision.gameObject.name == "KillPlane")

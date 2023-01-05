@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MoveGround : Triggerable
 {
-    private bool isTrigger = true;
+    private bool isTrigger;
     [SerializeField] [Range(0f, 4f)] float lerpTime;
     [SerializeField] Vector3[] positions;
     private int posIndex = 0;
@@ -13,10 +13,10 @@ public class MoveGround : Triggerable
     private bool move;
     private float t = 0f;
 
-    [SerializeField] private BoxCollider trigger1 = null;
-    [SerializeField] private BoxCollider trigger2 = null;
-
-    [SerializeField] private MoveGround nextMove = null;
+    [SerializeField] private GameObject wall1;
+    [SerializeField] private GameObject wall2;
+    [SerializeField] private GameObject wall3;
+    [SerializeField] private GameObject wall4;
 
     private int pressedCount = 0;
 
@@ -29,6 +29,10 @@ public class MoveGround : Triggerable
     {
         if(move)
         {
+            wall1.GetComponent<BoxCollider>().enabled = false;
+            wall2.GetComponent<BoxCollider>().enabled = false;
+            wall3.GetComponent<BoxCollider>().enabled = false;
+            wall4.GetComponent<BoxCollider>().enabled = false;
             transform.position = Vector3.Lerp(transform.position, positions [posIndex], lerpTime * Time.deltaTime);
 
             t = Mathf.Lerp(t, 1f, lerpTime * Time.deltaTime);
@@ -37,7 +41,6 @@ public class MoveGround : Triggerable
                 t = 0f;
                 posIndex++;
                 posIndex = (posIndex >= length) ? 0 : posIndex;
-                nextMove.move = true;
             }
         }
     }
@@ -48,7 +51,6 @@ public class MoveGround : Triggerable
         if (pressedCount == 2)
         {
             isTrigger = false;
-            trigger2.isTrigger = false;
             move = true;
         }
     }
