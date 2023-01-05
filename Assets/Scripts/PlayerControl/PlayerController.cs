@@ -96,12 +96,18 @@ public class PlayerController : MonoBehaviour
     public LadderScript ladderScript;
     private Vector3 checkpoint;
 
+    // Difficulty
+    private GameState gameState;
+    private int diff;
+
 
     //-----------------------------------------//
     // Awake
     //-----------------------------------------//
     private void Awake()
     {
+        gameState = GameObject.Find("GlobalGameState").GetComponent<GameState>();
+        diff = gameState.GetDifficulty();
         Rb = GetComponent<Rigidbody>();
         checkpoint = transform.position;
         InitMovement();
@@ -181,6 +187,7 @@ public class PlayerController : MonoBehaviour
     // Monitors variables associated with jumping, coyote time counter, and refreshes the respawn position
     private void Update()
     {
+        AdjustValuesOnDifficulty();
         JumpGroundDetection();
         ConfigCoyoteTimeCounter();
         UpdateRespawn();
@@ -211,6 +218,49 @@ public class PlayerController : MonoBehaviour
         {
             lastGroundedPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.3f, gameObject.transform.position.z);
             StartCoroutine(RespawnPositionCooldown());
+        }
+    }
+
+    private void AdjustValuesOnDifficulty()
+    {
+        int newDiff = gameState.GetDifficulty();
+        if (newDiff == diff) {
+            return;
+        }
+        diff = newDiff;
+        AdjustFallMultiplier();
+        AdjustJumpMultiplier();
+    }
+
+    private void AdjustFallMultiplier()
+    {
+        switch(diff) 
+        {
+        case 0:
+            fallMultiplier = 0.8f * fallMultiplier;
+            break;
+        case 1:
+            fallMultiplier = 2f;
+            break;
+        case 2:
+            fallMultiplier = 2f;
+            break;
+        }
+    }
+
+    private void AdjustJumpMultiplier()
+    {
+        switch(diff) 
+        {
+        case 0:
+            landJumpMultiplier = 1.032f * landJumpMultiplier;
+            break;
+        case 1:
+            landJumpMultiplier = 12f;
+            break;
+        case 2:
+            landJumpMultiplier = 12f;
+            break;
         }
     }
 

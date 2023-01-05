@@ -12,6 +12,7 @@ public class MovingPlatform : MonoBehaviour
 {
     [SerializeField] private WaypointPath _waypointPath;
     [SerializeField] private float _speed;
+    private float defaultSpeed;
     [SerializeField] private int _startingIndex;
     private GameState gameState;
     private int diff;
@@ -28,6 +29,7 @@ public class MovingPlatform : MonoBehaviour
     {
         gameState = GameObject.Find("GlobalGameState").GetComponent<GameState>();
         diff = gameState.GetDifficulty();
+        defaultSpeed = _speed;
         _targetWaypointIndex = _startingIndex;
         TargetNextWaypoint();
         difficultyChangeSpeed();
@@ -40,13 +42,18 @@ public class MovingPlatform : MonoBehaviour
             return;
         }
         diff = newDiff;
-        if (diff == 0)
+
+        switch(diff) 
         {
+        case 0:
             _speed = 0.7f * _speed;
-        } 
-        else if (diff == 2)
-        {
+            break;
+        case 1:
+            _speed = defaultSpeed;
+            break;
+        case 2:
             _speed = 1.2f * _speed;
+            break;
         }
 
     }
