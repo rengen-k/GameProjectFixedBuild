@@ -19,7 +19,7 @@ public class PuzzleBlock5 : Triggerable
     public string tag;
     private int turns = 30;
     public GameObject triggerCube;
-    float magnitude = 10f;
+    float magnitude = 6.5f;
 
 
     void Start()
@@ -95,7 +95,7 @@ public class PuzzleBlock5 : Triggerable
 
     IEnumerator Wait()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
         cube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
     }
 }

@@ -475,7 +475,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6678616722628432880, guid: 4186d877a5b950340907efba059a3b36, type: 3}
       propertyPath: m_Name
-      value: CarryableBlock (1)
+      value: Block2
       objectReference: {fileID: 0}
     - target: {fileID: 6678616722628432880, guid: 4186d877a5b950340907efba059a3b36, type: 3}
       propertyPath: m_Layer
@@ -1716,7 +1716,8 @@ PrefabInstance:
       propertyPath: trigger.Array.data[1]
       value: 
       objectReference: {fileID: 812555253}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6468012471372542713, guid: d9efead6084caee4ebded96ae019328c, type: 3}
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: d9efead6084caee4ebded96ae019328c, type: 3}
 --- !u!1001 &494455723
@@ -2846,15 +2847,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8183061161519230016, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7042698
+      value: 0.70426977
       objectReference: {fileID: 0}
     - target: {fileID: 8183061161519230016, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.00990153
+      value: 0.009901528
       objectReference: {fileID: 0}
     - target: {fileID: 8183061161519230016, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.70979327
+      value: 0.7097933
       objectReference: {fileID: 0}
     - target: {fileID: 8183061161519230016, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.z
@@ -6072,6 +6073,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 56
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1356278305 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6468012471372542708, guid: d9efead6084caee4ebded96ae019328c, type: 3}
+  m_PrefabInstance: {fileID: 449106042}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1356278310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356278305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 253ed4fdcf93caf4aaa29762fc70f7e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isStuck: 0
+  spring: {fileID: 1591583344}
+  trigger:
+  - {fileID: 1622258274}
+  playnt: 0
+  col: 
 --- !u!1 &1356819584
 GameObject:
   m_ObjectHideFlags: 0
@@ -7223,6 +7247,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d4527b6ac28245ebba2c53aa1d254eb, type: 3}
+--- !u!145 &1591583344 stripped
+SpringJoint:
+  m_CorrespondingSourceObject: {fileID: 6468012470353081404, guid: d9efead6084caee4ebded96ae019328c, type: 3}
+  m_PrefabInstance: {fileID: 449106042}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1596157788 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 38000135837855303, guid: 0d4527b6ac28245ebba2c53aa1d254eb, type: 3}
@@ -7311,6 +7340,8 @@ MonoBehaviour:
   wall2: {fileID: 1561955721}
   wall3: {fileID: 1982918417}
   wall4: {fileID: 179175446}
+  button1: {fileID: 1867024003}
+  button2: {fileID: 1356278310}
 --- !u!1001 &1639426461
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7622,6 +7653,11 @@ MonoBehaviour:
   - {fileID: 714941034}
   tag: 
   triggerCube: {fileID: 741834714}
+--- !u!145 &1678707080 stripped
+SpringJoint:
+  m_CorrespondingSourceObject: {fileID: 6468012470353081404, guid: d9efead6084caee4ebded96ae019328c, type: 3}
+  m_PrefabInstance: {fileID: 2032250262}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1692032968
 GameObject:
   m_ObjectHideFlags: 0
@@ -7744,7 +7780,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6678616722628432880, guid: 4186d877a5b950340907efba059a3b36, type: 3}
       propertyPath: m_Name
-      value: CarryableBlock
+      value: Block1
       objectReference: {fileID: 0}
     - target: {fileID: 6678616722628432880, guid: 4186d877a5b950340907efba059a3b36, type: 3}
       propertyPath: m_Layer
@@ -7756,7 +7792,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6678616722628432880, guid: 4186d877a5b950340907efba059a3b36, type: 3}
       propertyPath: m_TagString
-      value: Block
+      value: Block1
       objectReference: {fileID: 0}
     - target: {fileID: 6678616722628432883, guid: 4186d877a5b950340907efba059a3b36, type: 3}
       propertyPath: m_Constraints
@@ -8628,6 +8664,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   puzzleScript: {fileID: 1669895942}
+--- !u!1 &1867023998 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6468012471372542708, guid: d9efead6084caee4ebded96ae019328c, type: 3}
+  m_PrefabInstance: {fileID: 2032250262}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1867024003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867023998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4c1253514930624a901494d0485c528, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isStuck: 0
+  spring: {fileID: 1678707080}
+  trigger:
+  - {fileID: 1622258274}
+  playnt: 0
+  col: 
 --- !u!1001 &1898655928
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9280,7 +9339,8 @@ PrefabInstance:
       propertyPath: trigger.Array.data[1]
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6468012471372542713, guid: d9efead6084caee4ebded96ae019328c, type: 3}
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: d9efead6084caee4ebded96ae019328c, type: 3}
 --- !u!1 &2034218878

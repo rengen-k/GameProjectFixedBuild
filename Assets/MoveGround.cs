@@ -18,6 +18,9 @@ public class MoveGround : Triggerable
     [SerializeField] private GameObject wall3;
     [SerializeField] private GameObject wall4;
 
+    [SerializeField] private ButtonBlock1 button1;
+    [SerializeField] private ButtonBlock2 button2;
+
     private int pressedCount = 0;
 
     void Start()
@@ -47,11 +50,15 @@ public class MoveGround : Triggerable
 
     public override void triggerAct()
     {
+        print(button1.col);
         pressedCount++;
         if (pressedCount == 2)
         {
-            isTrigger = false;
-            move = true;
+            if ((button1.col == "Block1" | button1.col == "Block2") && (button2.col == "Block1" | button2.col == "Block2"))
+            {
+                isTrigger = false;
+                move = true;
+            }
         }
     }
 
