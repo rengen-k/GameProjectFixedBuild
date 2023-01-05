@@ -1,2 +1,2 @@
 ds
-<i>I wonder... how is this puzzle meant to be solved? If anyone is reading this, I discovered another curious block that I picked up around the corner. These button contraptions seem to require an order as to which is activated.<i>
+<i>I wonder... how is this puzzle meant to be solved? If anyone is reading this, I discovered <b>another curious block</b> that I picked up around the <b>corner</b>. These button contraptions seem to <b>require an order</b> as to which is activated.</i>

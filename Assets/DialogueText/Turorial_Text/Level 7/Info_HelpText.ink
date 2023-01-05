@@ -1,1 +1,1 @@
-Along your journey to the top of the tower, you may encounter helpful scribbles left behind by previous explorers. If you are stuck on a puzzle, press F to read what it says.
+Along your journey to the top of the tower, you may encounter <b>helpful scribbles</b> left behind by <b>previous explorers</b>. If you are stuck on a puzzle, <b>press F</b> to read what it says. More help will be displayed on the <b>Easy</b> Difficulty.

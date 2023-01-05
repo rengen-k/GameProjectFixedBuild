@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private Transform model;
     private PlayerInput playerInput;
     private PlayerActionsScript playerActionsScript;
+    private GameState gameState;
 
     //-------------------------//
     // Camera
@@ -96,8 +97,8 @@ public class PlayerController : MonoBehaviour
     public LadderScript ladderScript;
     private Vector3 checkpoint;
 
+    //-------------------------//
     // Difficulty
-    private GameState gameState;
     private int diff;
 
 
@@ -221,6 +222,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Intended to be called on every update cycle. If the difficulty has been changed, then the relevant values are adjusted.
     private void AdjustValuesOnDifficulty()
     {
         int newDiff = gameState.GetDifficulty();
@@ -608,7 +610,7 @@ public class PlayerController : MonoBehaviour
     // Reset Player health to maxHealth
     private void ResetPlayerHealth()
     {
-        if (GameObject.Find("GlobalGameState").GetComponent<GameState>().IsEasy())
+        if (gameState.IsEasy())
         {
             maxHealth = 2;
         }
@@ -618,7 +620,7 @@ public class PlayerController : MonoBehaviour
     public void MenuIncreaseHealth()
     {
         int setHealth;
-        if (GameObject.Find("GlobalGameState").GetComponent<GameState>().IsEasy())
+        if (gameState.IsEasy())
         {
             setHealth = 2;
         }

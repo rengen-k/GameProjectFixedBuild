@@ -9,8 +9,12 @@ public class DialogueTrigger : MonoBehaviour
     [SerializeField] private GameObject visualCue;
     private PlayerActionsScript playerActionsScript;
     private bool talkPressed;
+    [Header("Normal and Hard Difficulty")]
     [SerializeField] private TextAsset inkJSON;
-    private int instanceID;
+    [Header("Easy Difficulty")]
+    [SerializeField] private TextAsset inkJSONeasy;
+    private GameState gameState;
+    private int diff;
 
     private bool playerInRange;
 
@@ -33,7 +37,8 @@ public class DialogueTrigger : MonoBehaviour
 
     private void Awake()
     {
-        instanceID = gameObject.GetInstanceID();
+        gameState = GameObject.Find("GlobalGameState").GetComponent<GameState>();
+        diff = gameState.GetDifficulty();
         playerInRange = false;
         talkPressed = false;
         visualCue.SetActive(false);
@@ -53,7 +58,14 @@ public class DialogueTrigger : MonoBehaviour
                 talkPressed = false;
                 if (!DialogueManager.GetInstance().dialogueIsPlaying)
                 {
-                    DialogueManager.GetInstance().EnterDialogueMode(inkJSON, gameObject);
+                    if (gameState.IsEasy())
+                    {
+                        DialogueManager.GetInstance().EnterDialogueMode(inkJSONeasy, gameObject);
+                    }
+                    else
+                    {
+                        DialogueManager.GetInstance().EnterDialogueMode(inkJSON, gameObject);  
+                    }
                 }
             }
         }
