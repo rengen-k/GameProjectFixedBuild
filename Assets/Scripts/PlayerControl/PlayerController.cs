@@ -535,7 +535,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "HurtTag3")
         {
             ResetPlayerHealth();
-            transform.position = new Vector3(-15.52f, -1.07f, 14.66f);
+            transform.position = new Vector3(Random.Range(-2f, -28f), -1.07f, Random.Range(17.0f, 40.0f));
         }
 
         else if (collision.gameObject.name == "KillPlane")

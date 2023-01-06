@@ -9,16 +9,18 @@ public class BossEnemy : MonoBehaviour
     public GameObject ground;
     public GameObject enemy;
     public Vector3 newPos;
-    public int health = 100;
+    public int health;
     public Transform target;
-    public float speed = 4f;
+    private float speed;
+    private float newSpeed;
+    private float baseSpeed;
     public GameObject attackRing;
     public GameObject attackPosition;
     private float _elapsedTime;
     private float _timeToWaypoint;
-    [SerializeField] private float _speed = 5;
     [SerializeField] private Image healthBar;
     [SerializeField] private GameObject healthBarGameObj;
+    [SerializeField] private GameState globalGameState;
     private int count;
     Rigidbody rig;
     float magnitude = 15f;
@@ -29,6 +31,28 @@ public class BossEnemy : MonoBehaviour
         target = GameObject.Find("Player").transform;
         StartCoroutine(SpeedLoop());
         healthBar = healthBar.GetComponent<Image>();
+        globalGameState = globalGameState.GetComponent<GameState>();
+
+
+        if (globalGameState.GetDifficulty() == 0)
+        {
+            health = 30;
+            baseSpeed = 2f;
+            newSpeed = 6f;
+        } else if (globalGameState.GetDifficulty() == 1)
+        {
+            health = 60;
+            baseSpeed = 3f;
+            newSpeed = 8f;
+        } else if (globalGameState.GetDifficulty() == 2)
+        {
+            health = 100;
+            baseSpeed = 4f;
+            newSpeed = 10f;
+        }
+
+        speed = baseSpeed;
+
     }
 
     void Update()
@@ -47,7 +71,7 @@ public class BossEnemy : MonoBehaviour
     {
         Vector3 pos = Vector3.MoveTowards(transform.position, target.position, speed * Time.fixedDeltaTime);
         rig.MovePosition(pos);
-        //transform.LookAt(target);
+        print(speed);
     }
 
     private void OnTriggerEnter(Collider col)
@@ -56,7 +80,18 @@ public class BossEnemy : MonoBehaviour
         if(col.GetComponent<Collider>().tag == "HurtTag1")
         {
             health -= 10;
-            healthBar.fillAmount -= 0.1f;
+
+            if (globalGameState.GetDifficulty() == 0)
+            {
+                healthBar.fillAmount -= 0.3333333333333333f;
+            } else if (globalGameState.GetDifficulty() == 1)
+            {
+                healthBar.fillAmount -= 0.1666666666666667f;
+            } else if (globalGameState.GetDifficulty() == 2)
+            {
+                healthBar.fillAmount -= 0.1f;
+            }
+
         }
     }
 
@@ -65,9 +100,9 @@ public class BossEnemy : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(15f);
-            speed = 10;
+            speed = newSpeed;
             yield return new WaitForSeconds(8f);
-            speed = 4f;
+            speed = baseSpeed;
         }
     }
 }

@@ -19,7 +19,7 @@ public class PuzzleBlock5 : Triggerable
     public string tag;
     private int turns = 30;
     public GameObject triggerCube;
-    float magnitude = 6.5f;
+    float magnitude = 8f;
 
 
     void Start()
