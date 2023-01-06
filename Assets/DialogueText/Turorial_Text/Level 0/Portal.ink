@@ -1,1 +1,1 @@
-The object you see in front of you is a portal. Touch it to continue to the next level.
+<b>Mysterious Voice:</b> The object you see in front of you is a portal. Touch it to continue to the next level.

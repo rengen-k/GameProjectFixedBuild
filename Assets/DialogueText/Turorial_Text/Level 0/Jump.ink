@@ -1,3 +1,3 @@
 VAR jump = "Space"
 
-Press {jump} to Jump.
+<b>Mysterious Voice:</b> Press {jump} to Jump.

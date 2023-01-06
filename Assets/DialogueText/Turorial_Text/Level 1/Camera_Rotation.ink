@@ -1,1 +1,1 @@
-Rotate the Camera using the Arrow keys.
+<b>Mysterious Voice:</b> Rotate the Camera using the Arrow keys.

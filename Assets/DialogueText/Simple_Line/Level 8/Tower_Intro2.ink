@@ -1,0 +1,1 @@
+Now come! The journey awaits! Treasure! Unlimitless riches and your deepest desires will be fulfilled when you reach the top of the tower. I will be waiting for you.

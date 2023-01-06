@@ -1,3 +1,3 @@
 VAR left = "A"
 VAR right = "D"
-Move left and right with the {left} and {right} keys.
+<b>Mysterious Voice:</b> Move left and right with the {left} and {right} keys.

@@ -1,1 +1,1 @@
-The Camera angle determines which direction you can move in.
+<b>Mysterious Voice:</b> The Camera angle determines which direction you can move in.

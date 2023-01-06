@@ -1,1 +1,1 @@
-Next to you is a Bomb. Pick it up with E and throw it with Q. See what happens if you throw it at a Destructible block.
+<b>Mysterious Voice:</b> Next to you is a Bomb. Pick it up with E and throw it with Q. See what happens if you throw it at a Destructible block.

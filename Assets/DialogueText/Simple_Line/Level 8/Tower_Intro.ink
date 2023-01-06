@@ -1,0 +1,1 @@
+<b>Tower:</b> My, how long has it been dear friend? I have been waiting since the day you left...Don't fret, there is nothing to feel sorry for. I am glad you have returned nonetheless. 

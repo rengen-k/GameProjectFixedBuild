@@ -1,3 +1,3 @@
 ds
-<i>I wonder... how is this puzzle meant to be solved? If anyone is reading this, I discovered <b>another curious block</b> that I picked up around the <b>corner</b>. These button contraptions seem to <b>require an order</b> as to which is activated.</i>
-<i>I picked up the block and placed it behind me on the <b>switch next to this yellow pillar</b>. That then allowed me to pick up the block and <b>place both of them on the 2 switches</b> ahead to <b>unlock the door</b>.</i>
+<b>Scrawled Handwriting:</b> <i>I wonder... how is this puzzle meant to be solved? If anyone is reading this, I discovered <b>another curious block</b> that I picked up around the <b>corner</b>. These button contraptions seem to <b>require an order</b> as to which is activated.</i>
+<b>Scrawled Handwriting:</b> <i>I picked up the block and placed it behind me on the <b>switch next to this yellow pillar</b>. That then allowed me to pick up the block and <b>place both of them on the 2 switches</b> ahead to <b>unlock the door</b>.</i>

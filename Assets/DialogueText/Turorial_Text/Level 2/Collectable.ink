@@ -1,1 +1,1 @@
-The Yellow object you see in front of you is a Collectable. Collect enough of them and unlock bonus levels. If you collect all of them in a level, it is coloured yellow in the level select screen.
+<b>Mysterious Voice:</b> The Yellow object you see in front of you is a Collectable. Collect enough of them and unlock bonus levels. If you collect all of them in a level, it is coloured yellow in the level select screen.
