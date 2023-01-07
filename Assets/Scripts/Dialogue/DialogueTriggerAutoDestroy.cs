@@ -3,32 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+//-----------------------------------------//
+// DialogueTriggerAuto
+//-----------------------------------------//
+// Base code from https://www.youtube.com/watch?v=vY0Sk93YUhA and heavily modified.
+// Automatically triggers dialogue when the player makes contact
+
 public class DialogueTriggerAutoDestroy : MonoBehaviour
 {
     private GameObject visualCue;
     private PlayerActionsScript playerActionsScript;
-    private bool talkPressed;
     [SerializeField] private TextAsset inkJSON;
-    private bool triggerCalled = false;
-
     private bool playerInRange;
-
-    private void OnEnable()
-    {
-        InitPlayerInput();
-        ConfigPlayerInput();
-    }
-
-    private void InitPlayerInput() 
-    {
-        playerActionsScript = new PlayerActionsScript();
-        playerActionsScript.Player.Enable();
-    }
-
-    private void ConfigPlayerInput() 
-    {
-        playerActionsScript.Player.Talk.performed += Talk;
-    }
 
     private void Awake()
     {
@@ -37,10 +23,6 @@ public class DialogueTriggerAutoDestroy : MonoBehaviour
 
     private void Update()
     {
-        if (DialogueManager.GetInstance().dialogueIsPlaying) {
-            playerActionsScript.Player.Disable();
-        }
-
         if (playerInRange)
         {
             if (DialogueManager.GetInstance().IsTriggerCalled(gameObject)) {
@@ -55,23 +37,13 @@ public class DialogueTriggerAutoDestroy : MonoBehaviour
         }
 
         if (!DialogueManager.GetInstance().dialogueIsPlaying) {
-
             DialogueManager.GetInstance().ExitDialogueMode();
-            StartCoroutine(DialogueCooldown());
-        }
-    }
-
-    public void Talk(InputAction.CallbackContext context)
-    {
-        if (playerInRange) {
-            talkPressed = true;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name == "Player" && !DialogueManager.GetInstance().isDialoguePlaying()) {
-            // Debug.Log("Enter trigger");
             if (!DialogueManager.GetInstance().IsTriggerCalled(gameObject)) {
                  DialogueManager.GetInstance().SetTriggerCalled(gameObject);
             }
@@ -85,7 +57,6 @@ public class DialogueTriggerAutoDestroy : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {   
         if (other.gameObject.tag == "Player" && DialogueManager.GetInstance().isDialoguePlaying()) {
-            // Debug.Log("Exit trigger");
             playerInRange = false;
             if (DialogueManager.GetInstance().IsTriggerCalled(gameObject)) {
                 DialogueManager.GetInstance().RemoveTriggerCalled(gameObject);
@@ -94,11 +65,5 @@ public class DialogueTriggerAutoDestroy : MonoBehaviour
         }
     }
     
-    private IEnumerator DialogueCooldown()
-    {
-        playerActionsScript.Player.Disable();
-        yield return new WaitForSeconds(0.1f);
-        playerActionsScript.Player.Enable();
-    }
     
 }

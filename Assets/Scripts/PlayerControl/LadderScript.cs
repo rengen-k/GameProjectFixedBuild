@@ -17,13 +17,13 @@ public class LadderScript : MonoBehaviour
     private float velPower = 1.5f;
     private float acceleration = 30;
     private float deceleration = 40;
-    private float offset = 0.6f;
+    // private float offset = 0.6f;
+    // private float smoothTime = 0.08f;
     private Vector3 ladderMovement;
     private Vector2 inputVector;
     private Vector3 tempPos;
     private float frictionAmount = 0.5f;
     private float ladderSpeed = 10;
-    private float smoothTime = 0.08f;
     private Vector3 velocity = Vector3.zero;
 
     // init

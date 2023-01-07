@@ -6,6 +6,13 @@ using TMPro;
 using Ink.Runtime;
 using UnityEngine.InputSystem;
 
+//-----------------------------------------//
+// DialogueTriggerAuto
+//-----------------------------------------//
+// Base code from https://www.youtube.com/watch?v=vY0Sk93YUhA and heavily modified.
+// Manages dialogue to ensure that the UI is displayed when it is active, and not displayed when it is not active.
+// Governs correct dialogue, and only ensures 1 piece of dialogue is active at a time
+// Keeps track of all Dialogue NPCs in a level
 
 public class DialogueManager : MonoBehaviour
 {
@@ -18,6 +25,7 @@ public class DialogueManager : MonoBehaviour
     private DialogueTriggerAuto[] allNPCObjects;
     private DialogueTriggerAutoDestroy[] allNPCObjectsDestroy;
     private GameObject[] allNPCs;
+
     private Story currentStory;
     public bool dialogueIsPlaying;
 
@@ -41,16 +49,18 @@ public class DialogueManager : MonoBehaviour
         playerActionsScript.Player.Talk.performed += Talk;
     }
 
+    // Finds all the NPC objects in a level and stores them in a list
     private void Awake()
     {
         allNPCObjectsInteract = FindObjectsOfType<DialogueTrigger>();
         allNPCObjects = FindObjectsOfType<DialogueTriggerAuto>();
         allNPCObjectsDestroy = FindObjectsOfType<DialogueTriggerAutoDestroy>();
         allNPCs = allNPCObjects.Select(s => s.gameObject).ToArray().Concat(allNPCObjectsDestroy.Select(s => s.gameObject)).ToArray().Concat(allNPCObjectsInteract.Select(s => s.gameObject)).ToArray();
+        
         dialoguePanel = GameObject.Find("DialoguePanel");
         dialogueText = GameObject.Find("DialogueText").GetComponent<TextMeshProUGUI>();
 
-        
+        // Singleton
         if (instance != null)
         {
             Debug.LogWarning("More than one DialogueManager found");
@@ -70,21 +80,22 @@ public class DialogueManager : MonoBehaviour
         dialoguePanel.SetActive(false);
     }
 
+    // Makes the UI active and continues the story
     public void EnterDialogueMode(TextAsset inkJSON, GameObject npc) {
-        Debug.Log("enter Dialogue");
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
         ContinueStory();
     }
 
+    // Exits the dialogue
     public void ExitDialogueMode() {
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
     }
 
-    // Update is called once per frame
+    // If the talk key is pressed, then continue the story
     void Update()
     {
         if (!dialogueIsPlaying) {
@@ -114,6 +125,8 @@ public class DialogueManager : MonoBehaviour
         talkPressed = true;
     }
 
+
+    // Methods related to keeping track of the NPCs in a level
     public bool IsTriggerCalled(GameObject npc)
     {
         
@@ -129,7 +142,6 @@ public class DialogueManager : MonoBehaviour
                 n.SetActive(false);
             }
         }
-        Debug.Log(npc.name + "add");
     }
 
     public void RemoveTriggerCalled(GameObject npc)
@@ -143,7 +155,6 @@ public class DialogueManager : MonoBehaviour
         if (npc.GetComponent<DialogueTriggerAutoDestroy>() != null) {
             Destroy(npc);
         }
-        Debug.Log(npc.name + "remove");
         triggeredNPCs.Remove(npc);
     }
 
