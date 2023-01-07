@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering.PostProcessing;
 
 public class SceneSwitch : MonoBehaviour
 {
@@ -10,7 +11,14 @@ public class SceneSwitch : MonoBehaviour
     [SerializeField] private string nameOfSceneToLoad;
     [SerializeField] private int indexOfSceneToLoad;
     [SerializeField] private bool loadWithIndex;
-    
+
+    [SerializeField] private Animator fade;
+
+    void Start()
+    {
+        fade = GameObject.FindGameObjectWithTag("Fade").GetComponent<Animator>();
+    }
+
     private void OnTriggerEnter(Collider collision) {
         GameObject collisionGameObject = collision.gameObject;
         if (collisionGameObject.tag == "Player") {
@@ -20,11 +28,13 @@ public class SceneSwitch : MonoBehaviour
                 tracker = GameObject.Find("GlobalGameState");
             }
             tracker.GetComponent<GameState>().EndLevel();
-            LoadScene();
+            fade.SetTrigger("FadeOut");
+            //LoadScene();
         }
     }
 
-    private void LoadScene() {
+    public void LoadScene() {
         SceneManager.LoadScene(nameOfSceneToLoad);
     }
+
 }

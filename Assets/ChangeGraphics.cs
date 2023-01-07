@@ -85,6 +85,14 @@ public class ChangeGraphics : MonoBehaviour
     public Slider depthOfFieldFocalLengthSlider;
     public GameObject depthOfFieldSettings;
 
+    public CurrentSettings currentSettings;
+
+    private void Update()
+    {
+        currentSettings = GameObject.FindGameObjectWithTag("CurrentSettings").GetComponent<CurrentSettings>();
+        currentSettings.changeGraphics = this.gameObject.GetComponent<ChangeGraphics>();
+    }
+
     private void Start()
     {
         Volume = Volume.GetComponent<PostProcessVolume>();
@@ -153,8 +161,10 @@ public class ChangeGraphics : MonoBehaviour
         if(bloomToggle.isOn)
         {
             bloomEffect.active = true;
+            currentSettings.BloomOn = true;
         } else {
             bloomEffect.active = false;
+            currentSettings.BloomOn = false;
         }
 
     }
@@ -162,31 +172,37 @@ public class ChangeGraphics : MonoBehaviour
     public void BloomIntensity()
     {
         bloomEffect.intensity.value = bloomIntensitySlider.value*10;
+        currentSettings.BloomIntensity = bloomIntensitySlider.value*10;
     }
 
     public void BloomThreshold()
     {
         bloomEffect.threshold.value = bloomThresholdSlider.value*10;
+        currentSettings.BloomThreshold = bloomThresholdSlider.value*10;
     }
 
     public void BloomSoftKnee()
     {
         bloomEffect.softKnee.value = bloomSoftKneeSlider.value;
+        currentSettings.BloomSoftKnee = bloomSoftKneeSlider.value;
     }
 
     public void BloomClamp()
     {
         bloomEffect.clamp.value = bloomClampSlider.value*100;
+        currentSettings.BloomClamp = bloomClampSlider.value*100;
     }
 
     public void BloomDiffusion()
     {
         bloomEffect.diffusion.value = bloomDiffusionSlider.value*10;
+        currentSettings.BloomDiffusion = bloomDiffusionSlider.value*10;
     }
 
     public void BloomAnamorphicRatio()
     {
         bloomEffect.anamorphicRatio.value = bloomAnamorphicRatioSlider.value;
+        currentSettings.BloomAnamorphicRatio = bloomAnamorphicRatioSlider.value;
     }
 
     //AO Methods
@@ -215,8 +231,10 @@ public class ChangeGraphics : MonoBehaviour
         if(ambientOcclusionToggle.isOn)
         {
             ambientOcclusionEffect.active = true;
+            currentSettings.AmbientOcclusionOn = true;
         } else {
             ambientOcclusionEffect.active = false;
+            currentSettings.AmbientOcclusionOn = false;
         }
 
     }
@@ -224,11 +242,13 @@ public class ChangeGraphics : MonoBehaviour
     public void AmbientOcclusionIntensity()
     {
         ambientOcclusionEffect.intensity.value = ambientOcclusionIntensitySlider.value*4;
+        currentSettings.AmbientOcclusionIntensity = ambientOcclusionIntensitySlider.value*4;
     }
 
     public void AmbientOcclusionThickness()
     {
         ambientOcclusionEffect.thicknessModifier.value = ambientOcclusionThicknessSlider.value*10;
+        currentSettings.AmbientOcclusionThickness = ambientOcclusionThicknessSlider.value*10;
     }
 
     //Auto Exposure Methods
@@ -312,8 +332,10 @@ public class ChangeGraphics : MonoBehaviour
         if(chromaticAberrationToggle.isOn)
         {
             chromaticAberrationEffect.active = true;
+            currentSettings.ChromaticAberrationOn = true;
         } else {
             chromaticAberrationEffect.active = false;
+            currentSettings.ChromaticAberrationOn = false;
         }
 
     }
@@ -321,6 +343,7 @@ public class ChangeGraphics : MonoBehaviour
     public void ChromaticAberrationIntensity()
     {
         chromaticAberrationEffect.intensity.value = chromaticAberrationIntesitySlider.value;
+        currentSettings.ChromaticAberrationIntensity = chromaticAberrationIntesitySlider.value;
     }
 
     //Grain Methods
@@ -350,8 +373,10 @@ public class ChangeGraphics : MonoBehaviour
         if(grainToggle.isOn)
         {
             grainEffect.active = true;
+            currentSettings.GrainOn = true;
         } else {
             grainEffect.active = false;
+            currentSettings.GrainOn = false;
         }
 
     }
@@ -359,16 +384,19 @@ public class ChangeGraphics : MonoBehaviour
     public void GrainIntensity()
     {
         grainEffect.intensity.value = grainIntesitySlider.value;
+        currentSettings.GrainIntensity = grainIntesitySlider.value;
     }
 
     public void GrainSize()
     {
         grainEffect.size.value = grainSizeSlider.value*3;
+        currentSettings.GrainSize = grainSizeSlider.value*3;
     }
 
     public void GrainLuminanceContribution()
     {
         grainEffect.lumContrib.value = grainLuminanceContributionSlider.value;
+        currentSettings.GrainLuminanceContribution = grainLuminanceContributionSlider.value;
     }
 
     //Vignette Methods
@@ -398,8 +426,10 @@ public class ChangeGraphics : MonoBehaviour
         if(vignetteToggle.isOn)
         {
             vignetteEffect.active = true;
+            currentSettings.VignetteOn = true;
         } else {
             vignetteEffect.active = false;
+            currentSettings.VignetteOn = false;
         }
 
     }
@@ -407,16 +437,19 @@ public class ChangeGraphics : MonoBehaviour
     public void VignetteIntensity()
     {
         vignetteEffect.intensity.value = vignetteIntesitySlider.value;
+        currentSettings.VignetteIntensity = vignetteIntesitySlider.value;
     }
 
     public void VignetteSmoothness()
     {
         vignetteEffect.smoothness.value = vignetteSmoothnessSlider.value;
+        currentSettings.VignetteSmoothness = vignetteSmoothnessSlider.value;
     }
 
     public void VignetteRoundness()
     {
         vignetteEffect.roundness.value = vignetteRoundnessSlider.value;
+        currentSettings.VignetteRoundness = vignetteRoundnessSlider.value;
     }
 
     //Motion Blur Methods
@@ -446,8 +479,10 @@ public class ChangeGraphics : MonoBehaviour
         if(motionBlurToggle.isOn)
         {
             motionBlurEffect.active = true;
+            currentSettings.MotionBlurOn = true;
         } else {
             motionBlurEffect.active = false;
+            currentSettings.MotionBlurOn = false;
         }
 
     }
@@ -455,11 +490,13 @@ public class ChangeGraphics : MonoBehaviour
     public void MotionBlurShutterAngle()
     {
         motionBlurEffect.shutterAngle.value = motionBlurShutterAngleSlider.value;
+        currentSettings.MotionBlurShutterAngle = motionBlurShutterAngleSlider.value;
     }
 
     public void MotionBlurSampleCount()
     {
         motionBlurEffect.sampleCount.value = (int) motionBlurSampleCountSlider.value;
+        currentSettings.MotionBlurSampleCount = (int) motionBlurSampleCountSlider.value;
     }
 
     //Lens Distortion Methods
@@ -489,8 +526,10 @@ public class ChangeGraphics : MonoBehaviour
         if(lensDistortionToggle.isOn)
         {
             lensDistortionEffect.active = true;
+            currentSettings.LensDistortionOn = true;
         } else {
             lensDistortionEffect.active = false;
+            currentSettings.LensDistortionOn = false;
         }
 
     }
@@ -498,31 +537,37 @@ public class ChangeGraphics : MonoBehaviour
     public void LensDistortionIntensity()
     {
         lensDistortionEffect.intensity.value = lensDistortionIntensitySlider.value;
+        currentSettings.LensDistortionIntensity = lensDistortionIntensitySlider.value;
     }
 
     public void LensDistortionXMultiplier()
     {
         lensDistortionEffect.intensityX.value = lensDistortionXMultiplierSlider.value;
+        currentSettings.LensDistortionXMultiplier = lensDistortionXMultiplierSlider.value;
     }
 
     public void LensDistortionYMultiplier()
     {
         lensDistortionEffect.intensityY.value = lensDistortionYMultiplierSlider.value;
+        currentSettings.LensDistortionYMultiplier = lensDistortionYMultiplierSlider.value;
     }
 
     public void LensDistortionCenterX()
     {
         lensDistortionEffect.centerX.value = lensDistortionCenterXSlider.value;
+        currentSettings.LensDistortionCenterX = lensDistortionCenterXSlider.value;
     }
 
     public void LensDistortionCenterY()
     {
         lensDistortionEffect.centerY.value = lensDistortionCenterYSlider.value;
+        currentSettings.LensDistortionCenterY = lensDistortionCenterYSlider.value;
     }
 
     public void LensDistortionScale()
     {
         lensDistortionEffect.scale.value = lensDistortionScaleSlider.value;
+        currentSettings.LensDistortionScale = lensDistortionScaleSlider.value;
     }
 
     //Depth of Field Methods
@@ -552,8 +597,10 @@ public class ChangeGraphics : MonoBehaviour
         if(depthOfFieldToggle.isOn)
         {
             depthOfFieldEffect.active = true;
+            currentSettings.DepthOfFieldOn = true;
         } else {
             depthOfFieldEffect.active = false;
+            currentSettings.DepthOfFieldOn = false;
         }
 
     }
@@ -561,16 +608,19 @@ public class ChangeGraphics : MonoBehaviour
     public void DepthOfFieldFocusDistance()
     {
         depthOfFieldEffect.focusDistance.value = depthOfFieldFocusDistanceSlider.value;
+        currentSettings.DepthOfFieldFocusDistance = depthOfFieldFocusDistanceSlider.value;
     }
 
     public void DepthOfFieldAperture()
     {
         depthOfFieldEffect.aperture.value = depthOfFieldApertureSlider.value;
+        currentSettings.DepthOfFieldAperture = depthOfFieldApertureSlider.value;
     }
 
     public void DepthOfFieldFocalLength()
     {
         depthOfFieldEffect.focalLength.value = depthOfFieldFocalLengthSlider.value;
+        currentSettings.DepthOfFieldFocalLength = depthOfFieldApertureSlider.value;
     }
 
 }

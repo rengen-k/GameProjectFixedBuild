@@ -18,6 +18,8 @@ public class RebindingDisplay : MonoBehaviour
     [SerializeField] private TextMeshProUGUI throwObj;
     [SerializeField] private TextMeshProUGUI pickupObj;
 
+    public CurrentSettings currentSettings;
+
     private InputActionRebindingExtensions.RebindingOperation rebindingOperation;
 
     public void RebindRotateCameraRight()
@@ -34,6 +36,7 @@ public class RebindingDisplay : MonoBehaviour
         rebindingOperation.Dispose();
         waitingForInputObject.SetActive(false);
         camRight.GetComponent<TMPro.TextMeshProUGUI>().text = InputControlPath.ToHumanReadableString(Action.bindings[4].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+        currentSettings.RotateCameraRight = Action.bindings[4];
         })
         .Start();
 
@@ -54,6 +57,7 @@ public class RebindingDisplay : MonoBehaviour
         rebindingOperation.Dispose();
         waitingForInputObject.SetActive(false);
         camLeft.GetComponent<TMPro.TextMeshProUGUI>().text = InputControlPath.ToHumanReadableString(Action.bindings[3].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+        currentSettings.RotateCameraLeft = Action.bindings[3];
         })
         .Start();
 
@@ -76,6 +80,7 @@ public class RebindingDisplay : MonoBehaviour
         rebindingOperation.Dispose();
         waitingForInputObject.SetActive(false);
         movRight.GetComponent<TMPro.TextMeshProUGUI>().text = InputControlPath.ToHumanReadableString(Action.bindings[right.bindingIndex].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+        currentSettings.MoveRight = Action.bindings[right.bindingIndex];
         })
         .Start();
 
@@ -98,6 +103,7 @@ public class RebindingDisplay : MonoBehaviour
         rebindingOperation.Dispose();
         waitingForInputObject.SetActive(false);
         movLeft.GetComponent<TMPro.TextMeshProUGUI>().text = InputControlPath.ToHumanReadableString(Action.bindings[left.bindingIndex].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+        currentSettings.MoveLeft = Action.bindings[left.bindingIndex];
         })
         .Start();
 
@@ -117,6 +123,7 @@ public class RebindingDisplay : MonoBehaviour
         rebindingOperation.Dispose();
         waitingForInputObject.SetActive(false);
         jumpText.GetComponent<TMPro.TextMeshProUGUI>().text = InputControlPath.ToHumanReadableString(Action.bindings[0].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+        currentSettings.Jump = Action.bindings[0];
         })
         .Start();
 
@@ -136,6 +143,7 @@ public class RebindingDisplay : MonoBehaviour
         rebindingOperation.Dispose();
         waitingForInputObject.SetActive(false);
         throwObj.GetComponent<TMPro.TextMeshProUGUI>().text = InputControlPath.ToHumanReadableString(Action.bindings[5].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+        currentSettings.ThrowObject = Action.bindings[5];
         })
         .Start();
 
@@ -155,6 +163,7 @@ public class RebindingDisplay : MonoBehaviour
         rebindingOperation.Dispose();
         waitingForInputObject.SetActive(false);
         pickupObj.GetComponent<TMPro.TextMeshProUGUI>().text = InputControlPath.ToHumanReadableString(Action.bindings[0].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+        currentSettings.PickupObject = Action.bindings[0];
         })
         .Start();
 
