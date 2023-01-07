@@ -99,6 +99,8 @@ public class PlayerController : MonoBehaviour
     public AudioSource soundManager;
     public AudioClip footsteps;
     public AudioClip landing;
+    public AudioClip rotate;
+    public AudioClip trampoline;
 
     //-----------------------------------------//
     // Awake
@@ -497,6 +499,7 @@ public class PlayerController : MonoBehaviour
     // Look input to be used when the player rotates the camera using left and right x axis input
     public void Look(InputAction.CallbackContext context)
     {
+        soundManager.PlayOneShot(rotate);
         if (context.ReadValue<Vector2>().x <= -0.5f)
         {
             currentCam = camScript.SwitchState(-1);
@@ -544,6 +547,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.gameObject.tag == "JumpTag" && !isJumpTrampoline)
         {
+            soundManager.PlayOneShot(trampoline);
             coyoteTimeCounter = 0f;
             StartCoroutine(TrampolineCooldown());
             Rb.velocity = Vector3.zero;
