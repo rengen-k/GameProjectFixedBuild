@@ -12,12 +12,11 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-
     //-------------------------//
     // Init
     private Rigidbody Rb;
     private Transform model;
-    public PlayerInput playerInput;
+    private PlayerInput playerInput;
     public PlayerActionsScript playerActionsScript;
 
     //-------------------------//
@@ -33,7 +32,7 @@ public class PlayerController : MonoBehaviour
     //-------------------------//
     // Damage
     private bool isHurt = false;
-    
+
     //-------------------------//
     // Movement
     private Vector3 movement;
@@ -107,17 +106,14 @@ public class PlayerController : MonoBehaviour
         checkpoint = transform.position;
         InitMovement();
         ConfigureGroundCheckAndRadius();
-
-
-
     }
 
-    private void InitMovement() 
+    private void InitMovement()
     {
         movement = new Vector3(0.0f, 0.0f, 0.0f);
     }
 
-    private void ConfigureGroundCheckAndRadius() 
+    private void ConfigureGroundCheckAndRadius()
     {
         var col = GetComponent<CapsuleCollider>();
         var direction = new Vector3 {[col.direction] = 1};
@@ -147,7 +143,6 @@ public class PlayerController : MonoBehaviour
     {
         InitPlayerInput();
         ConfigPlayerInput();
-
     }
 
     private void InitPlayerInput()
@@ -191,13 +186,13 @@ public class PlayerController : MonoBehaviour
         UpdateRespawn();
     }
 
-    private void JumpGroundDetection() 
+    private void JumpGroundDetection()
     {
         jumpBufferCounter -= Time.deltaTime;
         lastGrounded -= Time.deltaTime;
     }
 
-    private void ConfigCoyoteTimeCounter() 
+    private void ConfigCoyoteTimeCounter()
     {
         if (isGrounded)
         {
@@ -210,7 +205,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update respawn position when player is not near an edge and is grounded
-    private void UpdateRespawn() 
+    private void UpdateRespawn()
     {
         if (isNotNearEdge && isStableGrounded && updateRespawnPosition && coyoteTimeCounter == coyoteTime)
         {
@@ -232,7 +227,7 @@ public class PlayerController : MonoBehaviour
         ConfigPlayerModelRotationDirection();
         ConfigMovementAmount();
 
-        ApplyFriction(inputVector);  
+        ApplyFriction(inputVector);
 
         Rb.AddForce(movement * Time.fixedDeltaTime);
 
@@ -296,7 +291,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Check whether sphere is colliding with ground or stableground
-    private void CheckIfGroundedorStableGrounded() 
+    private void CheckIfGroundedorStableGrounded()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (int)whatIsGround) || Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
         isStableGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
@@ -334,7 +329,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // While moving, changes the rotation of the model to be relative to the camera
-    private void ConfigPlayerModelRotationDirection() 
+    private void ConfigPlayerModelRotationDirection()
     {
         if (movement.x > 0)
         {
@@ -355,7 +350,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Changes amount of movement in the z or x axis depending on a number of physics variables
-    private void ConfigMovementAmount() 
+    private void ConfigMovementAmount()
     {
         if (currentCam == 1 || currentCam == 3)
         {
@@ -394,7 +389,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Apply opposite force to player movement to imitate friction
-    private void ApplyFriction(Vector2 inputVector) 
+    private void ApplyFriction(Vector2 inputVector)
     {
         if (isGrounded && Mathf.Abs(inputVector.x) < 0.01f && (currentCam == 1 || currentCam == 3) || ladderScript.onLadder && Mathf.Abs(inputVector.x) < 0.01f && (currentCam == 1 || currentCam == 3))
         {
@@ -411,7 +406,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Execute Jump only when certain conditions are met eg. when not jumping
-    private void ExecuteJump() 
+    private void ExecuteJump()
     {
         if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f && !isJumping)
             {
@@ -426,7 +421,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Modifies fall speed to become faster or slower
-    private void ModifyFallSpeed() 
+    private void ModifyFallSpeed()
     {
         if (Rb.velocity.y < 0 && Rb.useGravity == true && !inWater)
         {
@@ -443,7 +438,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Determines whether player is not near the edge - main use is to respawn at correct locations
-    private bool CheckIfPlayerNotNearEdge() 
+    private bool CheckIfPlayerNotNearEdge()
     {
         int layerMask = 1 << 8;
 
@@ -472,7 +467,6 @@ public class PlayerController : MonoBehaviour
     // Jump Input to be used when the player presses the Jump button in the input system
     public void Jump(InputAction.CallbackContext context)
     {
-
         jumpRequest = true;
         jumpBufferCounter = jumpBufferTime;
         if (context.canceled)
@@ -482,8 +476,7 @@ public class PlayerController : MonoBehaviour
             {
                 Rb.AddForce(Vector3.down * Rb.velocity.y * (1 - jumpCutMultiplier), ForceMode.Impulse);
             }
-       }
-        
+        }
     }
 
     //-----------------------------------------//

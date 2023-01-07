@@ -8,10 +8,15 @@ public class RebindingDisplay : MonoBehaviour
 {
 
     [SerializeField] private PlayerController playerController = null;
-    [SerializeField] private GameObject bindingDisplayNameText = null;
-    [SerializeField] private GameObject startRebindObject = null;
     [SerializeField] private GameObject waitingForInputObject = null;
     [SerializeField] private InputAction Action;
+    [SerializeField] private TextMeshProUGUI jumpText;
+    [SerializeField] private TextMeshProUGUI camRight;
+    [SerializeField] private TextMeshProUGUI camLeft;
+    [SerializeField] private TextMeshProUGUI movRight;
+    [SerializeField] private TextMeshProUGUI movLeft;
+    [SerializeField] private TextMeshProUGUI throwObj;
+    [SerializeField] private TextMeshProUGUI pickupObj;
 
     private InputActionRebindingExtensions.RebindingOperation rebindingOperation;
 
@@ -28,10 +33,11 @@ public class RebindingDisplay : MonoBehaviour
         .OnComplete(operation => {
         rebindingOperation.Dispose();
         waitingForInputObject.SetActive(false);
+        camRight.GetComponent<TMPro.TextMeshProUGUI>().text = InputControlPath.ToHumanReadableString(Action.bindings[4].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
         })
         .Start();
 
-        Action.Enable();    
+        Action.Enable();
     }
 
     public void RebindRotateCameraLeft()
@@ -47,6 +53,7 @@ public class RebindingDisplay : MonoBehaviour
         .OnComplete(operation => {
         rebindingOperation.Dispose();
         waitingForInputObject.SetActive(false);
+        camLeft.GetComponent<TMPro.TextMeshProUGUI>().text = InputControlPath.ToHumanReadableString(Action.bindings[3].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
         })
         .Start();
 
@@ -68,6 +75,7 @@ public class RebindingDisplay : MonoBehaviour
         .OnComplete(operation => {
         rebindingOperation.Dispose();
         waitingForInputObject.SetActive(false);
+        movRight.GetComponent<TMPro.TextMeshProUGUI>().text = InputControlPath.ToHumanReadableString(Action.bindings[right.bindingIndex].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
         })
         .Start();
 
@@ -89,6 +97,7 @@ public class RebindingDisplay : MonoBehaviour
         .OnComplete(operation => {
         rebindingOperation.Dispose();
         waitingForInputObject.SetActive(false);
+        movLeft.GetComponent<TMPro.TextMeshProUGUI>().text = InputControlPath.ToHumanReadableString(Action.bindings[left.bindingIndex].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
         })
         .Start();
 
@@ -107,15 +116,56 @@ public class RebindingDisplay : MonoBehaviour
         .OnComplete(operation => {
         rebindingOperation.Dispose();
         waitingForInputObject.SetActive(false);
+        jumpText.GetComponent<TMPro.TextMeshProUGUI>().text = InputControlPath.ToHumanReadableString(Action.bindings[0].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
         })
         .Start();
 
         Action.Enable();
     }
 
-    private void RebindComplete()
+    public void RebindThrow()
     {
+        Action = playerController.playerActionsScript.Player.Fire;
+        waitingForInputObject.SetActive(true);
+
+        Action.Disable();
+
+        rebindingOperation = Action.PerformInteractiveRebinding(5)
+        .OnMatchWaitForAnother(0.1f)
+        .OnComplete(operation => {
         rebindingOperation.Dispose();
         waitingForInputObject.SetActive(false);
+        throwObj.GetComponent<TMPro.TextMeshProUGUI>().text = InputControlPath.ToHumanReadableString(Action.bindings[5].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+        })
+        .Start();
+
+        Action.Enable();
+    }
+
+    public void RebindPickup()
+    {
+        Action = playerController.playerActionsScript.Player.Interact;
+        waitingForInputObject.SetActive(true);
+
+        Action.Disable();
+
+        rebindingOperation = Action.PerformInteractiveRebinding()
+        .OnMatchWaitForAnother(0.1f)
+        .OnComplete(operation => {
+        rebindingOperation.Dispose();
+        waitingForInputObject.SetActive(false);
+        pickupObj.GetComponent<TMPro.TextMeshProUGUI>().text = InputControlPath.ToHumanReadableString(Action.bindings[0].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+        })
+        .Start();
+
+        Action.Enable();
+    }
+
+    public void ResetJump()
+    {
+        Action = playerController.playerActionsScript.Player.Jump;
+        Action.Disable();
+        //Action.Rebind()
+        pickupObj.GetComponent<TMPro.TextMeshProUGUI>().text = InputControlPath.ToHumanReadableString(Action.bindings[0].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
     }
 }

@@ -541,26 +541,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 9173282485034384679}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45004ef8aaa484612b4a9c5a4fe9ed66, type: 3}
+  m_Script: {fileID: 11500000, guid: 0537b97a515f8d14e97043bd9a016998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   camScript: {fileID: 0}
   currentHealth: 0
   maxHealth: 1
   speed: 12
-  frictionAmount: 0.3
+  frictionAmount: 0.45
   acceleration: 17
   deceleration: 25
   isJumping: 0
-  jumpMultiplier: 14
+  jumpMultiplier: 12
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 128
-  groundCheck: {fileID: 9173282484750590619}
-  ladderCheck: {fileID: 2023358513}
+    m_Bits: 0
+  groundCheck: {fileID: 0}
+  ladderCheck: {fileID: 0}
   whatIsWater:
     serializedVersion: 2
-    m_Bits: 16
+    m_Bits: 0
   ladderScript: {fileID: 0}
 --- !u!136 &8363808424005067768
 CapsuleCollider:
