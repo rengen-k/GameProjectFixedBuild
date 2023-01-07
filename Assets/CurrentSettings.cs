@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class CurrentSettings : MonoBehaviour
 {
@@ -68,6 +69,13 @@ public class CurrentSettings : MonoBehaviour
 
     public ChangeSound changeSound;
     public ChangeGraphics changeGraphics;
+    public RebindingDisplay rebindingDisplay;
+
+    [SerializeField] private InputAction Action;
+    [SerializeField] private PlayerController playerController;
+    private InputActionRebindingExtensions.RebindingOperation rebindingOperation;
+
+    public PlayerActionsScript.PlayerActions script;
 
     void Start()
     {
@@ -81,13 +89,15 @@ public class CurrentSettings : MonoBehaviour
         BloomOn = false;
     }
 
+    void Awake()
+    {
+
+    }
+
     void Update()
     {
         try
         {
-            //changeGraphics = GameObject.FindWithTag("GraphicsScreen").GetComponent<ChangeGraphics>();
-            //changeSound = GameObject.FindWithTag("SoundScreen").GetComponent<ChangeSound>();
-
             changeSound.masterToggle.isOn = MasterOn;
             changeSound.masterVolumeSlider.value = MasterVolume;
 
@@ -138,7 +148,15 @@ public class CurrentSettings : MonoBehaviour
             changeGraphics.depthOfFieldFocusDistanceSlider.value = DepthOfFieldFocusDistance;
             changeGraphics.depthOfFieldApertureSlider.value = DepthOfFieldAperture;
             changeGraphics.depthOfFieldFocalLengthSlider.value = DepthOfFieldFocalLength;
-            
+
+            rebindingDisplay.camRight.GetComponent<TMPro.TextMeshProUGUI>().text = InputControlPath.ToHumanReadableString(RotateCameraRight.effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+            rebindingDisplay.camLeft.GetComponent<TMPro.TextMeshProUGUI>().text = InputControlPath.ToHumanReadableString(RotateCameraLeft.effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+            rebindingDisplay.movRight.GetComponent<TMPro.TextMeshProUGUI>().text = InputControlPath.ToHumanReadableString(MoveRight.effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+            rebindingDisplay.movLeft.GetComponent<TMPro.TextMeshProUGUI>().text = InputControlPath.ToHumanReadableString(MoveLeft.effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+            rebindingDisplay.throwObj.GetComponent<TMPro.TextMeshProUGUI>().text = InputControlPath.ToHumanReadableString(ThrowObject.effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+            rebindingDisplay.pickupObj.GetComponent<TMPro.TextMeshProUGUI>().text = InputControlPath.ToHumanReadableString(PickupObject.effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+            rebindingDisplay.jumpText.GetComponent<TMPro.TextMeshProUGUI>().text = InputControlPath.ToHumanReadableString(Jump.effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+
         } catch {
         }
 

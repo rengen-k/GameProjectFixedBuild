@@ -10,17 +10,23 @@ public class RebindingDisplay : MonoBehaviour
     [SerializeField] private PlayerController playerController = null;
     [SerializeField] private GameObject waitingForInputObject = null;
     [SerializeField] private InputAction Action;
-    [SerializeField] private TextMeshProUGUI jumpText;
-    [SerializeField] private TextMeshProUGUI camRight;
-    [SerializeField] private TextMeshProUGUI camLeft;
-    [SerializeField] private TextMeshProUGUI movRight;
-    [SerializeField] private TextMeshProUGUI movLeft;
-    [SerializeField] private TextMeshProUGUI throwObj;
-    [SerializeField] private TextMeshProUGUI pickupObj;
+    public TextMeshProUGUI jumpText;
+    public TextMeshProUGUI camRight;
+    public TextMeshProUGUI camLeft;
+    public TextMeshProUGUI movRight;
+    public TextMeshProUGUI movLeft;
+    public TextMeshProUGUI throwObj;
+    public TextMeshProUGUI pickupObj;
 
     public CurrentSettings currentSettings;
 
     private InputActionRebindingExtensions.RebindingOperation rebindingOperation;
+
+    private void Update()
+    {
+        currentSettings = GameObject.FindGameObjectWithTag("CurrentSettings").GetComponent<CurrentSettings>();
+        currentSettings.rebindingDisplay = this.gameObject.GetComponent<RebindingDisplay>();
+    }
 
     public void RebindRotateCameraRight()
     {
