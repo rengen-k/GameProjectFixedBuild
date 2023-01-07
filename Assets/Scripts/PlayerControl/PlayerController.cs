@@ -96,6 +96,9 @@ public class PlayerController : MonoBehaviour
     public LadderScript ladderScript;
     private Vector3 checkpoint;
 
+    public AudioSource soundManager;
+    public AudioClip footsteps;
+    public AudioClip landing;
 
     //-----------------------------------------//
     // Awake
@@ -134,6 +137,7 @@ public class PlayerController : MonoBehaviour
         model = transform.Find("Model");
         ladderScript = GetComponent<LadderScript>();
         swimCheck = ladderCheck;
+        soundManager = soundManager.GetComponent<AudioSource>();
     }
 
     //-----------------------------------------//
@@ -269,6 +273,14 @@ public class PlayerController : MonoBehaviour
         {
             swimCheck = ladderCheck;
             swimRadius = 0f;
+        }
+
+        if (Vector3.Distance(Rb.velocity, Vector3.zero) > 0.1 && (isGrounded || isStableGrounded) && Vector2.Distance(inputVector, Vector2.zero) > 0.1) 
+        {
+            if (!soundManager.isPlaying)
+            {
+                soundManager.PlayOneShot(footsteps);
+            }
         }
     }
 
@@ -541,6 +553,10 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(collision.transform.parent.gameObject);
         }
+        //else if (collision.gameObject.layer == 7 || collision.gameObject.layer == 8)
+        //{
+        //    soundManager.PlayOneShot(landing);
+        //}
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -702,4 +718,5 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         swimming = inWater;
     }
+
 }
