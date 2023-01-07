@@ -1,0 +1,2 @@
+ds
+<b>Scrawled Handwriting:</b> <i>This mechanical construct seems to be a damaged relic from the past. The button may reignite it once more. Once triggered, it seems as if the platforms currently accessible vary.</i>

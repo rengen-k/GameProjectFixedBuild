@@ -1,4 +1,4 @@
-﻿Scanning... 0 Entities detected (2.452ms)
+Scanning... 0 Entities detected (2.452ms)
 Scanning... 0 Entities detected (2.232ms)
 Scanning... 1 Entities detected (2.88ms)
 LOADING TASKS<br>EXECUTE CHASE PROTOCAL

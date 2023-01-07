@@ -86,11 +86,11 @@ public class DialogueTriggerAutoDestroy : MonoBehaviour
     {   
         if (other.gameObject.tag == "Player" && DialogueManager.GetInstance().isDialoguePlaying()) {
             // Debug.Log("Exit trigger");
-
+            playerInRange = false;
             if (DialogueManager.GetInstance().IsTriggerCalled(gameObject)) {
                 DialogueManager.GetInstance().RemoveTriggerCalled(gameObject);
             }
-            playerInRange = false;
+            
         }
     }
     
