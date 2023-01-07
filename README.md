@@ -102,7 +102,10 @@ https://www.youtube.com/watch?v=c8Nq19gkNfs
 https://www.youtube.com/watch?v=vY0Sk93YUhA
 - Key and Door System
 https://www.youtube.com/watch?v=MIt0PJHMN5Y
-
+- Water Shader
+https://youtu.be/FWO4k4-vXXA
+- Frog Rotation
+https://forum.unity.com/threads/how-do-i-update-the-rotation-of-a-navmeshagent.707579/ 
 
 
 
