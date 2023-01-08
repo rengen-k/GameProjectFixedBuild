@@ -160,7 +160,7 @@ public class PlayerController : MonoBehaviour
         anim = model.GetComponent<Animator>();
         ladderScript = GetComponent<LadderScript>();
         swimCheck = ladderCheck;
-        soundManager = GameObject.Find("SoundManager").GetComponent<AudioSource>();
+        soundManager = GameObject.FindWithTag("SoundEffects").GetComponent<AudioSource>();
     }
 
     //-----------------------------------------//
@@ -211,6 +211,7 @@ public class PlayerController : MonoBehaviour
         JumpGroundDetection();
         ConfigCoyoteTimeCounter();
         UpdateRespawn();
+
     }
 
     private void JumpGroundDetection() 
