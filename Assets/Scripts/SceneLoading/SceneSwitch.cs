@@ -31,11 +31,15 @@ public class SceneSwitch : MonoBehaviour
                 tracker = GameObject.Find("GlobalGameState");
             }
             tracker.GetComponent<GameState>().EndLevel();
+
             if (autoLoad)
             {
                 SceneManager.LoadScene(nextSceneName);
             }
-            LoadScene();
+            else
+            {
+                LoadScene();
+            }
         }
     }
 
