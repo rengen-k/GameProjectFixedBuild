@@ -171,7 +171,7 @@ public class FrogEnemy : MonoBehaviour
 
     private void Jump()
     {
-        soundManager.PlayOneShot(frogJump);
+        //soundManager.PlayOneShot(frogJump);
         grounded = false;
         if (agent.enabled)
         {
@@ -195,7 +195,7 @@ public class FrogEnemy : MonoBehaviour
         agent.updatePosition = false;
         agent.updateRotation = false;
         agent.isStopped = true;
-        //soundManager.PlayOneShot(tongue);
+        soundManager.PlayOneShot(tongue);
         StartCoroutine(TongueMovement());
         StartCoroutine(AttackCooldown());
     }

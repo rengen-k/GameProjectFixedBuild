@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 //-----------------------------------------//
 // PickupItem
@@ -29,6 +30,8 @@ public class PickupItem : MonoBehaviour
     private bool inWater = false;
     [SerializeField] private LayerMask whatIsWater;
     private float waterRadius;
+    private int frames = 0;
+    private float previousYVel;
 
     private AudioSource soundManager;
     public AudioClip pickup_item;
@@ -72,6 +75,8 @@ public class PickupItem : MonoBehaviour
         {
             transform.position = pickupPoint.position + (transform.localScale.x * -GameObject.Find("Model").transform.forward);
         }
+
+
     }
 
     private void FixedUpdate()
@@ -95,6 +100,16 @@ public class PickupItem : MonoBehaviour
         {
             rb.drag = 0;
             rb.AddForce(Physics.gravity * 1.2f, ForceMode.Acceleration);
+        }
+
+        if (frames > 3)
+        {
+            previousYVel = rb.velocity.y;
+            frames = 0;
+        }
+        else
+        {
+            frames++;
         }
     }
 
@@ -146,7 +161,7 @@ public class PickupItem : MonoBehaviour
         {
             Respawn();
         }
-        else if (other.gameObject.layer == 7 || other.gameObject.layer == 8)
+        else if ((other.gameObject.layer == 7 || other.gameObject.layer == 8) && previousYVel < 0)
         {
             soundManager.PlayOneShot(landing, 0.8f);
         }

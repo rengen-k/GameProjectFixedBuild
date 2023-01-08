@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 //-----------------------------------------//
 // Player Controller
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float acceleration = 17;
     [SerializeField] private float deceleration = 25;
     private RigidbodyConstraints disableConstraints;
+
     //-------------------------//
     // Jump
     private float jumpBufferTime = 0.4f;
@@ -98,6 +100,8 @@ public class PlayerController : MonoBehaviour
 
     //-------------------------//
     // Audio
+    private int frames = 0;
+    private float previousYVel;
     public AudioSource soundManager;
     public AudioClip footsteps;
     public AudioClip landing;
@@ -107,6 +111,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip spikeDeath;
     public AudioClip fallDeath;
     public AudioClip enemyDeath;
+    public AudioClip underwater;
 
     //-----------------------------------------//
     // Awake
@@ -196,6 +201,8 @@ public class PlayerController : MonoBehaviour
         JumpGroundDetection();
         ConfigCoyoteTimeCounter();
         UpdateRespawn();
+
+        Debug.Log(previousYVel);
     }
 
     private void JumpGroundDetection() 
@@ -264,6 +271,10 @@ public class PlayerController : MonoBehaviour
         // adjusts movement values depending on if you are in water
         if (inWater)
         {
+            if (!soundManager.isPlaying)
+            {
+                soundManager.PlayOneShot(underwater);
+            }
             modifyWaterMovementValues();
         }
         else
@@ -289,6 +300,17 @@ public class PlayerController : MonoBehaviour
             {
                 soundManager.PlayOneShot(footsteps);
             }
+        }
+
+        // for playing landing sound correctly
+        if (frames > 5)
+        {
+            previousYVel = Rb.velocity.y;
+            frames = 0;
+        }
+        else
+        {
+            frames++;
         }
     }
 
@@ -543,9 +565,9 @@ public class PlayerController : MonoBehaviour
     // JumpTag - Bounce Up
     private void OnCollisionEnter(Collision collision) 
     {
-        if ((collision.gameObject.layer == 7 || collision.gameObject.layer == 8))
+        if ((collision.gameObject.layer == 7 || collision.gameObject.layer == 8) && previousYVel < -2)
         {
-            //soundManager.PlayOneShot(landing, 0.8f);
+            soundManager.PlayOneShot(landing, 0.8f);
         }
 
         else if (collision.gameObject.tag == "HurtTag1" && !isHurt) 
