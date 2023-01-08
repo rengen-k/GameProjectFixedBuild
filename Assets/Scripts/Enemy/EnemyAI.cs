@@ -21,6 +21,7 @@ public class EnemyAI : MonoBehaviour
     private int waypointIndex;
     private Vector3 target;
     private float originalSpeed;
+    private Vector3 respawnPos;
 
     // variables for following player
     [SerializeField] private bool followsPlayer;
@@ -29,6 +30,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Start()
     {
+        respawnPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.3f, gameObject.transform.position.z);
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.Find("Player").transform;
         originalSpeed = agent.speed;
@@ -75,7 +77,8 @@ public class EnemyAI : MonoBehaviour
     }
 
     public void Respawn()
-    {
+    { 
+        transform.position = respawnPos;
         transform.position = respawnPoint.position;
     }
 
