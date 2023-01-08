@@ -101,6 +101,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip landing;
     public AudioClip rotate;
     public AudioClip trampoline;
+    public AudioClip splash;
 
     //-----------------------------------------//
     // Awake
@@ -557,10 +558,10 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(collision.transform.parent.gameObject);
         }
-        //else if (collision.gameObject.layer == 7 || collision.gameObject.layer == 8)
-        //{
-        //    soundManager.PlayOneShot(landing);
-        //}
+        else if (collision.gameObject.layer == 7 || collision.gameObject.layer == 8)
+        {
+            soundManager.PlayOneShot(landing);
+        }
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -572,6 +573,10 @@ public class PlayerController : MonoBehaviour
         else if (collision.gameObject.tag == "HurtTag1" && !isHurt)
         {
             Hurt(collision.transform.position);
+        }
+        else if (collision.gameObject.layer == 4)
+        {
+            soundManager.PlayOneShot(splash);
         }
     }
 
