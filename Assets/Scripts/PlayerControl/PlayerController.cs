@@ -84,21 +84,6 @@ public class PlayerController : MonoBehaviour
     private bool nearLedge;
 
     //-------------------------//
-    // Respawn
-    private Vector3 lastGroundedPosition;
-    private bool updateRespawnPosition = true;
-    private bool isNotNearEdge;
-    private Vector3 originalPos;
-
-    private bool RespawnRaycastMinusX;
-    private bool RespawnRaycastMinusZ;
-    private bool RespawnRaycastPlusX;
-    private bool RespawnRaycastPlusZ;
-
-    public LadderScript ladderScript;
-    private Vector3 checkpoint;
-
-    //-------------------------//
     // Audio
     private int frames = 0;
     private float previousYVel;
@@ -112,6 +97,21 @@ public class PlayerController : MonoBehaviour
     public AudioClip fallDeath;
     public AudioClip enemyDeath;
     public AudioClip underwater;
+
+    //-------------------------//
+    // Respawn
+    private Vector3 lastGroundedPosition;
+    private bool updateRespawnPosition = true;
+    private bool isNotNearEdge;
+    private Vector3 originalPos;
+
+    private bool RespawnRaycastMinusX;
+    private bool RespawnRaycastMinusZ;
+    private bool RespawnRaycastPlusX;
+    private bool RespawnRaycastPlusZ;
+
+    public LadderScript ladderScript;
+    private Vector3 checkpoint;
 
     //-----------------------------------------//
     // Awake
@@ -565,12 +565,7 @@ public class PlayerController : MonoBehaviour
     // JumpTag - Bounce Up
     private void OnCollisionEnter(Collision collision) 
     {
-        if ((collision.gameObject.layer == 7 || collision.gameObject.layer == 8) && previousYVel < -2)
-        {
-            soundManager.PlayOneShot(landing, 0.8f);
-        }
-
-        else if (collision.gameObject.tag == "HurtTag1" && !isHurt) 
+        if (collision.gameObject.tag == "HurtTag1" && !isHurt) 
         {
             soundManager.PlayOneShot(spikeDeath);
             Hurt(collision.transform.position);
@@ -592,6 +587,10 @@ public class PlayerController : MonoBehaviour
         {
             soundManager.PlayOneShot(enemyDeath);
             Destroy(collision.transform.parent.gameObject);
+        }
+        else if ((collision.gameObject.layer == 7 || collision.gameObject.layer == 8) && previousYVel < -2)
+        {
+            soundManager.PlayOneShot(landing, 0.8f);
         }
     }
 
