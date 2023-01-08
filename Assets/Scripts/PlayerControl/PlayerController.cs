@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody Rb;
     private Transform model;
     private PlayerInput playerInput;
-    private PlayerActionsScript playerActionsScript;
+    public PlayerActionsScript playerActionsScript;
 
     //-------------------------//
     // Camera
