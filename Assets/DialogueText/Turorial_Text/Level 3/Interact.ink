@@ -1,0 +1,1 @@
+<b>Mysterious Voice:</b> Press E to pickup an object. Press it again to drop it. Some buttons require an object to be kept on it to remain activated.

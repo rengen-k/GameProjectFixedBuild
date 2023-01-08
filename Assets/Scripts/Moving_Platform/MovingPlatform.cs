@@ -12,7 +12,10 @@ public class MovingPlatform : MonoBehaviour
 {
     [SerializeField] private WaypointPath _waypointPath;
     [SerializeField] private float _speed;
+    private float defaultSpeed;
     [SerializeField] private int _startingIndex;
+    private GameState gameState;
+    private int diff;
 
     private int _targetWaypointIndex;
 
@@ -24,8 +27,35 @@ public class MovingPlatform : MonoBehaviour
 
     private void Start()
     {
+        gameState = GameObject.Find("GlobalGameState").GetComponent<GameState>();
+        diff = gameState.GetDifficulty();
+        defaultSpeed = _speed;
         _targetWaypointIndex = _startingIndex;
         TargetNextWaypoint();
+        difficultyChangeSpeed();
+    }
+
+    private void difficultyChangeSpeed()
+    {
+        int newDiff = gameState.GetDifficulty();
+        if (newDiff == diff) {
+            return;
+        }
+        diff = newDiff;
+
+        switch(diff) 
+        {
+        case 0:
+            _speed = 0.7f * _speed;
+            break;
+        case 1:
+            _speed = defaultSpeed;
+            break;
+        case 2:
+            _speed = 1.2f * _speed;
+            break;
+        }
+
     }
 
     // Move platform from previous waypoint position to target waypoint position
@@ -42,6 +72,10 @@ public class MovingPlatform : MonoBehaviour
         {
             TargetNextWaypoint();
         }
+    }
+
+    private void Update() {
+        difficultyChangeSpeed();
     }
 
     // Get next waypoint (whenever elapsed percentage is 1)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,11 +6,21 @@ using UnityEngine.SceneManagement;
 
 public class SceneSwitch : MonoBehaviour
 {
-    //Level Loader script, to advance to next level
+    //Level Loader script to advance to next level
     [Tooltip("Fields deciding what the next level to load is.")]
     [SerializeField] private string nameOfSceneToLoad;
-    [SerializeField] private int indexOfSceneToLoad;
-    [SerializeField] private bool loadWithIndex;
+    [SerializeField] private bool autoLoad;
+    private Scene currentScene;
+    private string currentSceneName;
+    private string nextSceneName;
+
+
+    private void Start() {
+        currentScene = SceneManager.GetActiveScene();
+        currentSceneName = currentScene.name;
+        string[] words = currentSceneName.Split(' ');
+        nextSceneName = words[0] + " " + (Int32.Parse(words[1]) + 1);
+    }
     
     private void OnTriggerEnter(Collider collision) {
         GameObject collisionGameObject = collision.gameObject;
@@ -20,7 +31,15 @@ public class SceneSwitch : MonoBehaviour
                 tracker = GameObject.Find("GlobalGameState");
             }
             tracker.GetComponent<GameState>().EndLevel();
-            LoadScene();
+
+            if (autoLoad)
+            {
+                SceneManager.LoadScene(nextSceneName);
+            }
+            else
+            {
+                LoadScene();
+            }
         }
     }
 
