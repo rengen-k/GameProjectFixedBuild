@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour
 
     //-------------------------//
     // Respawn
-    private Vector3 lastGroundedPosition;
+    public Vector3 lastGroundedPosition;
     private bool updateRespawnPosition = true;
     private bool isNotNearEdge;
     private Vector3 originalPos;
