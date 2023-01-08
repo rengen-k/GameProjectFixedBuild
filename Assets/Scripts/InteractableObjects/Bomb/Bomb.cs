@@ -44,7 +44,7 @@ public class Bomb : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         timer.transform.parent.GetComponent<Canvas>().worldCamera = GameObject.Find("UICamera").GetComponent<Camera>();
         respawnPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.1f, gameObject.transform.position.z);
-        soundManager = soundManager.GetComponent<AudioSource>();
+        soundManager = GameObject.FindWithTag("SoundEffects").GetComponent<AudioSource>();
     }
 
     private void OnEnable()
