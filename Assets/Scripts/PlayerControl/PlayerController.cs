@@ -43,11 +43,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float acceleration = 17;
     [SerializeField] private float deceleration = 25;
     private RigidbodyConstraints disableConstraints;
-<<<<<<< HEAD
-
-=======
-    private bool isMoving = false;
->>>>>>> T-Player-Animations
+    public bool isMoving = false;
     //-------------------------//
     // Jump
     private float jumpBufferTime = 0.4f;
@@ -58,7 +54,7 @@ public class PlayerController : MonoBehaviour
     private float jumpCutMultiplier = 0.5f;
     private float fallMultiplier = 2f;
     [SerializeField] private float jumpMultiplier = 12f;
-    private bool isAirborne = false;
+    public bool isAirborne = false;
 
     // Fixed Jump Values
     private float landJumpMultiplier = 12f;
@@ -118,22 +114,13 @@ public class PlayerController : MonoBehaviour
     public LadderScript ladderScript;
     private Vector3 checkpoint;
 
-<<<<<<< HEAD
-=======
     //-------------------------//
     // Difficulty
     private int diff;
 
-    //-------------------------//
-    // Audio
-    public AudioSource soundManager;
-    public AudioClip footsteps;
-    public AudioClip landing;
-
     private Animator anim;
 
 
->>>>>>> T-Player-Animations
     //-----------------------------------------//
     // Awake
     //-----------------------------------------//
@@ -264,13 +251,21 @@ public class PlayerController : MonoBehaviour
         CheckIfGroundedorStableGrounded();
         Vector2 inputVector = playerActionsScript.Player.Move.ReadValue<Vector2>();
         //FIXME, This does play the run animation when needed, but it doesn't do it as cleanly as possible. 
-        if (!isMoving){
-            if (inputVector.x != 0 && !isAirborne)
+        if (!isAirborne)
+        {
+
+            if (inputVector.x != 0)
             {
                 anim.Play("BasicMotions@Run01 - Forwards");
-                StartCoroutine(IdleRunCooldown());
+                isMoving = true;
+            }
+            else if (inputVector.x == 0 && isMoving)
+            {
+                anim.Play("BasicMotions@Idle01");
+                isMoving = false;
             }
         }
+       
         SetMovementDirection(inputVector);
         ConfigPlayerModelRotationDirection();
         ConfigMovementAmount();
@@ -423,11 +418,11 @@ public class PlayerController : MonoBehaviour
         }
         else if (movement.z < 0)
         {
-            model.rotation = transform.rotation * Quaternion.Euler(0, 0, 0);
+            model.rotation = transform.rotation * Quaternion.Euler(0, 180, 0);
         }
         else if (movement.z > 0)
         {
-            model.rotation = transform.rotation * Quaternion.Euler(0, 180, 0);
+            model.rotation = transform.rotation * Quaternion.Euler(0, 0, 0);
         }
     }
 
@@ -619,11 +614,8 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.gameObject.tag == "JumpTag" && !isJumpTrampoline)
         {
-<<<<<<< HEAD
             soundManager.PlayOneShot(trampoline);
-=======
 
->>>>>>> T-Player-Animations
             coyoteTimeCounter = 0f;
             StartCoroutine(TrampolineCooldown());
             Rb.velocity = Vector3.zero;
@@ -766,13 +758,6 @@ public class PlayerController : MonoBehaviour
     // Cooldowns (Coroutines)
     //-----------------------------------------//
     // Coroutines that act as cooldowns to ensure that action is only performed at specified intervals
-
-    private IEnumerator IdleRunCooldown()
-    {
-        isMoving = true;
-        yield return new WaitForSeconds(0.2f);
-        isMoving = false;
-    }
 
     private IEnumerator JumpCooldown()
     {
