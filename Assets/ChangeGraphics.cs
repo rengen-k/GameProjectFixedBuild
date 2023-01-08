@@ -98,11 +98,15 @@ public class ChangeGraphics : MonoBehaviour
             currentSettings.changeGraphics = this.gameObject.GetComponent<ChangeGraphics>();
         }
 
+        Volume = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<PostProcessVolume>();
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
     }
 
     private void Start()
     {
-        Volume = Volume.GetComponent<PostProcessVolume>();
+        //Volume = Volume.GetComponent<PostProcessVolume>();
+        Volume = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<PostProcessVolume>();
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         Volume.profile.TryGetSettings(out bloomEffect);
         Volume.profile.TryGetSettings(out ambientOcclusionEffect);
         Volume.profile.TryGetSettings(out autoExposureEffect);

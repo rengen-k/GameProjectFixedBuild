@@ -14,9 +14,10 @@ public class SceneSwitch : MonoBehaviour
 
     [SerializeField] private Animator fade;
 
-    void Start()
+    void Update()
     {
         fade = GameObject.FindGameObjectWithTag("Fade").GetComponent<Animator>();
+        print("1");
     }
 
     private void OnTriggerEnter(Collider collision) {
