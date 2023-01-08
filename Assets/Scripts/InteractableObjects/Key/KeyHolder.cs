@@ -51,7 +51,7 @@ public class KeyHolder : MonoBehaviour
 
     public void AddKey(Key.KeyType keyType)
     {
-        soundManager.PlayOneShot(keyCollect);
+        soundManager.PlayOneShot(keyCollect, 0.8f);
         keyList.Add(keyType);
         OnKeysChanged?.Invoke(this, EventArgs.Empty);
     }
@@ -101,7 +101,7 @@ public class KeyHolder : MonoBehaviour
         if (ContainsKey(keyDoor.GetKeyType()))
         {
             RemoveKey(keyDoor.GetKeyType());
-            soundManager.PlayOneShot(openDoor);
+            soundManager.PlayOneShot(openDoor, 0.8f);
             keyDoor.OpenDoor();
         }
 

@@ -201,8 +201,6 @@ public class PlayerController : MonoBehaviour
         JumpGroundDetection();
         ConfigCoyoteTimeCounter();
         UpdateRespawn();
-
-        Debug.Log(previousYVel);
     }
 
     private void JumpGroundDetection() 
@@ -572,7 +570,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.gameObject.name == "KillPlane")
         {
-            soundManager.PlayOneShot(fallDeath);
+            soundManager.PlayOneShot(fallDeath, 0.4f);
             Respawn();
         }
         else if (collision.gameObject.tag == "JumpTag" && !isJumpTrampoline)
