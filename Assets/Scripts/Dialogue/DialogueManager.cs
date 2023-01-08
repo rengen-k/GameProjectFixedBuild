@@ -19,12 +19,14 @@ public class DialogueManager : MonoBehaviour
     private static DialogueManager instance;
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
+    [SerializeField] private bool resetToLevel0;
 
     private List<GameObject> triggeredNPCs = new List<GameObject>();
     private DialogueTrigger[] allNPCObjectsInteract;
     private DialogueTriggerAuto[] allNPCObjects;
     private DialogueTriggerAutoDestroy[] allNPCObjectsDestroy;
     private GameObject[] allNPCs;
+    private SceneSwitch sceneSwitch;
 
     private Story currentStory;
     public bool dialogueIsPlaying;
@@ -34,6 +36,7 @@ public class DialogueManager : MonoBehaviour
 
     private void OnEnable()
     {
+        sceneSwitch = GameObject.Find("LevelLoader").GetComponent<SceneSwitch>();
         InitPlayerInput();
         ConfigPlayerInput();
     }
@@ -93,6 +96,10 @@ public class DialogueManager : MonoBehaviour
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+        if (resetToLevel0)
+        {
+            sceneSwitch.LoadLevel0();
+        }
     }
 
     // If the talk key is pressed, then continue the story

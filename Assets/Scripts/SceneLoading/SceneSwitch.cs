@@ -13,9 +13,10 @@ public class SceneSwitch : MonoBehaviour
     private Scene currentScene;
     private string currentSceneName;
     private string nextSceneName;
-
+    private GameState gameState;
 
     private void Start() {
+        gameState = GameObject.Find("GlobalGameState").GetComponent<GameState>();
         currentScene = SceneManager.GetActiveScene();
         currentSceneName = currentScene.name;
         string[] words = currentSceneName.Split(' ');
@@ -32,18 +33,25 @@ public class SceneSwitch : MonoBehaviour
             }
             tracker.GetComponent<GameState>().EndLevel();
 
+            if (currentSceneName == "Level 15" && gameState.totalCollectibles >= 25)
+            {
+                 SceneManager.LoadScene("True_Ending");
+            }
+
             if (autoLoad)
             {
                 SceneManager.LoadScene(nextSceneName);
             }
-            else
-            {
-                LoadScene();
-            }
+
+            LoadScene();
         }
     }
 
     private void LoadScene() {
         SceneManager.LoadScene(nameOfSceneToLoad);
+    }
+
+    public void LoadLevel0() {
+        SceneManager.LoadScene("Level 0");
     }
 }
