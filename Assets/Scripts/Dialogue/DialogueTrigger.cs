@@ -10,6 +10,8 @@ public class DialogueTrigger : MonoBehaviour
     private PlayerActionsScript playerActionsScript;
     private bool talkPressed;
     [SerializeField] private TextAsset inkJSON;
+    private AudioSource soundManager;
+    public AudioClip dialogueStart;
 
     private bool playerInRange;
 
@@ -17,6 +19,7 @@ public class DialogueTrigger : MonoBehaviour
     {
         InitPlayerInput();
         ConfigPlayerInput();
+        soundManager = GameObject.Find("SoundManager").GetComponent<AudioSource>();
     }
 
     private void InitPlayerInput() 
@@ -70,6 +73,7 @@ public class DialogueTrigger : MonoBehaviour
 
     public void Talk(InputAction.CallbackContext context)
     {
+        soundManager.PlayOneShot(dialogueStart);
         if (playerInRange) {
             // Debug.Log("Boom");
             talkPressed = true;
