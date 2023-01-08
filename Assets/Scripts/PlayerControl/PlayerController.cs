@@ -43,7 +43,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float acceleration = 17;
     [SerializeField] private float deceleration = 25;
     private RigidbodyConstraints disableConstraints;
+<<<<<<< HEAD
 
+=======
+    private bool isMoving = false;
+>>>>>>> T-Player-Animations
     //-------------------------//
     // Jump
     private float jumpBufferTime = 0.4f;
@@ -54,6 +58,7 @@ public class PlayerController : MonoBehaviour
     private float jumpCutMultiplier = 0.5f;
     private float fallMultiplier = 2f;
     [SerializeField] private float jumpMultiplier = 12f;
+    private bool isAirborne = false;
 
     // Fixed Jump Values
     private float landJumpMultiplier = 12f;
@@ -113,12 +118,29 @@ public class PlayerController : MonoBehaviour
     public LadderScript ladderScript;
     private Vector3 checkpoint;
 
+<<<<<<< HEAD
+=======
+    //-------------------------//
+    // Difficulty
+    private int diff;
+
+    //-------------------------//
+    // Audio
+    public AudioSource soundManager;
+    public AudioClip footsteps;
+    public AudioClip landing;
+
+    private Animator anim;
+
+
+>>>>>>> T-Player-Animations
     //-----------------------------------------//
     // Awake
     //-----------------------------------------//
     private void Awake()
     {
         Rb = GetComponent<Rigidbody>();
+        
         checkpoint = transform.position;
         InitMovement();
         ConfigureGroundCheckAndRadius();
@@ -148,6 +170,7 @@ public class PlayerController : MonoBehaviour
         ResetPlayerHealth();
         playerInput = GetComponent<PlayerInput>();
         model = transform.Find("Model");
+        anim = model.GetComponent<Animator>();
         ladderScript = GetComponent<LadderScript>();
         swimCheck = ladderCheck;
         soundManager = GameObject.Find("SoundManager").GetComponent<AudioSource>();
@@ -237,9 +260,17 @@ public class PlayerController : MonoBehaviour
     // Performs movement, jumping, ground detection, and physics while there is an input
     private void FixedUpdate()
     {
+        
         CheckIfGroundedorStableGrounded();
         Vector2 inputVector = playerActionsScript.Player.Move.ReadValue<Vector2>();
-
+        //FIXME, This does play the run animation when needed, but it doesn't do it as cleanly as possible. 
+        if (!isMoving){
+            if (inputVector.x != 0 && !isAirborne)
+            {
+                anim.Play("BasicMotions@Run01 - Forwards");
+                StartCoroutine(IdleRunCooldown());
+            }
+        }
         SetMovementDirection(inputVector);
         ConfigPlayerModelRotationDirection();
         ConfigMovementAmount();
@@ -334,6 +365,17 @@ public class PlayerController : MonoBehaviour
     private void CheckIfGroundedorStableGrounded() 
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (int)whatIsGround) || Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
+        if (!isGrounded && !isAirborne)
+        {
+            isAirborne = true;
+            anim.Play("BasicMotions@Jump01 - MidAir");
+        }
+        
+        if (isAirborne && isGrounded)
+        {
+            anim.Play("BasicMotions@Jump01 - Land");
+            isAirborne = false;
+        }
         isStableGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
         inWater = Physics.CheckSphere(swimCheck.position, swimRadius, (int)whatIsWater);
         nearLedge = Physics.CheckSphere(swimCheck.position, groundRadius + 0.3f, (int)whatIsGround);
@@ -373,11 +415,11 @@ public class PlayerController : MonoBehaviour
     {
         if (movement.x > 0)
         {
-            model.rotation = transform.rotation * Quaternion.Euler(0, -90, 0);
+            model.rotation = transform.rotation * Quaternion.Euler(0, 90, 0);
         }
         else if (movement.x < 0)
         {
-            model.rotation = transform.rotation * Quaternion.Euler(0, 90, 0);
+            model.rotation = transform.rotation * Quaternion.Euler(0, -90, 0);
         }
         else if (movement.z < 0)
         {
@@ -450,9 +492,11 @@ public class PlayerController : MonoBehaviour
     {
         if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f && !isJumping)
             {
+                anim.Play("BasicMotions@Jump01");
                 jumpBufferCounter = jumpBufferTime;
                 coyoteTimeCounter = 0f;
                 jumpRequest = false;
+                isAirborne = true;
 
                 Rb.velocity = new Vector3(Rb.velocity.x, 0f, Rb.velocity.z);
                 Rb.AddForce(Vector3.up * jumpMultiplier, ForceMode.Impulse);
@@ -575,7 +619,11 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.gameObject.tag == "JumpTag" && !isJumpTrampoline)
         {
+<<<<<<< HEAD
             soundManager.PlayOneShot(trampoline);
+=======
+
+>>>>>>> T-Player-Animations
             coyoteTimeCounter = 0f;
             StartCoroutine(TrampolineCooldown());
             Rb.velocity = Vector3.zero;
@@ -718,6 +766,14 @@ public class PlayerController : MonoBehaviour
     // Cooldowns (Coroutines)
     //-----------------------------------------//
     // Coroutines that act as cooldowns to ensure that action is only performed at specified intervals
+
+    private IEnumerator IdleRunCooldown()
+    {
+        isMoving = true;
+        yield return new WaitForSeconds(0.2f);
+        isMoving = false;
+    }
+
     private IEnumerator JumpCooldown()
     {
         isJumping = true;
