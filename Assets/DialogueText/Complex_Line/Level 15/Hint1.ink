@@ -1,2 +1,2 @@
 ds
-<b>Deranged Handwriting:</b> <i>How long... has it been without meeting anyone? How long...until I reach the top. It may be the effects of the tower, but I may be hallucinating... The blocks.. they seem to move whenever I change my perspective... </i>
+<b>Demented Handwriting:</b> <i>The treasure... it is just within arms reach!  THE TREASURE! All I have to do is rotate the puzzle pieces to unlock the bridge right? Is it that simple? </i>

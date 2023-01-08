@@ -115,3 +115,5 @@ https://www.youtube.com/watch?v=MIt0PJHMN5Y
 https://youtu.be/FWO4k4-vXXA
 - Frog Rotation
 https://forum.unity.com/threads/how-do-i-update-the-rotation-of-a-navmeshagent.707579/
+- PCG Water
+Raluca Gaina - ECS657U Multi-platform Game Development 2022/23 - Lecture 5
