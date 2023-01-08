@@ -33,6 +33,7 @@ public class PickupItem : MonoBehaviour
     private AudioSource soundManager;
     public AudioClip pickup_item;
     public AudioClip drop_item;
+    public AudioClip landing;
 
 
     private Vector3 respawnPos;
@@ -145,31 +146,11 @@ public class PickupItem : MonoBehaviour
         {
             Respawn();
         }
-        //Debug.Log("collision");
-        //if (other.gameObject.layer == 1 << 4)
-        //{
-        //    Debug.Log("in water");
-        //    inWater = true;
-        //}
+        else if (other.gameObject.layer == 7 || other.gameObject.layer == 8)
+        {
+            soundManager.PlayOneShot(landing, 0.8f);
+        }
     }
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
-    //    {
-    //        Debug.Log("in water");
-    //        inWater = true;
-    //    }
-    //}
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
-    //    {
-    //        Debug.Log("out of water");
-    //        inWater = false;
-    //    }
-    //}
 
     private void Respawn()
     {

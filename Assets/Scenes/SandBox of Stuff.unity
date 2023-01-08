@@ -1765,6 +1765,10 @@ PrefabInstance:
       value: PickupObject
       objectReference: {fileID: 0}
     - target: {fileID: 6678616722628432882, guid: 4186d877a5b950340907efba059a3b36, type: 3}
+      propertyPath: landing
+      value: 
+      objectReference: {fileID: 8300000, guid: 0462feb393ce2b64b9f78c8bc9303014, type: 3}
+    - target: {fileID: 6678616722628432882, guid: 4186d877a5b950340907efba059a3b36, type: 3}
       propertyPath: drop_item
       value: 
       objectReference: {fileID: 8300000, guid: c9bf58fff6ea6a64ebb92dca3568bdc6, type: 3}
@@ -2294,7 +2298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8292551349714455528, guid: 4d1780b184639114d84cb4fa524049d5, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8292551349714455528, guid: 4d1780b184639114d84cb4fa524049d5, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -2602,7 +2606,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -5085,6 +5089,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrampolineEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 3609562044966505148, guid: da855df396e88422c9cb57881d550060, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: da855df396e88422c9cb57881d550060, type: 3}
@@ -5294,6 +5302,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3655318758706731404, guid: 383653e97065e44e19e4ea8c4002b20e, type: 3}
+      propertyPath: tongue
+      value: 
+      objectReference: {fileID: 8300000, guid: d740780d9ace04d42bca8c0e7e46e31a, type: 3}
+    - target: {fileID: 3655318758706731404, guid: 383653e97065e44e19e4ea8c4002b20e, type: 3}
+      propertyPath: frogJump
+      value: 
+      objectReference: {fileID: 8300000, guid: 75cc6ba369ff38d48bc9eb4edec2d269, type: 3}
+    - target: {fileID: 3655318758706731404, guid: 383653e97065e44e19e4ea8c4002b20e, type: 3}
       propertyPath: respawnPoint
       value: 
       objectReference: {fileID: 1896993329}
@@ -5379,7 +5395,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4036306179454983549, guid: 383653e97065e44e19e4ea8c4002b20e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -5501,7 +5517,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3931909882675135473, guid: f27ad5ac18c8e42da97480a4ddf9464c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 95.89
+      value: 65.32
       objectReference: {fileID: 0}
     - target: {fileID: 3931909882675135473, guid: f27ad5ac18c8e42da97480a4ddf9464c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6337,6 +6353,10 @@ PrefabInstance:
       propertyPath: maxHealth
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9173282485034384676, guid: 4aa76f037130cb144a0ae881838a4226, type: 3}
+      propertyPath: enemyDeath
+      value: 
+      objectReference: {fileID: 8300000, guid: 2a79fc8a65436bd4cb2324a6285866df, type: 3}
     - target: {fileID: 9173282485034384676, guid: 4aa76f037130cb144a0ae881838a4226, type: 3}
       propertyPath: spikeDeath
       value: 
