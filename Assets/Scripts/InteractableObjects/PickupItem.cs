@@ -30,6 +30,11 @@ public class PickupItem : MonoBehaviour
     [SerializeField] private LayerMask whatIsWater;
     private float waterRadius;
 
+    private AudioSource soundManager;
+    public AudioClip pickup_item;
+    public AudioClip drop_item;
+
+
     private Vector3 respawnPos;
 
     void Start()
@@ -40,6 +45,7 @@ public class PickupItem : MonoBehaviour
         ableToPickup = true;
         respawnPos = transform.position;
         waterRadius = transform.localScale.x / 3;
+        soundManager = GameObject.Find("SoundManager").GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -99,6 +105,7 @@ public class PickupItem : MonoBehaviour
         // lets you drop the object if you click the interact button again
         if (itemPickedUp)
         {
+            soundManager.PlayOneShot(drop_item);
             itemPickedUp = false;
             this.transform.parent = null;
             ableToPickup = true;
@@ -109,6 +116,7 @@ public class PickupItem : MonoBehaviour
         // picks up the object and makes it a child of the the player's pickupPoint
         if (reset && pickupDist < 2 && !itemPickedUp && ableToPickup)
         {
+            soundManager.PlayOneShot(pickup_item);
             rb.isKinematic = true;
             transform.parent = GameObject.Find("pickupPoint").transform;
             transform.position = pickupPoint.position + (transform.localScale.x * -GameObject.Find("Model").transform.forward);
@@ -121,6 +129,7 @@ public class PickupItem : MonoBehaviour
     {
         if (itemPickedUp)
         {
+            soundManager.PlayOneShot(drop_item);
             rb.isKinematic = false;
             rb.AddForce(-GameObject.Find("Model").transform.forward * throwForce + velocity, ForceMode.Impulse);
             this.transform.parent = null;
