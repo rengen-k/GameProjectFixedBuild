@@ -132,12 +132,12 @@ public class PickupItem : MonoBehaviour
         // picks up the object and makes it a child of the the player's pickupPoint
         if (reset && pickupDist < 2 && !itemPickedUp && ableToPickup)
         {
-            soundManager.PlayOneShot(pickup_item);
             rb.isKinematic = true;
             transform.parent = GameObject.Find("pickupPoint").transform;
             transform.position = pickupPoint.position + (transform.localScale.x * GameObject.Find("Model").transform.forward);
             ableToPickup = false;
             itemPickedUp = true;
+            soundManager.PlayOneShot(pickup_item);
         }
     }
     // throws the object based on player's current velocity

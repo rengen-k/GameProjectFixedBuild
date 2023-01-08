@@ -26,6 +26,8 @@ public class PauseMenu : MonoBehaviour
 
     private GameObject DialoguePanel;
 
+    private DialogueManager dialogueManager;
+
     private Vector2 helpPosOn;
     private Vector2 helpPosOff;
 
@@ -36,13 +38,13 @@ public class PauseMenu : MonoBehaviour
     private bool firstTime;
 
     void Awake(){
-
+        dialogueManager = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
         PauseMenuUI = transform.Find("PauseMenu").gameObject;
         helpPanel = transform.Find("PauseMenu/HelpScreen").gameObject;
         levelPanel = transform.Find("PauseMenu/LevelScreen").gameObject;
         KeyPanel = transform.Find("KeyPanel").gameObject;
         CollectiblePanel = transform.Find("CollectiblePanel").gameObject;
-        DialoguePanel = transform.Find("KeyPanel").gameObject;
+        DialoguePanel = transform.Find("DialoguePanel").gameObject;
 
 
 
@@ -128,7 +130,12 @@ public class PauseMenu : MonoBehaviour
         PauseMenuUI.SetActive(false);
         KeyPanel.SetActive(true);
         CollectiblePanel.SetActive(true);
-        DialoguePanel.SetActive(true);
+        if (dialogueManager.dialogueIsPlaying)
+        {
+            DialoguePanel.SetActive(true);
+        }
+        
+        
 
         Time.timeScale = 1f;
         GamePaused = false;
@@ -148,7 +155,10 @@ public class PauseMenu : MonoBehaviour
         PauseMenuUI.SetActive(true);
         KeyPanel.SetActive(false);
         CollectiblePanel.SetActive(false);
-        DialoguePanel.SetActive(false);
+        if (dialogueManager.dialogueIsPlaying)
+        {
+            DialoguePanel.SetActive(false);
+        }
 
         Time.timeScale = 0f;
         GamePaused = true;
