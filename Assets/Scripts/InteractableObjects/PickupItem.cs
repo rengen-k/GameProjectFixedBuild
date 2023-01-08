@@ -73,7 +73,7 @@ public class PickupItem : MonoBehaviour
         // for some reason it needs to be in both Update and FixedUpdate for it not to slow the player down or jiggle around
         if (itemPickedUp)
         {
-            transform.position = pickupPoint.position + (transform.localScale.x * -GameObject.Find("Model").transform.forward);
+            transform.position = pickupPoint.position + (transform.localScale.x * GameObject.Find("Model").transform.forward);
         }
 
 
@@ -84,7 +84,7 @@ public class PickupItem : MonoBehaviour
 
         if (itemPickedUp)
         {
-            transform.position = pickupPoint.position + (transform.localScale.x * -GameObject.Find("Model").transform.forward);
+            transform.position = pickupPoint.position + (transform.localScale.x * GameObject.Find("Model").transform.forward);
         }
 
         velocity = GameObject.Find("Player").GetComponent<Rigidbody>().velocity;
@@ -135,7 +135,7 @@ public class PickupItem : MonoBehaviour
             soundManager.PlayOneShot(pickup_item);
             rb.isKinematic = true;
             transform.parent = GameObject.Find("pickupPoint").transform;
-            transform.position = pickupPoint.position + (transform.localScale.x * -GameObject.Find("Model").transform.forward);
+            transform.position = pickupPoint.position + (transform.localScale.x * GameObject.Find("Model").transform.forward);
             ableToPickup = false;
             itemPickedUp = true;
         }
@@ -147,7 +147,7 @@ public class PickupItem : MonoBehaviour
         {
             soundManager.PlayOneShot(drop_item);
             rb.isKinematic = false;
-            rb.AddForce(-GameObject.Find("Model").transform.forward * throwForce + velocity, ForceMode.Impulse);
+            rb.AddForce(GameObject.Find("Model").transform.forward * throwForce + velocity, ForceMode.Impulse);
             this.transform.parent = null;
             ableToPickup = true;
             itemPickedUp = false;
