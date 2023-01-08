@@ -21,9 +21,11 @@ public class BossEnemy : MonoBehaviour
     [SerializeField] private Image healthBar;
     [SerializeField] private GameObject healthBarGameObj;
     [SerializeField] private GameState globalGameState;
+    [SerializeField] private GameObject loadLevel;
     private int count;
     Rigidbody rig;
     float magnitude = 15f;
+
 
     void Start()
     {
@@ -59,10 +61,9 @@ public class BossEnemy : MonoBehaviour
     {
         if(health <= 0)
         {
+            Instantiate(loadLevel, gameObject.transform.position, gameObject.transform.rotation);
             Destroy(gameObject);
             Destroy(healthBarGameObj);
-
-            //Instantiate()
         }
 
     }
