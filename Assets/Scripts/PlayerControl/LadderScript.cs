@@ -17,13 +17,13 @@ public class LadderScript : MonoBehaviour
     private float velPower = 1.5f;
     private float acceleration = 30;
     private float deceleration = 40;
-    private float offset = 0.6f;
+    // private float offset = 0.6f;
+    // private float smoothTime = 0.08f;
     private Vector3 ladderMovement;
     private Vector2 inputVector;
     private Vector3 tempPos;
     private float frictionAmount = 0.5f;
     private float ladderSpeed = 10;
-    private float smoothTime = 0.08f;
     private Vector3 velocity = Vector3.zero;
 
     // init
@@ -74,30 +74,30 @@ public class LadderScript : MonoBehaviour
             Collider[] ladders = Physics.OverlapSphere(ladderCheck.position, ladderRadius, (int)whatIsLadder);
 
             // checks each ladder nearby and correctly snaps the player to it
-            foreach (Collider ladder in ladders)
-            {
-                Debug.Log(ladder + " rotation: " + ladder.transform.rotation.eulerAngles.y);
-                if ((ladder.transform.rotation.eulerAngles.y > -0.01 && ladder.transform.rotation.eulerAngles.y < 0.01) && transform.position.x < ladder.transform.position.x)
-                {
-                    tempPos.x = ladder.transform.position.x - offset;
-                    transform.position = Vector3.SmoothDamp(transform.position, tempPos, ref velocity, smoothTime);
-                }
-                else if ((ladder.transform.rotation.eulerAngles.y > 89.99 && ladder.transform.rotation.eulerAngles.y < 90.01) && transform.position.z < ladder.transform.position.z)
-                {
-                    tempPos.z = ladder.transform.position.z - offset;
-                    transform.position = Vector3.SmoothDamp(transform.position, tempPos, ref velocity, smoothTime);
-                }
-                else if ((ladder.transform.rotation.eulerAngles.y > 179.99 && ladder.transform.rotation.eulerAngles.y < 180.01) && transform.position.x > ladder.transform.position.x)
-                {
-                    tempPos.x = ladder.transform.position.x + offset;
-                    transform.position = Vector3.SmoothDamp(transform.position, tempPos, ref velocity, smoothTime);
-                }
-                else if (((ladder.transform.rotation.eulerAngles.y > -90.01 && ladder.transform.rotation.eulerAngles.y < -89.99) || (ladder.transform.rotation.eulerAngles.y > 269.99 && ladder.transform.rotation.eulerAngles.y < 270.01)) && transform.position.z > ladder.transform.position.z)
-                {
-                    tempPos.z = ladder.transform.position.z + offset;
-                    transform.position = Vector3.SmoothDamp(transform.position, tempPos, ref velocity, smoothTime);
-                }
-            }
+            // foreach (Collider ladder in ladders)
+            // {
+            //     Debug.Log(ladder + " rotation: " + ladder.transform.rotation.eulerAngles.y);
+            //     if ((ladder.transform.rotation.eulerAngles.y > -0.01 && ladder.transform.rotation.eulerAngles.y < 0.01) && transform.position.x < ladder.transform.position.x)
+            //     {
+            //         tempPos.x = ladder.transform.position.x - offset;
+            //         transform.position = Vector3.SmoothDamp(transform.position, tempPos, ref velocity, smoothTime);
+            //     }
+            //     else if ((ladder.transform.rotation.eulerAngles.y > 89.99 && ladder.transform.rotation.eulerAngles.y < 90.01) && transform.position.z < ladder.transform.position.z)
+            //     {
+            //         tempPos.z = ladder.transform.position.z - offset;
+            //         transform.position = Vector3.SmoothDamp(transform.position, tempPos, ref velocity, smoothTime);
+            //     }
+            //     else if ((ladder.transform.rotation.eulerAngles.y > 179.99 && ladder.transform.rotation.eulerAngles.y < 180.01) && transform.position.x > ladder.transform.position.x)
+            //     {
+            //         tempPos.x = ladder.transform.position.x + offset;
+            //         transform.position = Vector3.SmoothDamp(transform.position, tempPos, ref velocity, smoothTime);
+            //     }
+            //     else if (((ladder.transform.rotation.eulerAngles.y > -90.01 && ladder.transform.rotation.eulerAngles.y < -89.99) || (ladder.transform.rotation.eulerAngles.y > 269.99 && ladder.transform.rotation.eulerAngles.y < 270.01)) && transform.position.z > ladder.transform.position.z)
+            //     {
+            //         tempPos.z = ladder.transform.position.z + offset;
+            //         transform.position = Vector3.SmoothDamp(transform.position, tempPos, ref velocity, smoothTime);
+            //     }
+            // }
         }
 
         /* allows you to move up and down and also applies friction if you are within distance of a ladder

@@ -1,0 +1,1 @@
+<b>Mysterious Voice:</b> Gold Buttons cannot be triggered by standing on them. Only objects will trigger them.

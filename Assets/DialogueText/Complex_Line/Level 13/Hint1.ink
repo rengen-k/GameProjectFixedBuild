@@ -1,0 +1,2 @@
+ds
+<b>Scrawled Handwriting:</b> <i>I... I can't take it anymore. The tower's bright and inescapable light pierces me from all directions. The <b>meteors</b> are relentlessly barraging the platforms, preventing a clear path to walk upon.</i>

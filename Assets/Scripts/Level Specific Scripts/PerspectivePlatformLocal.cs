@@ -16,7 +16,7 @@ public class PerspectivePlatformLocal : MonoBehaviour
     [SerializeField] private float tower2;
     [SerializeField] private float tower3;
     private bool camChange;
-    private float lastCamPos = 0;
+    // private float lastCamPos = 0;
     private Vector3 playerLocalPos;
     private static bool onBlock;
 

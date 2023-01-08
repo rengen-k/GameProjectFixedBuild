@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private Transform model;
     private PlayerInput playerInput;
     private PlayerActionsScript playerActionsScript;
+    private GameState gameState;
 
     //-------------------------//
     // Camera
@@ -32,7 +33,7 @@ public class PlayerController : MonoBehaviour
     //-------------------------//
     // Damage
     private bool isHurt = false;
-    
+
     //-------------------------//
     // Movement
     private Vector3 movement;
@@ -55,7 +56,7 @@ public class PlayerController : MonoBehaviour
 
     // Fixed Jump Values
     private float landJumpMultiplier = 12f;
-    private float seaJumpMultiplier = 8f;
+    private float seaJumpMultiplier = 11f;
     private float jumpTrampolineHeight = 19.0f;
 
     //-------------------------//
@@ -96,24 +97,35 @@ public class PlayerController : MonoBehaviour
     public LadderScript ladderScript;
     private Vector3 checkpoint;
 
+    //-------------------------//
+    // Difficulty
+    private int diff;
+
+    //-------------------------//
+    // Audio
+    public AudioSource soundManager;
+    public AudioClip footsteps;
+    public AudioClip landing;
 
     //-----------------------------------------//
     // Awake
     //-----------------------------------------//
     private void Awake()
     {
+        gameState = GameObject.Find("GlobalGameState").GetComponent<GameState>();
+        diff = gameState.GetDifficulty();
         Rb = GetComponent<Rigidbody>();
         checkpoint = transform.position;
         InitMovement();
         ConfigureGroundCheckAndRadius();
     }
 
-    private void InitMovement() 
+    private void InitMovement()
     {
         movement = new Vector3(0.0f, 0.0f, 0.0f);
     }
 
-    private void ConfigureGroundCheckAndRadius() 
+    private void ConfigureGroundCheckAndRadius()
     {
         var col = GetComponent<CapsuleCollider>();
         var direction = new Vector3 {[col.direction] = 1};
@@ -134,6 +146,7 @@ public class PlayerController : MonoBehaviour
         model = transform.Find("Model");
         ladderScript = GetComponent<LadderScript>();
         swimCheck = ladderCheck;
+        soundManager = soundManager.GetComponent<AudioSource>();
     }
 
     //-----------------------------------------//
@@ -145,13 +158,13 @@ public class PlayerController : MonoBehaviour
         ConfigPlayerInput();
     }
 
-    private void InitPlayerInput() 
+    private void InitPlayerInput()
     {
         playerActionsScript = new PlayerActionsScript();
         playerActionsScript.Player.Enable();
     }
 
-    private void ConfigPlayerInput() 
+    private void ConfigPlayerInput()
     {
         playerActionsScript.Player.Jump.started += Jump;
         playerActionsScript.Player.Jump.canceled += Jump;
@@ -181,18 +194,19 @@ public class PlayerController : MonoBehaviour
     // Monitors variables associated with jumping, coyote time counter, and refreshes the respawn position
     private void Update()
     {
+        AdjustValuesOnDifficulty();
         JumpGroundDetection();
         ConfigCoyoteTimeCounter();
         UpdateRespawn();
     }
 
-    private void JumpGroundDetection() 
+    private void JumpGroundDetection()
     {
         jumpBufferCounter -= Time.deltaTime;
         lastGrounded -= Time.deltaTime;
     }
 
-    private void ConfigCoyoteTimeCounter() 
+    private void ConfigCoyoteTimeCounter()
     {
         if (isGrounded)
         {
@@ -205,12 +219,56 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update respawn position when player is not near an edge and is grounded
-    private void UpdateRespawn() 
+    private void UpdateRespawn()
     {
         if (isNotNearEdge && isStableGrounded && updateRespawnPosition && coyoteTimeCounter == coyoteTime)
         {
             lastGroundedPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.3f, gameObject.transform.position.z);
             StartCoroutine(RespawnPositionCooldown());
+        }
+    }
+
+    // Intended to be called on every update cycle. If the difficulty has been changed, then the relevant values are adjusted.
+    private void AdjustValuesOnDifficulty()
+    {
+        int newDiff = gameState.GetDifficulty();
+        if (newDiff == diff) {
+            return;
+        }
+        diff = newDiff;
+        AdjustFallMultiplier();
+        AdjustJumpMultiplier();
+    }
+
+    private void AdjustFallMultiplier()
+    {
+        switch(diff)
+        {
+        case 0:
+            fallMultiplier = 0.8f * fallMultiplier;
+            break;
+        case 1:
+            fallMultiplier = 2f;
+            break;
+        case 2:
+            fallMultiplier = 2f;
+            break;
+        }
+    }
+
+    private void AdjustJumpMultiplier()
+    {
+        switch(diff)
+        {
+        case 0:
+            landJumpMultiplier = 1.032f * landJumpMultiplier;
+            break;
+        case 1:
+            landJumpMultiplier = 12f;
+            break;
+        case 2:
+            landJumpMultiplier = 12f;
+            break;
         }
     }
 
@@ -227,7 +285,7 @@ public class PlayerController : MonoBehaviour
         ConfigPlayerModelRotationDirection();
         ConfigMovementAmount();
 
-        ApplyFriction(inputVector);  
+        ApplyFriction(inputVector);
 
         Rb.AddForce(movement * Time.fixedDeltaTime);
 
@@ -270,13 +328,21 @@ public class PlayerController : MonoBehaviour
             swimCheck = ladderCheck;
             swimRadius = 0f;
         }
+
+        if (Vector3.Distance(Rb.velocity, Vector3.zero) > 0.1 && (isGrounded || isStableGrounded) && Vector2.Distance(inputVector, Vector2.zero) > 0.1)
+        {
+            if (!soundManager.isPlaying)
+            {
+                soundManager.PlayOneShot(footsteps);
+            }
+        }
     }
 
     private void modifyWaterMovementValues()
     {
         acceleration = 12;
         deceleration = 12;
-        speed = 6;
+        speed = 7;
         frictionAmount = 0.1f;
         jumpMultiplier = seaJumpMultiplier;
     }
@@ -291,7 +357,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Check whether sphere is colliding with ground or stableground
-    private void CheckIfGroundedorStableGrounded() 
+    private void CheckIfGroundedorStableGrounded()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (int)whatIsGround) || Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
         isStableGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, (1 << 8));
@@ -329,7 +395,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // While moving, changes the rotation of the model to be relative to the camera
-    private void ConfigPlayerModelRotationDirection() 
+    private void ConfigPlayerModelRotationDirection()
     {
         if (movement.x > 0)
         {
@@ -350,7 +416,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Changes amount of movement in the z or x axis depending on a number of physics variables
-    private void ConfigMovementAmount() 
+    private void ConfigMovementAmount()
     {
         if (currentCam == 1 || currentCam == 3)
         {
@@ -381,7 +447,7 @@ public class PlayerController : MonoBehaviour
             // multiplier for upward movement to account for gravity
             if (move > 0.01f)
             {
-                move *= 3.5f;
+                move *= 4.5f;
             }
             movement.y = move;
             StartCoroutine(SwimCooldown());
@@ -389,7 +455,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Apply opposite force to player movement to imitate friction
-    private void ApplyFriction(Vector2 inputVector) 
+    private void ApplyFriction(Vector2 inputVector)
     {
         if (isGrounded && Mathf.Abs(inputVector.x) < 0.01f && (currentCam == 1 || currentCam == 3) || ladderScript.onLadder && Mathf.Abs(inputVector.x) < 0.01f && (currentCam == 1 || currentCam == 3))
         {
@@ -406,7 +472,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Execute Jump only when certain conditions are met eg. when not jumping
-    private void ExecuteJump() 
+    private void ExecuteJump()
     {
         if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f && !isJumping)
             {
@@ -421,7 +487,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Modifies fall speed to become faster or slower
-    private void ModifyFallSpeed() 
+    private void ModifyFallSpeed()
     {
         if (Rb.velocity.y < 0 && Rb.useGravity == true && !inWater)
         {
@@ -433,12 +499,12 @@ public class PlayerController : MonoBehaviour
         }
         if (inWater)
         {
-            Rb.AddForce(Physics.gravity * 0.5f, ForceMode.Acceleration);
+            Rb.AddForce(Physics.gravity * 0.7f, ForceMode.Acceleration);
         }
     }
 
     // Determines whether player is not near the edge - main use is to respawn at correct locations
-    private bool CheckIfPlayerNotNearEdge() 
+    private bool CheckIfPlayerNotNearEdge()
     {
         int layerMask = 1 << 8;
 
@@ -495,12 +561,12 @@ public class PlayerController : MonoBehaviour
             currentCam = camScript.SwitchState(1);
             model.transform.Rotate(-rotation);
         }
-    
+
         ModifyConstraintsBasedOnCamera();
     }
 
     // Rigidbody constraints to prevent movement in an axis that is not intended to be moved in
-    private void ModifyConstraintsBasedOnCamera() 
+    private void ModifyConstraintsBasedOnCamera()
     {
         if (currentCam == 0 | currentCam == 2)
         {
@@ -520,9 +586,9 @@ public class PlayerController : MonoBehaviour
     // HurtTag1 - take damage
     // KillPlane - Respawn
     // JumpTag - Bounce Up
-    private void OnCollisionEnter(Collision collision) 
+    private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "HurtTag1" && !isHurt) 
+        if (collision.gameObject.tag == "HurtTag1" && !isHurt)
         {
             Hurt(collision.transform.position);
         }
@@ -553,6 +619,10 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(collision.transform.parent.gameObject);
         }
+        //else if (collision.gameObject.layer == 7 || collision.gameObject.layer == 8)
+        //{
+        //    soundManager.PlayOneShot(landing);
+        //}
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -573,7 +643,7 @@ public class PlayerController : MonoBehaviour
     // Reset Player health to maxHealth
     private void ResetPlayerHealth()
     {
-        if (GameObject.Find("GlobalGameState").GetComponent<GameState>().IsEasy())
+        if (gameState.IsEasy())
         {
             maxHealth = 2;
         }
@@ -583,7 +653,7 @@ public class PlayerController : MonoBehaviour
     public void MenuIncreaseHealth()
     {
         int setHealth;
-        if (GameObject.Find("GlobalGameState").GetComponent<GameState>().IsEasy())
+        if (gameState.IsEasy())
         {
             setHealth = 2;
         }
@@ -634,7 +704,7 @@ public class PlayerController : MonoBehaviour
     public void Hurt()
     {
 
-        currentHealth -= 1;       
+        currentHealth -= 1;
         StartCoroutine(HurtCooldown());
         if (currentHealth <= 0) {
             if (GameObject.Find("GlobalGameState").GetComponent<GameState>().isNormal())
@@ -645,7 +715,7 @@ public class PlayerController : MonoBehaviour
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
-           
+
         }
         else
         {
@@ -656,7 +726,7 @@ public class PlayerController : MonoBehaviour
     private void Hurt(Vector3 hurter)
     {
 
-        currentHealth -= 1;       
+        currentHealth -= 1;
         StartCoroutine(HurtCooldown());
         if (currentHealth <= 0) {
             if (GameObject.Find("GlobalGameState").GetComponent<GameState>().isNormal())
@@ -667,7 +737,7 @@ public class PlayerController : MonoBehaviour
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
-           
+
         }
         else
         {
@@ -692,8 +762,8 @@ public class PlayerController : MonoBehaviour
         isHurt = true;
 
         yield return new WaitForSeconds(0.4f);
-        
-        
+
+
         isHurt = false;
     }
 
@@ -717,4 +787,5 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         swimming = inWater;
     }
+
 }

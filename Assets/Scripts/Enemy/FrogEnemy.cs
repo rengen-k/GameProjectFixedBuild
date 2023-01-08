@@ -156,6 +156,11 @@ public class FrogEnemy : MonoBehaviour
     public void Respawn()
     {
         transform.position = respawnPoint.position;
+        agent.updatePosition = true;
+        agent.updateRotation = true;
+        agent.isStopped = false;
+        waypointIndex = 0;
+        FaceTarget();
     }
 
     private void Jump()
@@ -239,7 +244,7 @@ public class FrogEnemy : MonoBehaviour
     private IEnumerator AttackCooldown()
     {
         attackCooldown = true;
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
         attackCooldown = false;
     }
 

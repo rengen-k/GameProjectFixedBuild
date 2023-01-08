@@ -44,7 +44,7 @@ public class GameState : MonoBehaviour
     [Tooltip("The total collectibles collected this game session, updates at the end of a level, assuming all has been retrieved.")]
     public int totalCollectibles = 0;
     private int thisLevelTotalCollectibles;
-    private int thisLevelCollectibles = 0;
+    public int thisLevelCollectibles = 0;
     
     // Start is called before the first frame update
     void Awake()
