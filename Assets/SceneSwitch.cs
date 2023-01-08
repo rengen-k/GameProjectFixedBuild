@@ -24,7 +24,8 @@ public class SceneSwitch : MonoBehaviour
         currentSceneName = currentScene.name;
         string[] words = currentSceneName.Split(' ');
         nextSceneName = words[0] + " " + (Int32.Parse(words[1]) + 1);
-        soundManager = GameObject.Find("SoundManager").GetComponent<AudioSource>();
+        //soundManager = GameObject.Find("SoundManager").GetComponent<AudioSource>();
+    }
 
     void Update()
     {
@@ -32,7 +33,7 @@ public class SceneSwitch : MonoBehaviour
         print("1");
     }
 
-    private void OnTriggerEnter(Collider collision) {
+    void OnTriggerEnter(Collider collision) {
         GameObject collisionGameObject = collision.gameObject;
         if (collisionGameObject.tag == "Player") {
             var tracker = GameObject.Find("CollectibleTracker");
@@ -65,5 +66,5 @@ public class SceneSwitch : MonoBehaviour
     public void LoadLevel0() {
         SceneManager.LoadScene("Level 0");
     }
-}
+
 }

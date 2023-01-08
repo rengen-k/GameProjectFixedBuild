@@ -277,8 +277,10 @@ MonoBehaviour:
   frictionAmount: 0.3
   acceleration: 17
   deceleration: 25
+  isMoving: 0
   isJumping: 0
   jumpMultiplier: 14
+  isAirborne: 0
   whatIsGround:
     serializedVersion: 2
     m_Bits: 128
@@ -431,7 +433,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 625ecf369c9b40148ba05e7e0a36ecdd, type: 2}
     - target: {fileID: 5866666021909216657, guid: 2d226e59912d0014fbf2646ed5c4b916, type: 3}
       propertyPath: m_UpdateMode
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects:
