@@ -104,6 +104,8 @@ public class PlayerController : MonoBehaviour
     public AudioClip rotate;
     public AudioClip trampoline;
     public AudioClip splash;
+    public AudioClip spikeDeath;
+    public AudioClip fallDeath;
 
     //-----------------------------------------//
     // Awake
@@ -540,12 +542,22 @@ public class PlayerController : MonoBehaviour
     // JumpTag - Bounce Up
     private void OnCollisionEnter(Collision collision) 
     {
-        if (collision.gameObject.tag == "HurtTag1" && !isHurt) 
+        if (collision.gameObject.layer == 7 || collision.gameObject.layer == 8)
         {
+            if (!soundManager.isPlaying)
+            {
+                //soundManager.PlayOneShot(landing);
+            }
+        }
+
+        else if (collision.gameObject.tag == "HurtTag1" && !isHurt) 
+        {
+            soundManager.PlayOneShot(spikeDeath);
             Hurt(collision.transform.position);
         }
         else if (collision.gameObject.name == "KillPlane")
         {
+            soundManager.PlayOneShot(fallDeath);
             Respawn();
         }
         else if (collision.gameObject.tag == "JumpTag" && !isJumpTrampoline)
@@ -559,10 +571,6 @@ public class PlayerController : MonoBehaviour
         else if (collision.gameObject.tag == "EnemyHead")
         {
             Destroy(collision.transform.parent.gameObject);
-        }
-        else if (collision.gameObject.layer == 7 || collision.gameObject.layer == 8)
-        {
-            soundManager.PlayOneShot(landing);
         }
     }
 

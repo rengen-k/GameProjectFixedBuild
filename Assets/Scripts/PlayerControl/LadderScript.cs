@@ -31,12 +31,17 @@ public class LadderScript : MonoBehaviour
     private PlayerActionsScript playerActionsScript;
     private PlayerController playerController;
 
+    // audio
+    private AudioSource soundManager;
+    public AudioClip climb;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         inLadder = false;
         onLadder = false;
         playerController = GetComponent<PlayerController>();
+        soundManager = GameObject.Find("SoundManager").GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -69,6 +74,11 @@ public class LadderScript : MonoBehaviour
         {
             // says you are on the ladder if you are within range and have clicked the up or down input
             onLadder = true;
+
+            if (!soundManager.isPlaying)
+            {
+                soundManager.PlayOneShot(climb);
+            }
 
             tempPos = transform.position;
             Collider[] ladders = Physics.OverlapSphere(ladderCheck.position, ladderRadius, (int)whatIsLadder);
