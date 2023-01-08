@@ -24,8 +24,6 @@ public class BossEnemy : MonoBehaviour
     [SerializeField] private GameObject loadLevel;
     private int count;
     Rigidbody rig;
-    float magnitude = 15f;
-
 
     void Start()
     {

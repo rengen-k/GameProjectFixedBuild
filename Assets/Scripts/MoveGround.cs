@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MoveGround : Triggerable
 {
-    private bool isTrigger;
     [SerializeField] [Range(0f, 4f)] float lerpTime;
     [SerializeField] Vector3[] positions;
     private int posIndex = 0;
@@ -56,7 +55,6 @@ public class MoveGround : Triggerable
         {
             if ((button1.col == "Block1" | button1.col == "Block2") && (button2.col == "Block1" | button2.col == "Block2"))
             {
-                isTrigger = false;
                 move = true;
             }
         }
