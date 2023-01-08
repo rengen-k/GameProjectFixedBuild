@@ -24,9 +24,29 @@ public class ChangeSound : MonoBehaviour
 
     void Update()
     {
-        Music = GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>();
-        soundEffectsManager = GameObject.FindGameObjectWithTag("SoundEffects").GetComponent<AudioSource>();
-        currentSettings = GameObject.FindGameObjectWithTag("CurrentSettings").GetComponent<CurrentSettings>();
+        Audiolistener = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioListener>();
+
+        try
+        {
+            Music = GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>();
+        } catch {
+            Music = GameObject.FindGameObjectWithTag("LevelMusic").GetComponent<AudioSource>();
+        }
+
+        try
+        {
+            soundEffectsManager = GameObject.FindGameObjectWithTag("SoundEffects").GetComponent<AudioSource>();
+        } catch {
+            soundEffectsManager = GameObject.FindGameObjectWithTag("LevelSoundEffects").GetComponent<AudioSource>();
+        }
+
+        try
+        {
+            currentSettings = GameObject.FindGameObjectWithTag("CurrentSettings").GetComponent<CurrentSettings>();
+        } catch {
+            currentSettings = GameObject.FindGameObjectWithTag("LevelCurrentSettings").GetComponent<CurrentSettings>();
+        }
+
         currentSettings.changeSound = this.gameObject.GetComponent<ChangeSound>();
     }
 

@@ -89,8 +89,15 @@ public class ChangeGraphics : MonoBehaviour
 
     private void Update()
     {
-        currentSettings = GameObject.FindGameObjectWithTag("CurrentSettings").GetComponent<CurrentSettings>();
-        currentSettings.changeGraphics = this.gameObject.GetComponent<ChangeGraphics>();
+        try
+        {
+            currentSettings = GameObject.FindGameObjectWithTag("CurrentSettings").GetComponent<CurrentSettings>();
+            currentSettings.changeGraphics = this.gameObject.GetComponent<ChangeGraphics>();
+        } catch {
+            currentSettings = GameObject.FindGameObjectWithTag("LevelCurrentSettings").GetComponent<CurrentSettings>();
+            currentSettings.changeGraphics = this.gameObject.GetComponent<ChangeGraphics>();
+        }
+
     }
 
     private void Start()

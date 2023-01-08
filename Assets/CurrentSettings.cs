@@ -6,7 +6,6 @@ using TMPro;
 
 public class CurrentSettings : MonoBehaviour
 {
-
     //Bindings
     public InputBinding RotateCameraRight;
     public InputBinding RotateCameraLeft;
@@ -78,16 +77,18 @@ public class CurrentSettings : MonoBehaviour
 
     public InputAction Action;
 
-    private bool start = false;
+    private bool start = true;
 
     void Start()
     {
         start = true;
-    }
-
-    void Awake()
-    {
-
+        
+        MasterOn = true;
+        MasterVolume = 1f;
+        MusicMute = false;
+        MusicVolume = 1f;
+        SoundEffectsMute = false;
+        SoundEffectsVolume = 1f;
     }
 
     void Update()

@@ -25,7 +25,13 @@ public class LoadSettings : MonoBehaviour
     void Start()
     {
         playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-        currentSettings = GameObject.FindGameObjectWithTag("CurrentSettings").GetComponent<CurrentSettings>();
+
+        try
+        {
+            currentSettings = GameObject.FindGameObjectWithTag("CurrentSettings").GetComponent<CurrentSettings>();
+        } catch {
+            currentSettings = GameObject.FindGameObjectWithTag("LevelCurrentSettings").GetComponent<CurrentSettings>();
+        }
         Volume = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<PostProcessVolume>();
         Volume.profile.TryGetSettings(out bloomEffect);
         Volume.profile.TryGetSettings(out ambientOcclusionEffect);

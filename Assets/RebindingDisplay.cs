@@ -24,8 +24,16 @@ public class RebindingDisplay : MonoBehaviour
 
     private void Update()
     {
-        currentSettings = GameObject.FindGameObjectWithTag("CurrentSettings").GetComponent<CurrentSettings>();
-        currentSettings.rebindingDisplay = this.gameObject.GetComponent<RebindingDisplay>();
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        try
+        {
+            currentSettings = GameObject.FindGameObjectWithTag("CurrentSettings").GetComponent<CurrentSettings>();
+            currentSettings.rebindingDisplay = this.gameObject.GetComponent<RebindingDisplay>();
+        } catch {
+            currentSettings = GameObject.FindGameObjectWithTag("LevelCurrentSettings").GetComponent<CurrentSettings>();
+            currentSettings.rebindingDisplay = this.gameObject.GetComponent<RebindingDisplay>();
+        }
+
     }
 
     public void RebindRotateCameraRight()
