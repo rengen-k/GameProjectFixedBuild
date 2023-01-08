@@ -9,9 +9,17 @@ public class DialogueTrigger : MonoBehaviour
     [SerializeField] private GameObject visualCue;
     private PlayerActionsScript playerActionsScript;
     private bool talkPressed;
+    [Header("Normal and Hard Difficulty")]
     [SerializeField] private TextAsset inkJSON;
+
     private AudioSource soundManager;
     public AudioClip dialogueStart;
+
+    [Header("Easy Difficulty")]
+    [SerializeField] private TextAsset inkJSONeasy;
+    private GameState gameState;
+    private int diff;
+
 
     private bool playerInRange;
 
@@ -35,6 +43,8 @@ public class DialogueTrigger : MonoBehaviour
 
     private void Awake()
     {
+        gameState = GameObject.Find("GlobalGameState").GetComponent<GameState>();
+        diff = gameState.GetDifficulty();
         playerInRange = false;
         talkPressed = false;
         visualCue.SetActive(false);
@@ -43,10 +53,10 @@ public class DialogueTrigger : MonoBehaviour
     private void Update()
     {
         if (DialogueManager.GetInstance().dialogueIsPlaying) {
-            playerActionsScript.Player.Disable();
+            playerActionsScript.Player.Talk.Disable();
         }
 
-        if (playerInRange)
+        if (playerInRange && DialogueManager.GetInstance().IsTriggerCalled(gameObject))
         {
             visualCue.SetActive(true);
             if (talkPressed)
@@ -54,15 +64,24 @@ public class DialogueTrigger : MonoBehaviour
                 talkPressed = false;
                 if (!DialogueManager.GetInstance().dialogueIsPlaying)
                 {
-                    DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
+                    if (gameState.IsEasy())
+                    {
+                        DialogueManager.GetInstance().EnterDialogueMode(inkJSONeasy, gameObject);
+                    }
+                    else
+                    {
+                        DialogueManager.GetInstance().EnterDialogueMode(inkJSON, gameObject);  
+                    }
                 }
             }
         }
         else
         {
             visualCue.SetActive(false);
-            DialogueManager.GetInstance().ExitDialogueMode();
-
+            // DialogueManager.GetInstance().ExitDialogueMode();
+            // if (DialogueManager.GetInstance().dialogueIsPlaying) { 
+            //     DialogueManager.GetInstance().ExitDialogueMode();
+            // }
         }
 
         if (!DialogueManager.GetInstance().dialogueIsPlaying) {
@@ -75,13 +94,16 @@ public class DialogueTrigger : MonoBehaviour
     {
         soundManager.PlayOneShot(dialogueStart);
         if (playerInRange) {
-            // Debug.Log("Boom");
             talkPressed = true;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (DialogueManager.GetInstance().IsTriggerCalled(gameObject)) {
+            return;
+        }
+        DialogueManager.GetInstance().SetTriggerCalled(gameObject);
         if (other.gameObject.name == "Player")
         {
             playerInRange = true;
@@ -90,17 +112,22 @@ public class DialogueTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (!DialogueManager.GetInstance().IsTriggerCalled(gameObject)) {
+            return;
+        }
+        DialogueManager.GetInstance().RemoveTriggerCalled(gameObject);
         if (other.gameObject.tag == "Player")
         {
             playerInRange = false;
         }
+
     }
     
     private IEnumerator DialogueCooldown()
     {
-        playerActionsScript.Player.Disable();
+        playerActionsScript.Player.Talk.Disable();
         yield return new WaitForSeconds(0.1f);
-        playerActionsScript.Player.Enable();
+        playerActionsScript.Player.Talk.Enable();
     }
     
 }

@@ -1,0 +1,1 @@
+<b>Mysterious Voice:</b> Next to you is a ladder. Traverse it by pressing the W key to attach onto it, and use W, A, S, D to move. At the top of the ladder is a trampoline that can also be picked up.

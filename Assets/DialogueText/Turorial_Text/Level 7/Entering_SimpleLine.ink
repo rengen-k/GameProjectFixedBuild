@@ -1,0 +1,1 @@
+<b>Mysterious Voice:</b> Before you lies the entrance to the next stage of the tower. Be warned. What you have experienced so far is just the beginning. You are on your own after you step through those gates.
