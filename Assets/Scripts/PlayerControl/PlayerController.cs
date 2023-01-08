@@ -96,6 +96,8 @@ public class PlayerController : MonoBehaviour
     public LadderScript ladderScript;
     private Vector3 checkpoint;
 
+    //-------------------------//
+    // Audio
     public AudioSource soundManager;
     public AudioClip footsteps;
     public AudioClip landing;
@@ -140,7 +142,7 @@ public class PlayerController : MonoBehaviour
         model = transform.Find("Model");
         ladderScript = GetComponent<LadderScript>();
         swimCheck = ladderCheck;
-        soundManager = soundManager.GetComponent<AudioSource>();
+        soundManager = GameObject.Find("SoundManager").GetComponent<AudioSource>();
     }
 
     //-----------------------------------------//

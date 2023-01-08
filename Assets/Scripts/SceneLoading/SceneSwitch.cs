@@ -16,7 +16,7 @@ public class SceneSwitch : MonoBehaviour
 
     private void Start()
     {
-        soundManager = soundManager.GetComponent<AudioSource>();
+        soundManager = GameObject.Find("SoundManager").GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider collision) {

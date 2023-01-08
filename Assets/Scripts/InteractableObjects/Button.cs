@@ -27,7 +27,7 @@ public class Button : MonoBehaviour
         if (isStuck){
             spring.breakForce = 20;
         }
-        soundManager = soundManager.GetComponent<AudioSource>();
+        soundManager = GameObject.Find("SoundManager").GetComponent<AudioSource>();
         
     }
 

@@ -14,7 +14,7 @@ public class collectible : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        soundManager = soundManager.GetComponent<AudioSource>();
+        soundManager = GameObject.Find("SoundManager").GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
