@@ -8,11 +8,13 @@ public class collectible : MonoBehaviour
 
     //To ensure that OnTrggerEnter can never trigger more then once.
     private bool onceTouch = true;
+    public AudioSource soundManager;
+    public AudioClip coinSound;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        soundManager = GameObject.Find("SoundManager").GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -25,7 +27,7 @@ public class collectible : MonoBehaviour
         if (other.gameObject.tag == "Player" && onceTouch){
             onceTouch = false;
             GameObject tracker = GameObject.Find("GlobalGameState");
-            
+            soundManager.PlayOneShot(coinSound);
             tracker.GetComponent<GameState>().Collected();
             Destroy(gameObject);
         }

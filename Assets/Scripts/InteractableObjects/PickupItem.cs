@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 //-----------------------------------------//
 // PickupItem
@@ -29,6 +30,14 @@ public class PickupItem : MonoBehaviour
     private bool inWater = false;
     [SerializeField] private LayerMask whatIsWater;
     private float waterRadius;
+    private int frames = 0;
+    private float previousYVel;
+
+    private AudioSource soundManager;
+    public AudioClip pickup_item;
+    public AudioClip drop_item;
+    public AudioClip landing;
+
 
     private Vector3 respawnPos;
 
@@ -40,6 +49,7 @@ public class PickupItem : MonoBehaviour
         ableToPickup = true;
         respawnPos = transform.position;
         waterRadius = transform.localScale.x / 3;
+        soundManager = GameObject.Find("SoundManager").GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -65,6 +75,8 @@ public class PickupItem : MonoBehaviour
         {
             transform.position = pickupPoint.position + (transform.localScale.x * -GameObject.Find("Model").transform.forward);
         }
+
+
     }
 
     private void FixedUpdate()
@@ -89,6 +101,16 @@ public class PickupItem : MonoBehaviour
             rb.drag = 0;
             rb.AddForce(Physics.gravity * 1.2f, ForceMode.Acceleration);
         }
+
+        if (frames > 3)
+        {
+            previousYVel = rb.velocity.y;
+            frames = 0;
+        }
+        else
+        {
+            frames++;
+        }
     }
 
     public void Interact(InputAction.CallbackContext context)
@@ -99,6 +121,7 @@ public class PickupItem : MonoBehaviour
         // lets you drop the object if you click the interact button again
         if (itemPickedUp)
         {
+            soundManager.PlayOneShot(drop_item);
             itemPickedUp = false;
             this.transform.parent = null;
             ableToPickup = true;
@@ -109,6 +132,7 @@ public class PickupItem : MonoBehaviour
         // picks up the object and makes it a child of the the player's pickupPoint
         if (reset && pickupDist < 2 && !itemPickedUp && ableToPickup)
         {
+            soundManager.PlayOneShot(pickup_item);
             rb.isKinematic = true;
             transform.parent = GameObject.Find("pickupPoint").transform;
             transform.position = pickupPoint.position + (transform.localScale.x * -GameObject.Find("Model").transform.forward);
@@ -121,6 +145,7 @@ public class PickupItem : MonoBehaviour
     {
         if (itemPickedUp)
         {
+            soundManager.PlayOneShot(drop_item);
             rb.isKinematic = false;
             rb.AddForce(-GameObject.Find("Model").transform.forward * throwForce + velocity, ForceMode.Impulse);
             this.transform.parent = null;
@@ -136,31 +161,11 @@ public class PickupItem : MonoBehaviour
         {
             Respawn();
         }
-        //Debug.Log("collision");
-        //if (other.gameObject.layer == 1 << 4)
-        //{
-        //    Debug.Log("in water");
-        //    inWater = true;
-        //}
+        else if ((other.gameObject.layer == 7 || other.gameObject.layer == 8) && previousYVel < 0)
+        {
+            soundManager.PlayOneShot(landing, 0.8f);
+        }
     }
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
-    //    {
-    //        Debug.Log("in water");
-    //        inWater = true;
-    //    }
-    //}
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
-    //    {
-    //        Debug.Log("out of water");
-    //        inWater = false;
-    //    }
-    //}
 
     private void Respawn()
     {

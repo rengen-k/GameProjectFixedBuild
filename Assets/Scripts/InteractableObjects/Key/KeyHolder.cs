@@ -12,6 +12,9 @@ public class KeyHolder : MonoBehaviour
     private PlayerActionsScript playerActionsScript;
     private bool nearDoor = false;
     private KeyDoorTrigger keyDoor;
+    private AudioSource soundManager;
+    public AudioClip keyCollect;
+    public AudioClip openDoor;
 
     public List<Key.KeyType> GetKeyList()
     {
@@ -22,6 +25,7 @@ public class KeyHolder : MonoBehaviour
     {
         InitPlayerInput();
         ConfigPlayerInput();
+        soundManager = GameObject.Find("SoundManager").GetComponent<AudioSource>();
     }
 
     private void OnDisable()
@@ -47,6 +51,7 @@ public class KeyHolder : MonoBehaviour
 
     public void AddKey(Key.KeyType keyType)
     {
+        soundManager.PlayOneShot(keyCollect, 0.8f);
         keyList.Add(keyType);
         OnKeysChanged?.Invoke(this, EventArgs.Empty);
     }
@@ -96,6 +101,7 @@ public class KeyHolder : MonoBehaviour
         if (ContainsKey(keyDoor.GetKeyType()))
         {
             RemoveKey(keyDoor.GetKeyType());
+            soundManager.PlayOneShot(openDoor, 0.8f);
             keyDoor.OpenDoor();
         }
 

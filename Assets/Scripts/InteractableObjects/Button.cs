@@ -19,11 +19,15 @@ public class Button : MonoBehaviour
     [Tooltip("Whether or not the player can push the button down with themselves, if true, have to use an object to press it down.")]
     [SerializeField] bool playnt;
 
+    public AudioSource soundManager;
+    public AudioClip buttonClick;
+
     void Start()
     {
         if (isStuck){
             spring.breakForce = 20;
         }
+        soundManager = GameObject.Find("SoundManager").GetComponent<AudioSource>();
         
     }
 
@@ -36,6 +40,7 @@ public class Button : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        soundManager.PlayOneShot(buttonClick);
         if (playnt){
             if (other.name == "Player"){
                 return;

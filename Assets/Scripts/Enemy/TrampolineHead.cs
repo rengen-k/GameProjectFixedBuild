@@ -20,10 +20,15 @@ public class TrampolineHead : MonoBehaviour
     private Vector3 playerBottom = new Vector3(0f, 1f, 0f);
     private bool squashed = false;
 
+    // audio
+    public AudioSource soundManager;
+    public AudioClip squish;
+
     private void Start()
     {
         agent = GetComponentInParent<NavMeshAgent>();
         player = GameObject.Find("Player").transform;
+        soundManager = GameObject.Find("SoundManager").GetComponent<AudioSource>();
     }
 
     private void FixedUpdate()
@@ -53,6 +58,7 @@ public class TrampolineHead : MonoBehaviour
             // if the player jumps on the trampoline enemy's head, it gets squashed and the NavMeshAgent is paused
             if (!squashed)
             {
+                soundManager.PlayOneShot(squish);
                 squashed = true;
                 scale = squashedScale;
                 StartCoroutine(smoothScaling());

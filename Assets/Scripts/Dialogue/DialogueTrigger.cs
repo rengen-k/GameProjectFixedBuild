@@ -11,10 +11,15 @@ public class DialogueTrigger : MonoBehaviour
     private bool talkPressed;
     [Header("Normal and Hard Difficulty")]
     [SerializeField] private TextAsset inkJSON;
+
+    private AudioSource soundManager;
+    public AudioClip dialogueStart;
+
     [Header("Easy Difficulty")]
     [SerializeField] private TextAsset inkJSONeasy;
     private GameState gameState;
     private int diff;
+
 
     private bool playerInRange;
 
@@ -22,6 +27,7 @@ public class DialogueTrigger : MonoBehaviour
     {
         InitPlayerInput();
         ConfigPlayerInput();
+        soundManager = GameObject.Find("SoundManager").GetComponent<AudioSource>();
     }
 
     private void InitPlayerInput() 
@@ -86,6 +92,7 @@ public class DialogueTrigger : MonoBehaviour
 
     public void Talk(InputAction.CallbackContext context)
     {
+        soundManager.PlayOneShot(dialogueStart);
         if (playerInRange) {
             talkPressed = true;
         }

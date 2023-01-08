@@ -41,6 +41,11 @@ public class FrogEnemy : MonoBehaviour
     public bool attackCooldown = false;
     public bool stuckToObject = false;
 
+    // audio
+    private AudioSource soundManager;
+    public AudioClip frogJump;
+    public AudioClip tongue;
+
     [Tooltip("Indicates whether the enemy will follow the player when they are close enough.")]
     [SerializeField] private bool followsPlayer;
     [SerializeField] private float followSpeed;
@@ -53,6 +58,7 @@ public class FrogEnemy : MonoBehaviour
         player = GameObject.Find("Player").transform;
         originalSpeed = agent.speed;
         UpdateDestination();
+        soundManager = GameObject.Find("SoundManager").GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -165,6 +171,7 @@ public class FrogEnemy : MonoBehaviour
 
     private void Jump()
     {
+        //soundManager.PlayOneShot(frogJump);
         grounded = false;
         if (agent.enabled)
         {
@@ -188,6 +195,7 @@ public class FrogEnemy : MonoBehaviour
         agent.updatePosition = false;
         agent.updateRotation = false;
         agent.isStopped = true;
+        soundManager.PlayOneShot(tongue);
         StartCoroutine(TongueMovement());
         StartCoroutine(AttackCooldown());
     }
