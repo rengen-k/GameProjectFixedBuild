@@ -70,23 +70,19 @@ public class CurrentSettings : MonoBehaviour
     public ChangeSound changeSound;
     public ChangeGraphics changeGraphics;
     public RebindingDisplay rebindingDisplay;
-
-    [SerializeField] private InputAction Action;
+    
     [SerializeField] private PlayerController playerController;
     private InputActionRebindingExtensions.RebindingOperation rebindingOperation;
 
     public PlayerActionsScript.PlayerActions script;
 
+    public InputAction Action;
+
+    private bool start = false;
+
     void Start()
     {
-        MasterOn = true;
-        MasterVolume = 1f;
-        MusicMute = true;
-        MusicVolume = 1f;
-        SoundEffectsMute = false;
-        SoundEffectsVolume = 1f;
-
-        BloomOn = false;
+        start = true;
     }
 
     void Awake()
@@ -157,6 +153,24 @@ public class CurrentSettings : MonoBehaviour
             rebindingDisplay.pickupObj.GetComponent<TMPro.TextMeshProUGUI>().text = InputControlPath.ToHumanReadableString(PickupObject.effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
             rebindingDisplay.jumpText.GetComponent<TMPro.TextMeshProUGUI>().text = InputControlPath.ToHumanReadableString(Jump.effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
 
+            if(start)
+            {
+                Action = playerController.playerActionsScript.Player.Jump;
+                Jump = Action.bindings[0];
+                Action = playerController.playerActionsScript.Player.Look;
+                RotateCameraRight = Action.bindings[4];
+                Action = playerController.playerActionsScript.Player.Look;
+                RotateCameraLeft = Action.bindings[3];
+                Action = playerController.playerActionsScript.Player.Move;
+                MoveRight = Action.bindings[7];
+                Action = playerController.playerActionsScript.Player.Move;
+                MoveLeft = Action.bindings[6];
+                Action = playerController.playerActionsScript.Player.Fire;
+                ThrowObject = Action.bindings[5];
+                Action = playerController.playerActionsScript.Player.Interact;
+                PickupObject = Action.bindings[0];
+                start = false;
+            }
         } catch {
         }
 
