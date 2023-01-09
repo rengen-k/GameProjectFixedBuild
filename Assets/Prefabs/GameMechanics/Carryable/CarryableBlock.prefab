@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6678616722628432883}
   m_Layer: 7
   m_Name: CarryableBlock
-  m_TagString: Untagged
+  m_TagString: PickupObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,11 +30,11 @@ Transform:
   m_GameObject: {fileID: 6678616722628432880}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.130001, y: 1.44, z: -22.52042}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 27
+  m_RootOrder: 46
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6678616722628432887
 MeshFilter:
@@ -119,6 +119,9 @@ MonoBehaviour:
   whatIsWater:
     serializedVersion: 2
     m_Bits: 16
+  pickup_item: {fileID: 8300000, guid: 4c3da5c8c9b9f7d478e59e24980e7dd8, type: 3}
+  drop_item: {fileID: 8300000, guid: c9bf58fff6ea6a64ebb92dca3568bdc6, type: 3}
+  landing: {fileID: 8300000, guid: 0462feb393ce2b64b9f78c8bc9303014, type: 3}
 --- !u!54 &6678616722628432883
 Rigidbody:
   m_ObjectHideFlags: 0

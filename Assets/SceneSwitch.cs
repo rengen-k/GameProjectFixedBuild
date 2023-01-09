@@ -15,6 +15,8 @@ public class SceneSwitch : MonoBehaviour
     private string currentSceneName;
     private string nextSceneName;
     private GameState gameState;
+    private AudioSource soundManager;
+    public AudioClip teleport;
 
     [SerializeField] private Animator fade;
 
@@ -24,7 +26,7 @@ public class SceneSwitch : MonoBehaviour
         currentSceneName = currentScene.name;
         string[] words = currentSceneName.Split(' ');
         nextSceneName = words[0] + " " + (Int32.Parse(words[1]) + 1);
-        //soundManager = GameObject.FindWithTag("SoundManager").GetComponent<AudioSource>();
+        soundManager = GameObject.Find("SoundManager").GetComponent<AudioSource>();
     }
 
     void Update()
@@ -35,6 +37,7 @@ public class SceneSwitch : MonoBehaviour
     void OnTriggerEnter(Collider collision) {
         GameObject collisionGameObject = collision.gameObject;
         if (collisionGameObject.tag == "Player") {
+            soundManager.PlayOneShot(teleport);
             var tracker = GameObject.Find("CollectibleTracker");
             if (tracker == null)
             {
