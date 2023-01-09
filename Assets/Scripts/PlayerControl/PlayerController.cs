@@ -160,7 +160,12 @@ public class PlayerController : MonoBehaviour
         anim = model.GetComponent<Animator>();
         ladderScript = GetComponent<LadderScript>();
         swimCheck = ladderCheck;
-        soundManager = GameObject.FindWithTag("SoundEffects").GetComponent<AudioSource>();
+        try
+        {
+            soundManager = GameObject.FindWithTag("SoundEffects").GetComponent<AudioSource>();
+        } catch {
+            soundManager = GameObject.FindWithTag("LevelSoundEffects").GetComponent<AudioSource>();
+        }
     }
 
     //-----------------------------------------//

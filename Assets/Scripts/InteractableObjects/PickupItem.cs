@@ -49,7 +49,12 @@ public class PickupItem : MonoBehaviour
         ableToPickup = true;
         respawnPos = transform.position;
         waterRadius = transform.localScale.x / 3;
-        soundManager = GameObject.FindWithTag("SoundEffects").GetComponent<AudioSource>();
+        try
+        {
+            soundManager = GameObject.FindWithTag("SoundEffects").GetComponent<AudioSource>();
+        } catch {
+            soundManager = GameObject.FindWithTag("LevelSoundEffects").GetComponent<AudioSource>();
+        }
     }
 
     private void OnEnable()
