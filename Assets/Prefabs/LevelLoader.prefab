@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &740240860959501041
 MeshFilter:
@@ -111,5 +111,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameOfSceneToLoad: Scene2
-  indexOfSceneToLoad: 
-  loadWithIndex: 0
+  autoLoad: 0
+  teleport: {fileID: 8300000, guid: 16c3224f617c666498edfaa38367be63, type: 3}
+  fade: {fileID: 0}

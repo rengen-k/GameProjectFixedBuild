@@ -222,7 +222,7 @@ Transform:
   - {fileID: 6468012470353081405}
   - {fileID: 6468012471372542711}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6468012470481845390
 MeshFilter:
@@ -337,6 +337,8 @@ MonoBehaviour:
   trigger:
   - {fileID: 0}
   playnt: 0
+  soundManager: {fileID: 0}
+  buttonClick: {fileID: 8300000, guid: 5d220408490ba814788f0470a209a997, type: 3}
 --- !u!65 &6468012471372542710
 BoxCollider:
   m_ObjectHideFlags: 0
