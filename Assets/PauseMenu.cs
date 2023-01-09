@@ -46,6 +46,7 @@ public class PauseMenu : MonoBehaviour
     private DialogueManager dialogueManager;
 
     void Awake(){
+        try {
         dialogueManager = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
         PauseMenuUI = transform.Find("PauseMenu").gameObject;
         helpPanel = transform.Find("PauseMenu/HelpScreen").gameObject;
@@ -56,6 +57,10 @@ public class PauseMenu : MonoBehaviour
         graphicsPanel = transform.Find("PauseMenu/GraphicsScreen").gameObject;
         audioPanel = transform.Find("PauseMenu/SoundScreen").gameObject;
         CollectiblePanel = transform.Find("CollectiblePanel").gameObject;
+        }
+        catch {
+
+        }
 
 
 
@@ -65,8 +70,11 @@ public class PauseMenu : MonoBehaviour
 
         int diff = GameObject.Find("GlobalGameState").GetComponent<GameState>().GetDifficulty();
         GameObject diffText = GameObject.Find("Diff Text");
+        try {
+            TMP_Text texty = diffText.GetComponent<TextMeshProUGUI>();
+        
 
-        TMP_Text texty = diffText.GetComponent<TextMeshProUGUI>();
+        
         if (diff == 0)
         {
             texty.text = "Diff: Easy";
@@ -78,6 +86,9 @@ public class PauseMenu : MonoBehaviour
         {
             texty.text = "Diff: Hard";
         }
+
+        }
+        catch {}
         
     }
 
@@ -87,6 +98,10 @@ public class PauseMenu : MonoBehaviour
         GameObject title = GameObject.Find("Level Title");
         TMP_Text texty = title.GetComponent<TextMeshProUGUI>();
         texty.text = "Level " + Int32.Parse(SceneManager.GetActiveScene().name.Split(" ")[1]);
+    }
+
+    private void OnEnable() {
+        playerActionsScript.Player.Enable();
     }
 
     private void OnDisable() {
