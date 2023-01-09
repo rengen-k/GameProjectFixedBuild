@@ -10,13 +10,13 @@ public class CheckIfMusicPresent : MonoBehaviour
     {
         if(!end)
         {
-            if(GameObject.FindGameObjectsWithTag("LevelMusic")[0].active && GameObject.FindWithTag("Music") != null || GameObject.FindGameObjectsWithTag("LevelMusic").Length == 2)
-            {
-                Destroy(this.gameObject);
-                end = true;
-            } else {
-                end = true;
-            }
+            // if(GameObject.FindGameObjectsWithTag("LevelMusic")[0].active && GameObject.FindWithTag("Music") != null || GameObject.FindGameObjectsWithTag("LevelMusic").Length == 2)
+            // {
+            //     Destroy(this.gameObject);
+            //     end = true;
+            // } else {
+            //     end = true;
+            // }
         }
     }
 }

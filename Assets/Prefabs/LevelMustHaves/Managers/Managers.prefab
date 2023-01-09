@@ -34,7 +34,7 @@ Transform:
   - {fileID: 5735962906052692328}
   - {fileID: 6526423108545573422}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &982222539
 MonoBehaviour:
@@ -214,6 +214,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8109608391262397918, guid: b59a2861ab9b0964bb78b5ab75fea4a8, type: 3}
+    - {fileID: 6526423109613720414, guid: b59a2861ab9b0964bb78b5ab75fea4a8, type: 3}
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: b59a2861ab9b0964bb78b5ab75fea4a8, type: 3}
 --- !u!114 &6526423108545573420 stripped
@@ -244,6 +245,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Music
       objectReference: {fileID: 0}
+    - target: {fileID: 5735962905022174355, guid: 3fe4740470a355648b27161e4c7ae9ff, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: a696ae0573e9c93429c0aefcb0684c38, type: 3}
     - target: {fileID: 5735962905022174356, guid: 3fe4740470a355648b27161e4c7ae9ff, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -340,7 +345,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5735962905022174357, guid: 3fe4740470a355648b27161e4c7ae9ff, type: 3}
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fe4740470a355648b27161e4c7ae9ff, type: 3}
 --- !u!224 &5735962906052692328 stripped
@@ -473,7 +479,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6225532602640160347, guid: 3404f1608587e8041acc27df31311279, type: 3}
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 3404f1608587e8041acc27df31311279, type: 3}
 --- !u!224 &6225532601658791117 stripped

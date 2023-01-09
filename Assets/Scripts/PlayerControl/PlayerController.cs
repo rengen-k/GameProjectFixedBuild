@@ -216,7 +216,7 @@ public class PlayerController : MonoBehaviour
         JumpGroundDetection();
         ConfigCoyoteTimeCounter();
         UpdateRespawn();
-        Debug.Log(soundManager.isPlaying);
+        // Debug.Log(soundManager.isPlaying);
     }
 
     private void JumpGroundDetection() 
