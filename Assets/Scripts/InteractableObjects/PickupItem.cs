@@ -168,7 +168,10 @@ public class PickupItem : MonoBehaviour
         }
         else if ((other.gameObject.layer == 7 || other.gameObject.layer == 8) && previousYVel < 0)
         {
-            soundManager.PlayOneShot(landing, 0.8f);
+            // try {
+            // soundManager.PlayOneShot(landing, 0.8f);
+
+            // } catch{}
         }
     }
 
