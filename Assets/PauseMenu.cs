@@ -43,8 +43,10 @@ public class PauseMenu : MonoBehaviour
     private bool pauseRequest;
     private bool firstTime;
 
-    void Awake(){
+    private GameState gameState;
 
+    void Awake(){
+        gameState = GameObject.Find("GlobalGameState").GetComponent<GameState>();
         PauseMenuUI = transform.Find("PauseMenu").gameObject;
         helpPanel = transform.Find("PauseMenu/HelpScreen").gameObject;
         levelPanel = transform.Find("PauseMenu/LevelScreen").gameObject;
