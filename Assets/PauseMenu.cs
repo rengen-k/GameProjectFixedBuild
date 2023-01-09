@@ -32,6 +32,7 @@ public class PauseMenu : MonoBehaviour
     private GameObject settingsPanel;
     private GameObject graphicsPanel;
     private GameObject audioPanel;
+    private GameObject CollectiblePanel;
 
     private Vector2 helpPosOn;
     private Vector2 helpPosOff;
@@ -52,6 +53,7 @@ public class PauseMenu : MonoBehaviour
         settingsPanel = transform.Find("PauseMenu/SettingsScreen").gameObject;
         graphicsPanel = transform.Find("PauseMenu/GraphicsScreen").gameObject;
         audioPanel = transform.Find("PauseMenu/SoundScreen").gameObject;
+        CollectiblePanel = transform.Find("CollectiblePanel").gameObject;
 
 
 
@@ -159,6 +161,7 @@ public class PauseMenu : MonoBehaviour
         PauseMenuUI.SetActive(false);
         KeyPanel.SetActive(true);
         DialoguePanel.SetActive(true);
+        CollectiblePanel.SetActive(true);
 
         Time.timeScale = 1f;
         GamePaused = false;
@@ -178,6 +181,7 @@ public class PauseMenu : MonoBehaviour
         PauseMenuUI.SetActive(true);
         KeyPanel.SetActive(false);
         DialoguePanel.SetActive(false);
+        CollectiblePanel.SetActive(false);
 
         Time.timeScale = 0f;
         GamePaused = true;
