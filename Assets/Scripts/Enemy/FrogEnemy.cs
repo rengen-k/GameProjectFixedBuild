@@ -43,7 +43,7 @@ public class FrogEnemy : MonoBehaviour
 
     // audio
     private AudioSource soundManager;
-    public AudioClip frogJump;
+    // public AudioClip frogJump;
     public AudioClip tongue;
 
     [Tooltip("Indicates whether the enemy will follow the player when they are close enough.")]

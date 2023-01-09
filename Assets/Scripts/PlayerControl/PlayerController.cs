@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody Rb;
     private Transform model;
     private PlayerInput playerInput;
-    private PlayerActionsScript playerActionsScript;
+    public PlayerActionsScript playerActionsScript;
 
     //-------------------------//
     // Camera
@@ -160,7 +160,12 @@ public class PlayerController : MonoBehaviour
         anim = model.GetComponent<Animator>();
         ladderScript = GetComponent<LadderScript>();
         swimCheck = ladderCheck;
-        soundManager = GameObject.Find("SoundManager").GetComponent<AudioSource>();
+        try
+        {
+            soundManager = GameObject.FindWithTag("SoundEffects").GetComponent<AudioSource>();
+        } catch {
+            soundManager = GameObject.FindWithTag("LevelSoundEffects").GetComponent<AudioSource>();
+        }
     }
 
     //-----------------------------------------//
@@ -211,6 +216,7 @@ public class PlayerController : MonoBehaviour
         JumpGroundDetection();
         ConfigCoyoteTimeCounter();
         UpdateRespawn();
+        Debug.Log(soundManager.isPlaying);
     }
 
     private void JumpGroundDetection() 

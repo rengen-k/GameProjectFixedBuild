@@ -17,16 +17,21 @@ public class PauseMenu : MonoBehaviour
     public static bool helpToggle = false;
     [Tooltip("Fields representing status of pausemenu.")]
     public static bool levelsToggle = false;
+    [Tooltip("Fields representing status of pausemenu.")]
+    public static bool settingsToggle = false;
+    [Tooltip("Fields representing status of pausemenu.")]
+    public static bool graphicsToggle = false;
+    [Tooltip("Fields representing status of pausemenu.")]
+    public static bool soundToggle = false;
 
     private GameObject PauseMenuUI;
     private GameObject helpPanel;
     private GameObject levelPanel;
     private GameObject KeyPanel;
-    private GameObject CollectiblePanel;
-
     private GameObject DialoguePanel;
-
-    private DialogueManager dialogueManager;
+    private GameObject settingsPanel;
+    private GameObject graphicsPanel;
+    private GameObject audioPanel;
 
     private Vector2 helpPosOn;
     private Vector2 helpPosOff;
@@ -38,13 +43,15 @@ public class PauseMenu : MonoBehaviour
     private bool firstTime;
 
     void Awake(){
-        dialogueManager = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+
         PauseMenuUI = transform.Find("PauseMenu").gameObject;
         helpPanel = transform.Find("PauseMenu/HelpScreen").gameObject;
         levelPanel = transform.Find("PauseMenu/LevelScreen").gameObject;
         KeyPanel = transform.Find("KeyPanel").gameObject;
-        CollectiblePanel = transform.Find("CollectiblePanel").gameObject;
-        DialoguePanel = transform.Find("DialoguePanel").gameObject;
+        DialoguePanel = transform.Find("KeyPanel").gameObject;
+        settingsPanel = transform.Find("PauseMenu/SettingsScreen").gameObject;
+        graphicsPanel = transform.Find("PauseMenu/GraphicsScreen").gameObject;
+        audioPanel = transform.Find("PauseMenu/SoundScreen").gameObject;
 
 
 
@@ -116,6 +123,28 @@ public class PauseMenu : MonoBehaviour
         else{
             levelPanel.SetActive(false);
         }
+
+        if(settingsToggle){
+            settingsPanel.SetActive(true);
+        }
+        else{
+            settingsPanel.SetActive(false);
+        }
+
+        if(graphicsToggle){
+            graphicsPanel.SetActive(true);
+        }
+        else{
+            graphicsPanel.SetActive(false);
+        }
+
+        if(soundToggle){
+            audioPanel.SetActive(true);
+        }
+        else{
+            audioPanel.SetActive(false);
+        }
+
         
 
     }
@@ -129,13 +158,7 @@ public class PauseMenu : MonoBehaviour
     {
         PauseMenuUI.SetActive(false);
         KeyPanel.SetActive(true);
-        CollectiblePanel.SetActive(true);
-        if (dialogueManager.dialogueIsPlaying)
-        {
-            DialoguePanel.SetActive(true);
-        }
-        
-        
+        DialoguePanel.SetActive(true);
 
         Time.timeScale = 1f;
         GamePaused = false;
@@ -154,11 +177,7 @@ public class PauseMenu : MonoBehaviour
     {
         PauseMenuUI.SetActive(true);
         KeyPanel.SetActive(false);
-        CollectiblePanel.SetActive(false);
-        if (dialogueManager.dialogueIsPlaying)
-        {
-            DialoguePanel.SetActive(false);
-        }
+        DialoguePanel.SetActive(false);
 
         Time.timeScale = 0f;
         GamePaused = true;
@@ -169,6 +188,7 @@ public class PauseMenu : MonoBehaviour
     public void LevelsToggle()
     {
         helpToggle = false;
+        settingsToggle = false;
         levelsToggle = !levelsToggle;
 
     }
@@ -176,6 +196,7 @@ public class PauseMenu : MonoBehaviour
     public void Help()
     {   
         levelsToggle = false;
+        settingsToggle = false;
         helpToggle = !helpToggle;
     }
 
@@ -201,5 +222,32 @@ public class PauseMenu : MonoBehaviour
             texty.text = "Diff: Hard";
         }
 
+    }
+
+    public void Settings()
+    {
+        levelsToggle = false;
+        helpToggle = false;
+        soundToggle = false;
+        graphicsToggle = false;
+        settingsToggle = true;
+    }
+
+    public void Graphics()
+    {
+        levelsToggle = false;
+        helpToggle = false;
+        settingsToggle = false;
+        soundToggle = false;
+        graphicsToggle = true;
+    }
+
+    public void Sound()
+    {
+        levelsToggle = false;
+        helpToggle = false;
+        settingsToggle = false;
+        graphicsToggle = false;
+        soundToggle = true;
     }
 }

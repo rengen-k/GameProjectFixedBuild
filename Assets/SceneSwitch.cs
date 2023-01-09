@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering.PostProcessing;
 
 public class SceneSwitch : MonoBehaviour
 {
@@ -14,11 +15,12 @@ public class SceneSwitch : MonoBehaviour
     private string currentSceneName;
     private string nextSceneName;
     private GameState gameState;
-
-    public AudioSource soundManager;
+    private AudioSource soundManager;
     public AudioClip teleport;
 
-    private void Start() {
+    [SerializeField] private Animator fade;
+
+    void Start() {
         gameState = GameObject.Find("GlobalGameState").GetComponent<GameState>();
         currentScene = SceneManager.GetActiveScene();
         currentSceneName = currentScene.name;
@@ -27,7 +29,12 @@ public class SceneSwitch : MonoBehaviour
         soundManager = GameObject.Find("SoundManager").GetComponent<AudioSource>();
     }
 
-    private void OnTriggerEnter(Collider collision) {
+    void Update()
+    {
+        fade = GameObject.FindGameObjectWithTag("Fade").GetComponent<Animator>();
+    }
+
+    void OnTriggerEnter(Collider collision) {
         GameObject collisionGameObject = collision.gameObject;
         if (collisionGameObject.tag == "Player") {
             soundManager.PlayOneShot(teleport);
@@ -48,15 +55,17 @@ public class SceneSwitch : MonoBehaviour
                 SceneManager.LoadScene(nextSceneName);
             }
 
-            LoadScene();
+            fade.SetTrigger("FadeOut");
+            //LoadScene();
         }
     }
 
-    private void LoadScene() {
+    public void LoadScene() {
         SceneManager.LoadScene(nameOfSceneToLoad);
     }
 
     public void LoadLevel0() {
         SceneManager.LoadScene("Level 0");
     }
+
 }
