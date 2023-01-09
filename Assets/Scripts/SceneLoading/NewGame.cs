@@ -30,7 +30,7 @@ public class NewGame : MonoBehaviour
 
     public void loadStart()
     {
-        SceneManager.LoadScene("Level 0");
+        SceneManager.LoadScene("LevelSelector");
     }
 
     public void closePanal()
