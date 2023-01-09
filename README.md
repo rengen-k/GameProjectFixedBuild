@@ -128,7 +128,7 @@ https://freesound.org/s/445109/
 - Frog tongue attack sound
 https://freesound.org/s/188384/
 - Level 19 rotation sound
-https://freesound.org/s/123253/ mechanical clamp
+https://freesound.org/s/123253/
 
 #### Scripts
 
