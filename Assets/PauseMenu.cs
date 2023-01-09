@@ -43,15 +43,15 @@ public class PauseMenu : MonoBehaviour
     private bool pauseRequest;
     private bool firstTime;
 
-    private GameState gameState;
+    private DialogueManager dialogueManager;
 
     void Awake(){
-        gameState = GameObject.Find("GlobalGameState").GetComponent<GameState>();
+        dialogueManager = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
         PauseMenuUI = transform.Find("PauseMenu").gameObject;
         helpPanel = transform.Find("PauseMenu/HelpScreen").gameObject;
         levelPanel = transform.Find("PauseMenu/LevelScreen").gameObject;
         KeyPanel = transform.Find("KeyPanel").gameObject;
-        DialoguePanel = transform.Find("KeyPanel").gameObject;
+        DialoguePanel = transform.Find("DialoguePanel").gameObject;
         settingsPanel = transform.Find("PauseMenu/SettingsScreen").gameObject;
         graphicsPanel = transform.Find("PauseMenu/GraphicsScreen").gameObject;
         audioPanel = transform.Find("PauseMenu/SoundScreen").gameObject;
@@ -162,8 +162,15 @@ public class PauseMenu : MonoBehaviour
     {
         PauseMenuUI.SetActive(false);
         KeyPanel.SetActive(true);
-        DialoguePanel.SetActive(true);
         CollectiblePanel.SetActive(true);
+        graphicsPanel.SetActive(false);
+        settingsPanel.SetActive(false);
+        audioPanel.SetActive(false);
+        if (dialogueManager.dialogueIsPlaying)
+        {
+            DialoguePanel.SetActive(true);
+        }
+        
 
         Time.timeScale = 1f;
         GamePaused = false;
@@ -182,8 +189,15 @@ public class PauseMenu : MonoBehaviour
     {
         PauseMenuUI.SetActive(true);
         KeyPanel.SetActive(false);
-        DialoguePanel.SetActive(false);
         CollectiblePanel.SetActive(false);
+        graphicsPanel.SetActive(false);
+        settingsPanel.SetActive(false);
+        audioPanel.SetActive(false);
+        if (dialogueManager.dialogueIsPlaying)
+        {
+            DialoguePanel.SetActive(false);
+        }
+
 
         Time.timeScale = 0f;
         GamePaused = true;
