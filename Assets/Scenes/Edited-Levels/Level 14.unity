@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.00071555015, g: 0.0006155511, b: 0.0012970879, a: 1}
+  m_IndirectSpecularColor: {r: 0.00071454386, g: 0.00061519013, b: 0.0012950114, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -382,11 +382,6 @@ Transform:
   m_Father: {fileID: 1685594077}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &95266842 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9173282484750590619, guid: 4aa76f037130cb144a0ae881838a4226, type: 3}
-  m_PrefabInstance: {fileID: 699979849}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &95893033
 GameObject:
   m_ObjectHideFlags: 0
@@ -3064,7 +3059,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8183061161519230016, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.009979186
+      value: -0.009979185
       objectReference: {fileID: 0}
     - target: {fileID: 8183061161519230017, guid: ca9adad64be104c4fab4a910165565e2, type: 3}
       propertyPath: m_Follow
@@ -5536,25 +5531,9 @@ PrefabInstance:
       propertyPath: camScript
       value: 
       objectReference: {fileID: 474115529}
-    - target: {fileID: 9173282485034384676, guid: 4aa76f037130cb144a0ae881838a4226, type: 3}
-      propertyPath: footsteps
-      value: 
-      objectReference: {fileID: 8300000, guid: 7131d701ae015a54aa3d856feccd513f, type: 3}
-    - target: {fileID: 9173282485034384676, guid: 4aa76f037130cb144a0ae881838a4226, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9173282485034384676, guid: 4aa76f037130cb144a0ae881838a4226, type: 3}
-      propertyPath: jumpMultiplier
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 9173282485034384679, guid: 4aa76f037130cb144a0ae881838a4226, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 9173282485034384682, guid: 4aa76f037130cb144a0ae881838a4226, type: 3}
-      propertyPath: m_AngularDrag
-      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 9173282485034384683, guid: 4aa76f037130cb144a0ae881838a4226, type: 3}
       propertyPath: m_RootOrder
@@ -6157,41 +6136,6 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: b084d45a469e24f4e885cc1098d28e4a, type: 3}
---- !u!1 &827277908 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9173282485034384679, guid: 4aa76f037130cb144a0ae881838a4226, type: 3}
-  m_PrefabInstance: {fileID: 699979849}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &827277916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 827277908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 529662916c86b4edc8966fd4bc6dc60d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  camScript: {fileID: 474115529}
-  currentHealth: 0
-  maxHealth: 1
-  speed: 12
-  frictionAmount: 0.3
-  acceleration: 17
-  deceleration: 25
-  isJumping: 0
-  jumpMultiplier: 12
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 128
-  groundCheck: {fileID: 95266842}
-  ladderCheck: {fileID: 1310981605}
-  whatIsWater:
-    serializedVersion: 2
-    m_Bits: 16
-  ladderScript: {fileID: 0}
 --- !u!1 &836415691
 GameObject:
   m_ObjectHideFlags: 0
@@ -8448,11 +8392,6 @@ MonoBehaviour:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4332346744908922264, guid: ba92ae5b06ba746feb85d5cd6bd8a39d, type: 3}
   m_PrefabInstance: {fileID: 1732038390}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1310981605 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2023358513, guid: 4aa76f037130cb144a0ae881838a4226, type: 3}
-  m_PrefabInstance: {fileID: 699979849}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1331951255 stripped
 Transform:
