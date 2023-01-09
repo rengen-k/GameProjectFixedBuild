@@ -32,7 +32,7 @@ public class BossEnemy : MonoBehaviour
         target = GameObject.Find("Player").transform;
         StartCoroutine(SpeedLoop());
         healthBar = healthBar.GetComponent<Image>();
-        globalGameState = globalGameState.GetComponent<GameState>();
+        globalGameState = GameObject.Find("GlobalGameState").GetComponent<GameState>();
 
 
         if (globalGameState.GetDifficulty() == 0)
@@ -66,6 +66,7 @@ public class BossEnemy : MonoBehaviour
 
     void Update()
     {
+        globalGameState = GameObject.Find("GlobalGameState").GetComponent<GameState>();
         if(health <= 0)
         {
             Instantiate(loadLevel, gameObject.transform.position, gameObject.transform.rotation);
