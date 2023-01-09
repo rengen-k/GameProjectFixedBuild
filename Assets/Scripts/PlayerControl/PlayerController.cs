@@ -636,6 +636,12 @@ public class PlayerController : MonoBehaviour
         {
             soundManager.PlayOneShot(landing, 0.8f);
         }
+
+        if (collision.gameObject.tag == "HurtTag3")
+        {
+            ResetPlayerHealth();
+            transform.position = new Vector3(Random.Range(-2f, -28f), -1.07f, Random.Range(17.0f, 40.0f));
+        }
     }
 
     private void OnTriggerEnter(Collider collision)
