@@ -24,13 +24,12 @@ public class SceneSwitch : MonoBehaviour
         currentSceneName = currentScene.name;
         string[] words = currentSceneName.Split(' ');
         nextSceneName = words[0] + " " + (Int32.Parse(words[1]) + 1);
-        //soundManager = GameObject.Find("SoundManager").GetComponent<AudioSource>();
+        //soundManager = GameObject.FindWithTag("SoundManager").GetComponent<AudioSource>();
     }
 
     void Update()
     {
         fade = GameObject.FindGameObjectWithTag("Fade").GetComponent<Animator>();
-        print("1");
     }
 
     void OnTriggerEnter(Collider collision) {
@@ -53,7 +52,6 @@ public class SceneSwitch : MonoBehaviour
                 SceneManager.LoadScene(nextSceneName);
             }
 
-            LoadScene();
             fade.SetTrigger("FadeOut");
             //LoadScene();
         }
