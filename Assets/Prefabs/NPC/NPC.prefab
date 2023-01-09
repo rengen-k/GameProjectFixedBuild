@@ -319,7 +319,7 @@ Transform:
   - {fileID: 5080265275128568150}
   - {fileID: 1911515538048308326}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 40
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5080265274349834908
 GameObject:
@@ -334,7 +334,7 @@ GameObject:
   - component: {fileID: 5080265274349834905}
   - component: {fileID: 5080265274349834910}
   m_Layer: 0
-  m_Name: Model
+  m_Name: Model2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -383,7 +383,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 88b4dcf770b9d754a90bfbdb67dee6c5, type: 2}
+  - {fileID: 2100000, guid: 005717006e953794ba0ab1ae131a84a8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -462,7 +462,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 2, z: 2}
+  m_Size: {x: 2, y: 2, z: 4}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5080265275128568147
 MonoBehaviour:
@@ -477,4 +477,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visualCue: {fileID: 1911515538594044556}
-  inkJSON: {fileID: 4900000, guid: 1c2262929c656864bbc728cccf272040, type: 3}
+  inkJSON: {fileID: 4900000, guid: 6a491cb301f05ec4ea30906494b5ef2c, type: 3}
+  dialogueStart: {fileID: 8300000, guid: fe3270a09a68c1c43b4fdbef38c6c34b, type: 3}
+  inkJSONeasy: {fileID: 4900000, guid: 89ba2ad6eecc2da4bad3d8058176ee80, type: 3}
