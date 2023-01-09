@@ -27,7 +27,12 @@ public class DialogueTrigger : MonoBehaviour
     {
         InitPlayerInput();
         ConfigPlayerInput();
-        soundManager = GameObject.Find("SoundManager").GetComponent<AudioSource>();
+        try
+        {
+            soundManager = GameObject.FindWithTag("SoundEffects").GetComponent<AudioSource>();
+        } catch {
+            soundManager = GameObject.FindWithTag("LevelSoundEffects").GetComponent<AudioSource>();
+        }
     }
 
     private void InitPlayerInput() 
