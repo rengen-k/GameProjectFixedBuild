@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -915,14 +915,6 @@ PrefabInstance:
       propertyPath: camScript
       value: 
       objectReference: {fileID: 1284378448}
-    - target: {fileID: 9173282485034384676, guid: 4aa76f037130cb144a0ae881838a4226, type: 3}
-      propertyPath: footsteps
-      value: 
-      objectReference: {fileID: 8300000, guid: 7131d701ae015a54aa3d856feccd513f, type: 3}
-    - target: {fileID: 9173282485034384676, guid: 4aa76f037130cb144a0ae881838a4226, type: 3}
-      propertyPath: ladderScript
-      value: 
-      objectReference: {fileID: 873389370}
     - target: {fileID: 9173282485034384679, guid: 4aa76f037130cb144a0ae881838a4226, type: 3}
       propertyPath: m_Name
       value: Player
@@ -979,17 +971,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9173282485034384683, guid: 4aa76f037130cb144a0ae881838a4226, type: 3}
   m_PrefabInstance: {fileID: 873389368}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &873389370 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1067078591, guid: 4aa76f037130cb144a0ae881838a4226, type: 3}
-  m_PrefabInstance: {fileID: 873389368}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd1b129fa236b49f0a8bccbcca5e8196, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &873389371 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9173282485034384676, guid: 4aa76f037130cb144a0ae881838a4226, type: 3}
