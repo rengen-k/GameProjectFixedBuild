@@ -41,7 +41,13 @@ public class LadderScript : MonoBehaviour
         inLadder = false;
         onLadder = false;
         playerController = GetComponent<PlayerController>();
-        soundManager = GameObject.Find("SoundManager").GetComponent<AudioSource>();
+
+        try
+        {
+            soundManager = GameObject.FindWithTag("SoundEffects").GetComponent<AudioSource>();
+        } catch {
+            soundManager = GameObject.FindWithTag("LevelSoundEffects").GetComponent<AudioSource>();
+        }
     }
 
     private void OnEnable()
