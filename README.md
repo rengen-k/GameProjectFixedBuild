@@ -89,7 +89,46 @@ https://opengameart.org/content/spinning-gold-coin
 https://www.newgrounds.com/art/view/flexviper/gold-coins-pixel-art
 - Unity Post Processing
 https://docs.unity3d.com/Packages/com.unity.postprocessing@3.2/manual/index.html
-
+- "Puzzle Game" by Eric Matyas www.soundimage.org
+https://soundimage.org/wp-content/uploads/2016/07/Puzzle-Game_Looping.mp3
+- Water Splash Pack
+https://assetstore.unity.com/packages/audio/sound-fx/foley/water-splash-pack-14039#publisher
+- Footsteps - Essentials
+https://assetstore.unity.com/packages/audio/sound-fx/foley/footsteps-essentials-189879
+- Collecitble noise
+https://freesound.org/s/135936/
+- NPC interact sound
+https://freesound.org/s/320181/
+- Teleport/Level Loader sound
+https://freesound.org/s/406063/
+- Player rotation woosh
+https://freesound.org/s/194081/
+- Pressing switch noise
+https://freesound.org/s/506053/
+- Water splash
+https://freesound.org/s/398712/
+- Death from falling sound
+https://freesound.org/s/364929/
+- Trampoline sound
+https://freesound.org/s/187025/
+- Sqishing trampoline enemy noise
+https://freesound.org/s/167074/
+- Opening door sound
+https://freesound.org/s/156507/
+- Collecting key sound
+https://freesound.org/s/109662/
+- Dying to spike noise
+https://freesound.org/s/77611/
+- Dropping or throwing item sound
+https://freesound.org/s/483603/
+- Picking up item noise
+https://freesound.org/s/654251/
+- Killing enemy noise
+https://freesound.org/s/445109/
+- Frog tongue attack sound
+https://freesound.org/s/188384/
+- Level 19 rotation sound
+https://freesound.org/s/123253/
 
 #### Scripts
 
